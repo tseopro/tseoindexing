@@ -1,0 +1,13 @@
+/* Colors Palette */
+@import "colors_palette/tailwind";
+@import "colors_palette/bootstrap";
+
+// Theme colors
+$primary:       $blue-900; // Tailwind
+$secondary:     $bt_gray-600;
+$success:       $bt_green;
+$info:          $bt_cyan;
+$warning:       $bt_yellow;
+$danger:        $bt_red;
+$light:         $bt_gray-100;
+$dark:          $bt_gray-900;

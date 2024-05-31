@@ -20,11 +20,9 @@
       "map": false
     },
     "scripts": {
-        "compile:rtl": "rtlcss public/css/tseoindexing.css public/css/tseoindexing-rtl.css",
-        "style": "sass --watch sass/style.scss public/css/tseoindexing.css  --no-charset --no-source-map",
-        "style-min": "sass --watch sass/style.scss public/css/tseoindexing.min.css  --no-charset --style=compressed --no-source-map",
-        "admin": "sass --watch sass/admin.scss admin/css/tseoport.css  --no-charset --no-source-map",
-        "admin-min": "sass --watch sass/admin.scss admin/css/tseoport.min.css  --no-charset --style=compressed --no-source-map",
+        "style:rtl": "rtlcss assets/css/style.css assets/css/style-rtl.css",
+        "style": "sass --watch sass/style.scss assets/css/style.css  --no-charset --no-source-map",
+        "style-min": "sass --watch sass/style.scss assets/css/style.min.css  --no-charset --style=compressed --no-source-map",
         "bundle": "dir-archiver --src . --dest ../tseoindexing-v1.0.0.zip --exclude sass icons _psd .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore .vscode README.md composer.json composer.lock node_modules vendor package-lock.json package.json"
     },
     "dependencies": {
