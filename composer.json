@@ -1,0 +1,32 @@
+{
+    "name": "tseo/tseoindexing",
+    "description": "Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "TSEO team",
+            "email": "dev@tseo.pro"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "google/apiclient": "2.16.0"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+        "wptrt/wpthemereview": "^0.2.1",
+        "php-parallel-lint/php-parallel-lint": "^1.3.2",
+        "wp-cli/i18n-command": "^2.4.3"
+    },
+    "scripts": {
+        "lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+        "lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
+        "make-pot": "wp i18n make-pot . languages/tseoindexing.pot"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
