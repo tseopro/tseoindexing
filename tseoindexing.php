@@ -3,8 +3,7 @@
  * TSEO Indexing
  *
  * @package           TSEOIndexing
- * @author            TSEO team
- * @copyright         2023 TSEO PRO
+ * @developer         TSEO team
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
@@ -13,7 +12,7 @@
  * Description:       Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages.
  * Version:           1.0.0
  * Requires at least: 5.5
- * Requires PHP:      7.4
+ * Requires PHP:      8.0
  * Author:            TSEO team
  * Author URI:        https://tseo.pro/
  * Text Domain:       tseoindexing
@@ -21,11 +20,10 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
- 
 defined('ABSPATH') or die('No script kiddies please!');
 
-if ( ! defined( 'TSEOINDEXING_VERSION' ) ) {
-	define( 'TSEOINDEXING_VERSION', '1.0.0' );
+if (!defined('TSEOINDEXING_VERSION')) {
+    define('TSEOINDEXING_VERSION', '1.0.0');
 }
 
 function tseoindexing_load_textdomain() {
@@ -37,8 +35,30 @@ require 'vendor/autoload.php';
 
 use Google\Client;
 use Google\Service\Indexing;
+
 require_once plugin_dir_path(__FILE__) . 'inc/tseoindexing-class.php';
 
-// Hook to notify Google about URLs to be removed upon plugin activation or update
-register_activation_hook(__FILE__, ['TSEOIndexing', 'notify_google_about_removed_urls']);
-register_deactivation_hook(__FILE__, ['TSEOIndexing', 'notify_google_about_removed_urls']);
+if (!class_exists('TSEOIndexing_Main')) {
+    $tseoindexing_main = new TSEOIndexing_Main();
+}
+
+/**
+ * TSEO PRO admin style
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_admin_styles($hook) {
+    if ('tseoindexing_page_tseoindexing-settings' != $hook) {
+        return;
+    }
+    wp_enqueue_style('tseoindexing-admin', plugin_dir_url(dirname(__FILE__)) . 'assets/css/tseoindexing.min.css', array(), TSEOINDEXING_VERSION, 'all');
+}
+add_action('admin_enqueue_scripts', 'tseoindexing_admin_styles');
+
+function tseoindexing_add_settings_link($links) {
+    $settings_link = '<a href="admin.php?page=tseoindexing-settings">' . esc_html__('Settings', 'tseoindexing') . '</a>';
+    array_push($links, $settings_link);
+    return $links;
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'tseoindexing_add_settings_link');

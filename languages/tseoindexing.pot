@@ -1,0 +1,48 @@
+# Copyright (C) 2024 TSEO team
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: TSEO Indexing 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tseoindexing\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-05-31T15:35:35+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: tseoindexing\n"
+
+#. Plugin Name of the plugin
+#: tseoindexing.php
+msgid "TSEO Indexing"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: tseoindexing.php
+msgid "https://tseo.pro/indexing/"
+msgstr ""
+
+#. Description of the plugin
+#: tseoindexing.php
+msgid "Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages."
+msgstr ""
+
+#. Author of the plugin
+#: tseoindexing.php
+msgid "TSEO team"
+msgstr ""
+
+#. Author URI of the plugin
+#: tseoindexing.php
+msgid "https://tseo.pro/"
+msgstr ""
+
+#: inc/tseoindexing-class.php:40
+msgid "TSEO Indexing Settings"
+msgstr ""
+
+#: tseoindexing.php:48
+msgid "Settings"
+msgstr ""
