@@ -9,40 +9,187 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-31T15:35:35+00:00\n"
+"POT-Creation-Date: 2024-06-02T11:40:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: tseoindexing\n"
 
 #. Plugin Name of the plugin
-#: tseoindexing.php
+#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
 msgid "TSEO Indexing"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: tseoindexing.php
+#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
 msgid "https://tseo.pro/indexing/"
 msgstr ""
 
 #. Description of the plugin
-#: tseoindexing.php
+#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
 msgid "Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages."
 msgstr ""
 
 #. Author of the plugin
-#: tseoindexing.php
+#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
 msgid "TSEO team"
 msgstr ""
 
 #. Author URI of the plugin
-#: tseoindexing.php
+#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
 msgid "https://tseo.pro/"
 msgstr ""
 
-#: inc/tseoindexing-class.php:40
+#: inc/tseoindexing-class.php:43
+#: inc/tseoindexing-class.php:44
+#: tseoindexing.php:98
+msgid "Settings"
+msgstr ""
+
+#: inc/tseoindexing-class.php:52
+#: inc/tseoindexing-class.php:53
+msgid "Links"
+msgstr ""
+
+#: inc/tseoindexing-class.php:65
+msgid "Dashboard"
+msgstr ""
+
+#: inc/tseoindexing-class.php:67
+msgid "Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins."
+msgstr ""
+
+#: inc/tseoindexing-class.php:83
 msgid "TSEO Indexing Settings"
 msgstr ""
 
-#: tseoindexing.php:48
-msgid "Settings"
+#: inc/tseoindexing-class.php:85
+msgid "Warning: This is a development version of the plugin. Do not use it in a production environment."
+msgstr ""
+
+#: inc/tseoindexing-class.php:107
+msgid "TSEO Indexing Links"
+msgstr ""
+
+#: inc/tseoindexing-class.php:210
+msgid "URL"
+msgstr ""
+
+#: inc/tseoindexing-class.php:211
+msgid "Indexed"
+msgstr ""
+
+#: inc/tseoindexing-class.php:212
+msgid "Action"
+msgstr ""
+
+#: inc/tseoindexing-class.php:213
+msgid "Type"
+msgstr ""
+
+#: inc/tseoindexing-class.php:220
+msgid "Yes"
+msgstr ""
+
+#: inc/tseoindexing-class.php:220
+msgid "No"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:61
+msgid "Saving TSEO Indexing"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:71
+msgid "SEO Options"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:72
+msgid "By activating SEO Options, you have a set of powerful tools without the need for third-party plugins: sitemaps, schema, open graph, image compressor and converter, etc."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:76
+msgid "Services"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:77
+msgid "General settings on the various services integrated within TSEO PRO without the use of any plugins. Knowing these different sections is of utmost importance."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:81
+msgid "RGPD"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:82
+msgid "The theme comes integrated with the necessary legal documentation to get started, which you can activate from the corresponding section. For now, it is only available in Spanish or English."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:86
+msgid "Woocommerce"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:87
+msgid "If you use WooCommerce as an online store, activate this service to enable multiple tools to customize the store."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:91
+msgid "Marketing"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:92
+msgid "Powerful marketing toolset: Notifications, Chatbot, WhatsApp, Landing Page, Google Reviews, and Banners. Stand out and grow your business!"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:96
+msgid "YouTube Videos"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:97
+msgid "Create a catalog of YouTube videos with their own covers, and you can trigger the playback of each video in a pop-up window using a custom [shortcode]."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:101
+msgid "Documentation"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:102
+msgid "If you have a product or service that requires technical documentation for its use, activate this service. Two new tabs will be activated: Documentation and Snippets."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:106
+msgid "PWA Web"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:107
+msgid "Turn the Web into an App with a powerful natural cache. It can also be installed on desktop and mobile devices. In the footer and on compatible devices, its installation is prompted."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:111
+msgid "PWA App (Beta)"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:112
+msgid "This is a service under development to launch a professional App that can be downloaded and installed without the need for app stores. It works in conjunction with the main PWA Web."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:116
+msgid "International SEO"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:117
+msgid "When you activate international SEO, the tool automatically generates hreflang tags across all editors: Pages, Posts, Docs, and Products."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:121
+msgid "Token"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:122
+msgid "We explain how you can enable the section to promote your own cryptocurrency (token) from your website with links to the Ethereum or Binance networks."
+msgstr ""
+
+#: inc/tseoindexing-settings.php:126
+msgid "Advanced settings"
+msgstr ""
+
+#: inc/tseoindexing-settings.php:127
+msgid "Advanced web configuration section. In this section, we teach you how .htaccess works for Linux or web.config for Windows."
 msgstr ""
