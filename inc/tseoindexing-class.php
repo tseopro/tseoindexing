@@ -33,7 +33,7 @@ class TSEOIndexing_Main {
             'TSEO Indexing',
             'manage_options',
             'tseoindexing',
-            [$this, 'tseoindexing_settings_page_content'],
+            [$this, 'tseoindexing_dashboard_page_content'],
             'dashicons-admin-site',
             6
         );
@@ -57,17 +57,44 @@ class TSEOIndexing_Main {
         );
     }
 
+    public function tseoindexing_dashboard_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('Dashboard', 'tseoindexing'); ?></h1>
+                <div class="success">
+                    <p><?php esc_html_e('Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins.', 'tseoindexing'); ?></p>
+                </div>
+                <?php tseoindexing_dashboard_options(); ?>
+            </div>    
+            <div class="sidebar">
+                <?php tseoindexing_display_info_sidebar(); ?>
+            </div>
+        </div>
+        <?php
+    }
+
     public function tseoindexing_settings_page_content() {
         ?>
         <div class="tseoindexing-admin-panel">
-            <h1><?php esc_html_e('TSEO Indexing Settings', 'tseoindexing'); ?></h1>
-            <form method="post" action="options.php" enctype="multipart/form-data">
-                <?php
-                    settings_fields('tseoindexing');
-                    do_settings_sections('tseoindexing');
-                    submit_button();
-                ?>
-            </form>
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('TSEO Indexing Settings', 'tseoindexing'); ?></h1>
+                <div class="danger">
+                    <p><?php esc_html_e('Warning: This is a development version of the plugin. Do not use it in a production environment.', 'tseoindexing'); ?></p>
+                </div>
+                <form method="post" action="options.php" enctype="multipart/form-data">
+                    <?php
+                        settings_fields('tseoindexing');
+                        do_settings_sections('tseoindexing');
+                        submit_button();
+                    ?>
+                </form>
+            </div>    
+            <div class="sidebar">
+                <?php tseoindexing_display_info_sidebar(); ?>
+            </div>
         </div>
         <?php
     }
@@ -75,10 +102,16 @@ class TSEOIndexing_Main {
     public function tseoindexing_links_page_content() {
         ?>
         <div class="tseoindexing-admin-panel">
-            <h1><?php esc_html_e('TSEO Indexing Links', 'tseoindexing'); ?></h1>
-            <form method="post" action="">
-                <?php $this->tseoindexing_display_links_table(); ?>
-            </form>
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('TSEO Indexing Links', 'tseoindexing'); ?></h1>
+                <form method="post" action="">
+                    <?php $this->tseoindexing_display_links_table(); ?>
+                </form>
+            </div>
+            <div class="sidebar">
+                <?php tseoindexing_display_info_sidebar(); ?>
+            </div>
         </div>
         <?php
     }
@@ -164,39 +197,90 @@ class TSEOIndexing_Main {
 
     public function tseoindexing_display_links_table() {
         $indexed_urls = $this->tseoindexing_get_indexed_urls();
+        $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
+        $per_page = 20;
+        $total_items = count($indexed_urls);
+        $total_pages = ceil($total_items / $per_page);
+        $offset = ($paged - 1) * $per_page;
+        $urls_to_display = array_slice($indexed_urls, $offset, $per_page, true);
         ?>
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th><?php esc_html_e('URL', 'tseoindexing'); ?></th>
+                    <th style="width:70%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Indexed', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Action', 'tseoindexing'); ?></th>
+                    <th><?php esc_html_e('Type', 'tseoindexing'); ?></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($indexed_urls as $url => $indexed) : ?>
+                <?php foreach ($urls_to_display as $url => $indexed) : ?>
                     <tr>
                         <td><?php echo esc_url($url); ?></td>
                         <td><?php echo $indexed ? esc_html__('Yes', 'tseoindexing') : esc_html__('No', 'tseoindexing'); ?></td>
                         <td>
                             <input type="checkbox" name="urls_to_index[]" value="<?php echo esc_url($url); ?>" <?php checked($indexed); ?>>
                         </td>
+                        <td>
+                            <?php
+                                $post_id = url_to_postid($url);
+                                $post_type = get_post_type($post_id);
+                                echo esc_html($post_type);
+                            ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <button type="submit" class="button button-primary"><?php esc_html_e('Update Indexing Status', 'tseoindexing'); ?></button>
+        <?php
+        if ($total_pages > 1) {
+            $page_links = paginate_links(array(
+                'base' => add_query_arg('paged', '%#%'),
+                'format' => '',
+                'prev_text' => __('&laquo;'),
+                'next_text' => __('&raquo;'),
+                'total' => $total_pages,
+                'current' => $paged,
+            ));
+            if ($page_links) {
+                echo '<div class="tseoindexing-pagination">' . $page_links . '</div>';
+            }
+        }
+        submit_button();
+        ?>
+        </form>
         <?php
     }
 
     public function tseoindexing_get_indexed_urls() {
-        // Aquí deberías implementar la lógica para obtener las URLs indexadas y no indexadas
-        // Este es solo un ejemplo simple
-        return [
-            'https://example.com/page1' => true,
-            'https://example.com/page2' => false,
-            'https://example.com/page3' => true,
-        ];
+        $indexed_urls = [];
+
+        // Get all pages
+        $pages = get_pages();
+        foreach ($pages as $page) {
+            $url = get_permalink($page->ID);
+            $indexed_urls[$url] = true;
+        }
+
+        // Get all posts
+        $posts = get_posts(['post_type' => 'post']);
+        foreach ($posts as $post) {
+            $url = get_permalink($post->ID);
+            $indexed_urls[$url] = true;
+        }
+
+        // Get all product pages (assuming WooCommerce is installed)
+        if (class_exists('WooCommerce')) {
+            $products = get_posts(['post_type' => 'product']);
+            foreach ($products as $product) {
+                $url = get_permalink($product->ID);
+                $indexed_urls[$url] = true;
+            }
+        }
+
+        // Add other custom post types here if needed
+
+        return $indexed_urls;
     }
 }
 

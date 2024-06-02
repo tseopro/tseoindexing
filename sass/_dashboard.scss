@@ -1,0 +1,127 @@
+@import "variables";
+
+.wrap-general-dashboard {
+    margin: 1em;
+    .options-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1em;
+        align-items: center;
+        justify-content: center;
+
+        .card-service {
+        border: 1px solid $gray-300;
+        background: $bt_white;
+        border-radius: 8px;
+        position: relative;
+
+        .card-service-body {
+            padding: 2em;
+            display: flex;
+            flex-direction: column;
+
+            .dashicons {
+            font-size: 3rem;
+            color: $indigo-400;
+            }
+
+            h3 {
+            margin-top: 2em;
+            font-size: 21px;
+            }
+
+            hr {
+            border: 1px solid #000;
+            }
+
+            p {
+            font-size: 15px;
+            min-height: 180px !important;
+            }
+        }
+
+        .card-service-footer {
+            justify-content: center;
+            align-items: center;
+            padding: 1em;
+            //height: 26px;
+            background: $slate-50;
+            position: absolute;
+            bottom: 0;
+
+            border-top: 1px solid $slate-300;
+
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        }
+
+        .card-service .card-service-footer {
+        position: relative;
+
+            input[type="checkbox"] {
+                position: absolute; 
+                left: -9999px;
+
+                + label {
+                position: relative;
+                width: 50px; // Tamaño del toggle
+                height: 30px;
+                cursor: pointer;
+                display: inline-block;
+                background-color: $stone-200; // Color gris desactivado
+                border-radius: 15px; // Asegurarse que es la mitad de la altura para obtener bordes redondeados
+                transition: background-color 0.3s;
+
+                &:before {
+                    content: "";
+                    position: absolute;
+                    top: 5px; // Espaciado vertical
+                    left: 5px; // Espaciado horizontal
+                    width: 20px; // Tamaño del círculo interno
+                    height: 20px;
+                    background-color: #ffffff; // Color del círculo interno
+                    border-radius: 50%; // Esto lo hace completamente redondo
+                    transition: left 0.3s; // Transición suave cuando el checkbox es activado
+                }
+                }
+
+                &:checked + label {
+                background-color: #4caf50; // Color verde activado
+
+                &:before {
+                    left: 25px; // Desplazar el círculo interno cuando esté activado
+                }
+                }
+            }
+            span {
+                color: $gray-500;
+                font-weight: 600;
+            }
+        }
+    }
+    @media only screen and (max-width: 1800px) {
+        .options-cards {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1em;
+        }
+    }
+    @media only screen and (max-width: 1400px) {
+        .options-cards {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1em;
+        }
+    }
+    @media only screen and (max-width: 1300px) {
+        .options-cards {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1em;
+        }
+    }
+    @media only screen and (max-width: 700px) {
+        .options-cards {
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1em;
+        }
+    }
+}
