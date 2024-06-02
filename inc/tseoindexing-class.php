@@ -24,8 +24,8 @@ class TSEOIndexing_Main {
 
         // Hook to notify Google about URLs to be removed upon plugin activation or update
         register_activation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
-        register_deactivation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
-    }
+        register_deactivation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);;
+    }   
 
     public function tseoindexing_create_menu() {
         add_menu_page(
@@ -278,10 +278,53 @@ class TSEOIndexing_Main {
             }
         }
 
+        // Get all custom taxonomies
+        $taxonomies = get_taxonomies();
+        foreach ($taxonomies as $taxonomy) {
+            $terms = get_terms($taxonomy);
+            foreach ($terms as $term) {
+                $url = get_term_link($term);
+                $indexed_urls[$url] = true;
+            }
+        }
+
+        // Get all categories
+        $categories = get_categories();
+        foreach ($categories as $category) {
+            $url = get_category_link($category);
+            $indexed_urls[$url] = true;
+        }
+
         // Add other custom post types here if needed
 
         return $indexed_urls;
     }
+
+    public function insert_url($url, $status) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'tseoindexing_settings';
+    
+        $wpdb->insert(
+            $table_name,
+            [
+                'url' => $url,
+                'status' => $status
+            ],
+            [
+                '%s',
+                '%s'
+            ]
+        );
+    }
+    
+    public function get_urls() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'tseoindexing_settings';
+        $result = $wpdb->get_results("SELECT * FROM $table_name", OBJECT);
+        return $result;
+    }
+    
+    
 }
 
 $tseoindexing_main = new TSEOIndexing_Main();

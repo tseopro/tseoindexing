@@ -4,7 +4,7 @@
 
 * Contributors: devtseo
 * Tags: indexing, website gallery, website showcase, display websites, website analytics, website marketing, SEO optimization, web development, performance analysis, WordPress indexing
-* Requires at least: 6.4.2
+* Requires at least: 6.0
 * Tested up to: 6.4.2
 * Stable tag: 1.0.0
 * Requires PHP: 8.0
