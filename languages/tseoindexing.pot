@@ -15,27 +15,27 @@ msgstr ""
 "X-Domain: tseoindexing\n"
 
 #. Plugin Name of the plugin
-#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
+#: tseoindexing.php
 msgid "TSEO Indexing"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
+#: tseoindexing.php
 msgid "https://tseo.pro/indexing/"
 msgstr ""
 
 #. Description of the plugin
-#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
+#: tseoindexing.php
 msgid "Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages."
 msgstr ""
 
 #. Author of the plugin
-#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
+#: tseoindexing.php
 msgid "TSEO team"
 msgstr ""
 
 #. Author URI of the plugin
-#: C:/laragon/www/tseo/wp-content/plugins/tseoindexing/tseoindexing.php
+#: tseoindexing.php
 msgid "https://tseo.pro/"
 msgstr ""
 
