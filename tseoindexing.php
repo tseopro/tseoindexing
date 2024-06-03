@@ -41,52 +41,26 @@ if (!defined('TSEOINDEXING_VERSION')) {
     define('TSEOINDEXING_VERSION', '1.0.0');
 }
 
-/**
- * TEO PRO Language
- *
- * @package TSEOIndexing
- * @version 1.0.0
- */
+// Autoload Google Client
+require 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Indexing;
+
+// Load Text Domain
 function tseoindexing_load_textdomain() {
     load_plugin_textdomain('tseoindexing', false, basename(dirname(__FILE__)) . '/languages/');
 }
 add_action('plugins_loaded', 'tseoindexing_load_textdomain');
 
+// Include Required Files
+require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-settings.php';
+require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-class.php';
+require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-dashboard.php';
 
-/**
- * TEO PRO Settings
- *
- * @package TSEOIndexing
- * @version 1.0.0
- */
-require_once plugin_dir_path(__FILE__) . 'inc/tseoindexing-settings.php';
+// Register Activation Hook
 register_activation_hook(__FILE__, 'tseoindexing_create_tables');
 
-/**
- * TEO PRO class TSEO_Indexing
- * 
- * @package TSEOIndexing
- * @version 1.0.0
- */
-require 'vendor/autoload.php';
-use Google\Client;
-use Google\Service\Indexing;
-require_once plugin_dir_path(__FILE__) . 'inc/tseoindexing-class.php';
-
-/**
- * TEO PRO Dashboard
- *
- * @package TSEOIndexing
- * @version 1.0.0
- */
-require_once plugin_dir_path(__FILE__) . 'inc/tseoindexing-dashboard.php';
-
-/**
- * TEO PRO Link settings list plugin
- *
- * @package TSEOIndexing
- * @version 1.0.0
- */
+// Add Settings Link
 function tseoindexing_add_settings_link($links) {
     $settings_link = '<a href="admin.php?page=tseoindexing-settings">' . esc_html__('Settings', 'tseoindexing') . '</a>';
     array_push($links, $settings_link);

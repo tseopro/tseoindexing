@@ -2,7 +2,7 @@
 defined('ABSPATH') or die('No script kiddies please!');
 
 /**
- * TSEO PRO class TSEO_Indexing
+ * TSEO PRO class TSEO_Indexing_Main
  *
  * @package TSEOIndexing
  * @version 1.0.0
@@ -24,8 +24,8 @@ class TSEOIndexing_Main {
 
         // Hook to notify Google about URLs to be removed upon plugin activation or update
         register_activation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
-        register_deactivation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);;
-    }   
+        register_deactivation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
+    }
 
     public function tseoindexing_create_menu() {
         add_menu_page(
@@ -57,25 +57,34 @@ class TSEOIndexing_Main {
         );
     }
 
-    public function tseoindexing_dashboard_page_content() {
-        ?>
-        <div class="tseoindexing-admin-panel">
-            <?php tseoindexing_loading_overlay(); ?>
-            <div class="main-content">
-                <h1><?php esc_html_e('Dashboard', 'tseoindexing'); ?></h1>
-                <div class="success">
-                    <p><?php esc_html_e('Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins.', 'tseoindexing'); ?></p>
-                </div>
-                <?php tseoindexing_dashboard_options(); ?>
-            </div>    
-            <div class="sidebar">
-                <?php tseoindexing_display_info_sidebar(); ?>
-            </div>
-        </div>
-        <?php
+    public function tseoindexing_handle_file_upload() {
+        if (isset($_FILES['tseoindexing_service_account_file']) && check_admin_referer('tseoindexing_settings')) {
+            $uploaded_file = $_FILES['tseoindexing_service_account_file'];
+            
+            if ($uploaded_file['error'] == UPLOAD_ERR_OK && $uploaded_file['type'] == 'application/json') {
+                $json_content = file_get_contents($uploaded_file['tmp_name']);
+                $post_types = isset($_POST['tseoindexing_post_types']) ? (array)$_POST['tseoindexing_post_types'] : [];
+                tseoindexing_save_api_key($json_content, $post_types);
+                echo '<div class="updated"><p>' . esc_html__('API Key and settings saved successfully.', 'tseoindexing') . '</p></div>';
+            } else {
+                echo '<div class="error"><p>' . esc_html__('Error uploading file. Please ensure it is a valid JSON file.', 'tseoindexing') . '</p></div>';
+            }
+        }
+    }
+
+    public function get_saved_options() {
+        return tseoindexing_get_api_key();
     }
 
     public function tseoindexing_settings_page_content() {
+        $this->tseoindexing_handle_file_upload(); // Handle the file upload if it exists.
+
+        $options = $this->get_saved_options();
+        $json_content = isset($options['json_key']) ? $options['json_key'] : '';
+        $post_types = isset($options['post_types']) ? $options['post_types'] : [];
+
+        $available_post_types = get_post_types(['public' => true], 'objects');
+
         ?>
         <div class="tseoindexing-admin-panel">
             <?php tseoindexing_loading_overlay(); ?>
@@ -84,31 +93,25 @@ class TSEOIndexing_Main {
                 <div class="danger">
                     <p><?php esc_html_e('Warning: This is a development version of the plugin. Do not use it in a production environment.', 'tseoindexing'); ?></p>
                 </div>
-                <form method="post" action="options.php" enctype="multipart/form-data">
-                    <?php
-                        settings_fields('tseoindexing');
-                        do_settings_sections('tseoindexing');
-                        submit_button();
-                    ?>
+                <form method="post" enctype="multipart/form-data" action="">
+                    <?php wp_nonce_field('tseoindexing_settings'); ?>
+                    <h2><?php esc_html_e('Google Service Account JSON', 'tseoindexing'); ?></h2>
+                    <input type="file" name="tseoindexing_service_account_file" id="tseoindexing_service_account_file" accept="application/json" />
+                    <h2><?php esc_html_e('Submit Posts to Google', 'tseoindexing'); ?></h2>
+                    <p><?php esc_html_e("Submit the following post types automatically to Google's Instant Indexing API when a post is published, edited, or deleted.", 'tseoindexing'); ?></p>
+                    <?php foreach ($available_post_types as $post_type) : ?>
+                        <label>
+                            <input type="checkbox" name="tseoindexing_post_types[]" value="<?php echo esc_attr($post_type->name); ?>" <?php checked(in_array($post_type->name, $post_types)); ?> />
+                            <?php echo esc_html($post_type->label); ?>
+                        </label><br/>
+                    <?php endforeach; ?>
+                    <?php submit_button(__('Upload JSON and Save Settings', 'tseoindexing')); ?>
+                </form>
+                <form method="post" action="">
+                    <h2><?php esc_html_e('Current JSON', 'tseoindexing'); ?></h2>
+                    <textarea name="tseoindexing_service_account_json" id="tseoindexing_service_account_json" rows="10" cols="50" readonly><?php echo esc_textarea($json_content); ?></textarea>
                 </form>
             </div>    
-            <div class="sidebar">
-                <?php tseoindexing_display_info_sidebar(); ?>
-            </div>
-        </div>
-        <?php
-    }
-
-    public function tseoindexing_links_page_content() {
-        ?>
-        <div class="tseoindexing-admin-panel">
-            <?php tseoindexing_loading_overlay(); ?>
-            <div class="main-content">
-                <h1><?php esc_html_e('TSEO Indexing Links', 'tseoindexing'); ?></h1>
-                <form method="post" action="">
-                    <?php $this->tseoindexing_display_links_table(); ?>
-                </form>
-            </div>
             <div class="sidebar">
                 <?php tseoindexing_display_info_sidebar(); ?>
             </div>
@@ -137,6 +140,59 @@ class TSEOIndexing_Main {
         );
         register_setting('tseoindexing', 'tseoindexing_service_account_file');
         register_setting('tseoindexing', 'tseoindexing_remove_urls');
+    }
+
+    public function tseo_notify_google_about_new_post($ID, $post) {
+        $url = get_permalink($ID);
+        $this->google_tseoindexing_api_publish_url($url);
+    }
+
+    public function tseo_notify_google_about_removed_urls() {
+        $urls_to_remove = get_option('tseoindexing_remove_urls');
+        if ($urls_to_remove) {
+            $urls = explode(PHP_EOL, $urls_to_remove);
+            foreach ($urls as $url) {
+                $url = trim($url);
+                if ($url) {
+                    $this->google_tseoindexing_api_publish_url($url, 'URL_REMOVED');
+                }
+            }
+        }
+    }
+
+    public function tseoindexing_dashboard_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('Dashboard', 'tseoindexing'); ?></h1>
+                <div class="success">
+                    <p><?php esc_html_e('Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins.', 'tseoindexing'); ?></p>
+                </div>
+                <?php tseoindexing_dashboard_options(); ?>
+            </div>    
+            <div class="sidebar">
+                <?php tseoindexing_display_info_sidebar(); ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function tseoindexing_links_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('TSEO Indexing Links', 'tseoindexing'); ?></h1>
+                <form method="post" action="">
+                    <?php $this->tseoindexing_display_links_table(); ?>
+                </form>
+            </div>
+            <div class="sidebar">
+                <?php tseoindexing_display_info_sidebar(); ?>
+            </div>
+        </div>
+        <?php
     }
 
     public function tseoindexing_field_callback($arguments) {
@@ -174,24 +230,6 @@ class TSEOIndexing_Main {
         } catch (Exception $e) {
             error_log('Error al publicar URL en Google Indexing API: ' . $e->getMessage());
             return false;
-        }
-    }
-
-    public function tseo_notify_google_about_new_post($ID, $post) {
-        $url = get_permalink($ID);
-        $this->google_tseoindexing_api_publish_url($url);
-    }
-
-    public function tseo_notify_google_about_removed_urls() {
-        $urls_to_remove = get_option('tseoindexing_remove_urls');
-        if ($urls_to_remove) {
-            $urls = explode(PHP_EOL, $urls_to_remove);
-            foreach ($urls as $url) {
-                $url = trim($url);
-                if ($url) {
-                    $this->google_tseoindexing_api_publish_url($url, 'URL_REMOVED');
-                }
-            }
         }
     }
 
@@ -302,7 +340,7 @@ class TSEOIndexing_Main {
 
     public function insert_url($url, $status) {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'tseoindexing_settings';
+        $table_name = $wpdb->prefix . 'tseo_indexing_links';
     
         $wpdb->insert(
             $table_name,
@@ -319,12 +357,10 @@ class TSEOIndexing_Main {
     
     public function get_urls() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'tseoindexing_settings';
+        $table_name = $wpdb->prefix . 'tseo_indexing_links';
         $result = $wpdb->get_results("SELECT * FROM $table_name", OBJECT);
         return $result;
     }
-    
-    
 }
 
 $tseoindexing_main = new TSEOIndexing_Main();

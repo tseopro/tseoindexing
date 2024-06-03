@@ -20,18 +20,10 @@ function tseoindexing_create_tables() {
                 status varchar(20) NOT NULL,
                 date_time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 PRIMARY KEY  (id)
-            ) $charset_collate;",
-        'tseo_indexing_json' => "
-            CREATE TABLE {$wpdb->prefix}tseo_indexing_json (
-                id mediumint(9) NOT NULL AUTO_INCREMENT,
-                json_content longtext NOT NULL,
-                user_created varchar(255) NOT NULL,
-                date_time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                PRIMARY KEY  (id)
             ) $charset_collate;"
     ];
 
-    foreach ($tables as $table_name => $sql) {
+    foreach ($tables as $sql) {
         if (is_multisite()) {
             $blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
             foreach ($blog_ids as $blog_id) {
@@ -44,29 +36,35 @@ function tseoindexing_create_tables() {
         }
     }
 }
+
 //register_activation_hook(__FILE__, 'tseoindexing_create_tables');
 
 
-function tseoindexing_save_json($json_content, $user) {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'tseo_indexing_json';
-
-    $sql = $wpdb->prepare("
-        INSERT INTO $table_name (id, json_content, user_created, date_time)
-        VALUES (1, %s, %s, CURRENT_TIMESTAMP)
-        ON DUPLICATE KEY UPDATE json_content = %s, user_created = %s, date_time = CURRENT_TIMESTAMP
-    ", $json_content, $user, $json_content, $user);
-
-    $wpdb->query($sql);
+/**
+ * Save API Key
+ *
+ * @param string $api_key JSON content to save.
+ * @param array $post_types Post types to save.
+ */
+function tseoindexing_save_api_key($api_key, $post_types) {
+    $options = [
+        'json_key' => $api_key,
+        'post_types' => $post_types,
+        'bing_post_types' => [],
+        'indexnow_api_key' => ''
+    ];
+    update_option('tseo_indexing_options_key', maybe_serialize($options));
 }
 
-function tseoindexing_get_json() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'tseo_indexing_json';
-    return $wpdb->get_row("SELECT * FROM $table_name WHERE id = 1");
+/**
+ * Get API Key
+ *
+ * @return array Options array from the database.
+ */
+function tseoindexing_get_api_key() {
+    $options = get_option('tseo_indexing_options_key');
+    return maybe_unserialize($options);
 }
-
-
 
 /**
  * TSEO PRO Assets
@@ -87,7 +85,7 @@ function tseoindexing_admin_styles($hook) {
 
     wp_enqueue_style('tseoindexing-admin', plugin_dir_url(dirname(__FILE__)) . 'assets/css/tseoindexing.min.css', array(), TSEOINDEXING_VERSION, 'all');
 
-    wp_enqueue_script('tseoindexing-loading', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-loading.js', array(), TSEOPORTFOLIO_VERSION, true);
+    wp_enqueue_script('tseoindexing-loading', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-loading.js', array(), TSEOINDEXING_VERSION, true);
 }
 add_action('admin_enqueue_scripts', 'tseoindexing_admin_styles');
 

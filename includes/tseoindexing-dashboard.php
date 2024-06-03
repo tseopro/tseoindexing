@@ -114,16 +114,14 @@ function tseoindexing_dashboard_options() {
  */
 function tseoindexing_display_info_sidebar() {
     ?>
-        <h2><?php echo esc_html_e('Information','tseoportfolio'); ?></h2>
-
-        <p><?php echo esc_html_e("TSEO Portfolio is recommended for digital marketing agencies that want to showcase a portfolio of websites in WordPress with high performance for SEO and SEM campaigns.",'tseoportfolio'); ?></p>
+        <h2><?php echo esc_html_e('Information','tseoindexing'); ?></h2>
 
         <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/img/tseopro.jpg'); ?>" alt="TSEO PRO theme">
 
-        <h3><?php echo esc_html_e('Boost your business with our TSEO PRO theme','tseoportfolio'); ?></h3>
+        <h3><?php echo esc_html_e('Boost your business with our TSEO PRO theme','tseoindexing'); ?></h3>
 
-        <p><?php echo esc_html_e("A Hassle-Free, Comprehensive Solution: If you're aiming to establish a powerful and seamless online presence, you've come to the right place. With our TSEO PRO theme and its 'Web Renting' subscription model, we offer an ideal solution for businesses and entrepreneurs. Get a high-performance website, SEO-optimized, without making significant upfront investments.",'tseoportfolio'); ?></p>
+        <p><?php echo esc_html_e("A Hassle-Free, Comprehensive Solution: If you're aiming to establish a powerful and seamless online presence, you've come to the right place. With our TSEO PRO theme and its 'Web Renting' subscription model, we offer an ideal solution for businesses and entrepreneurs. Get a high-performance website, SEO-optimized, without making significant upfront investments.",'tseoindexing'); ?></p>
 
-        <a href="<?php echo esc_url('https://tseo.pro/'); ?>" target="_black" rel="noopener noreferrer" class="button"><?php echo esc_html_e('Visit TSEO PRO', 'tseoportfolio'); ?></a>
+        <a href="<?php echo esc_url('https://tseo.pro/'); ?>" target="_black" rel="noopener noreferrer" class="button"><?php echo esc_html_e('Visit TSEO PRO', 'tseoindexing'); ?></a>
     <?php
 }
