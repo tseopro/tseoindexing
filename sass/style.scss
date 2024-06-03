@@ -1,7 +1,6 @@
 /*! TSEO Indexing admin - Author: TSEO PRO - Version: 1.0.0 */
 
 @import "variables";
-@import "dashboard";
 
 .tseoindexing-admin-panel {
     background: $slate-50;
@@ -46,6 +45,51 @@
                 font-size: large;
             }
         }
+
+        .checkbox {
+            input[type="checkbox"] {
+                position: absolute; 
+                //left: -10px;
+                display: none;
+
+                + label {
+                position: relative;
+                width: 45px; // Tamaño del toggle
+                height: 20px;
+                top: 0;
+                cursor: pointer;
+                display: inline-block;
+                background-color: $stone-200; // Color gris desactivado
+                border-radius: 5px; // Asegurarse que es la mitad de la altura para obtener bordes redondeados
+                transition: background-color 0.3s;
+
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 0px; // Espaciado vertical
+                        left: 0px; // Espaciado horizontal
+                        width: 20px; // Tamaño del círculo interno
+                        height: 20px;
+                        background-color: rgba($teal-100, 0.5); // Color del círculo interno
+                        border-radius: 50%; // Esto lo hace completamente redondo
+                        transition: left 0.3s; // Transición suave cuando el checkbox es activado
+                    }
+                }
+
+                &:checked + label {
+                    background-color: $green-700; // Color verde activado
+
+                    &:before {
+                        left: 25px; // Desplazar el círculo interno cuando esté activado
+                    }
+                }
+            }
+            span {
+                color: $gray-500;
+                font-weight: 600;
+            }            
+        }
+
     }
 
     .sidebar {
@@ -235,3 +279,5 @@
         cursor: default;
     }
 }
+
+@import "dashboard";

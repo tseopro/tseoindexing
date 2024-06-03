@@ -256,8 +256,9 @@ class TSEOIndexing_Main {
                     <tr>
                         <td><?php echo esc_url($url); ?></td>
                         <td><?php echo $indexed ? esc_html__('Yes', 'tseoindexing') : esc_html__('No', 'tseoindexing'); ?></td>
-                        <td>
-                            <input type="checkbox" name="urls_to_index[]" value="<?php echo esc_url($url); ?>" <?php checked($indexed); ?>>
+                        <td class="checkbox">
+                            <input type="checkbox" id="<?php echo $url; ?>" name="urls_to_index[]" value="<?php echo esc_url($url); ?>" <?php checked($indexed); ?>>
+                            <label for="<?php echo $url; ?>"></label>
                         </td>
                         <td>
                             <?php
