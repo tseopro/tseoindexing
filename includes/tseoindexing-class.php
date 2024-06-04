@@ -57,6 +57,12 @@ class TSEOIndexing_Main {
         );
     }
 
+    /**
+     * TSEO PRO Handle the file upload and save the API key to the database.
+     *
+     * @package TSEOIndexing
+     * @version 1.0.0
+     */
     public function tseoindexing_handle_file_upload() {
         if (isset($_FILES['tseoindexing_service_account_file']) && check_admin_referer('tseoindexing_settings')) {
             $uploaded_file = $_FILES['tseoindexing_service_account_file'];
@@ -72,10 +78,14 @@ class TSEOIndexing_Main {
         }
     }
 
+    /** 
+     * Get the saved options from the database.
+     */
     public function get_saved_options() {
         return tseoindexing_get_api_key();
     }
 
+    // Display the settings page content
     public function tseoindexing_settings_page_content() {
         $this->tseoindexing_handle_file_upload(); // Handle the file upload if it exists.
 
@@ -90,9 +100,7 @@ class TSEOIndexing_Main {
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
                 <h1><?php esc_html_e('TSEO Indexing Settings', 'tseoindexing'); ?></h1>
-                <div class="danger">
-                    <p><?php esc_html_e('Warning: This is a development version of the plugin. Do not use it in a production environment.', 'tseoindexing'); ?></p>
-                </div>
+                <?php tseoindexing_danger_info(); ?>
                 <form method="post" enctype="multipart/form-data" action="">
                     <?php wp_nonce_field('tseoindexing_settings'); ?>
                     <h2><?php esc_html_e('Google Service Account JSON', 'tseoindexing'); ?></h2>
@@ -160,17 +168,18 @@ class TSEOIndexing_Main {
         }
     }
 
+    // Display the dashboard page content
     public function tseoindexing_dashboard_page_content() {
         ?>
         <div class="tseoindexing-admin-panel">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
                 <h1><?php esc_html_e('Dashboard', 'tseoindexing'); ?></h1>
-                <div class="success">
-                    <p><?php esc_html_e('Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins.', 'tseoindexing'); ?></p>
-                </div>
-                <?php tseoindexing_dashboard_options(); ?>
-            </div>    
+                <?php
+                    tseoindexing_success_info();
+                    tseoindexing_dashboard_options(); 
+                ?>
+            </div>
             <div class="sidebar">
                 <?php tseoindexing_display_info_sidebar(); ?>
             </div>
@@ -178,18 +187,16 @@ class TSEOIndexing_Main {
         <?php
     }
 
+    // Display the links page content
     public function tseoindexing_links_page_content() {
         ?>
-        <div class="tseoindexing-admin-panel">
+        <div class="tseoindexing-admin-panel-all">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
                 <h1><?php esc_html_e('TSEO Indexing Links', 'tseoindexing'); ?></h1>
                 <form method="post" action="">
                     <?php $this->tseoindexing_display_links_table(); ?>
                 </form>
-            </div>
-            <div class="sidebar">
-                <?php tseoindexing_display_info_sidebar(); ?>
             </div>
         </div>
         <?php
@@ -242,25 +249,25 @@ class TSEOIndexing_Main {
         $offset = ($paged - 1) * $per_page;
         $urls_to_display = array_slice($indexed_urls, $offset, $per_page, true);
         ?>
-        <table class="wp-list-table widefat fixed striped">
+        <table class="wp-list-table widefat fixed striped form-table">
             <thead>
                 <tr>
-                    <th style="width:70%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('Indexed', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('Action', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('Type', 'tseoindexing'); ?></th>
+                    <th style="width:60%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
+                    <th style="width:15%"><?php esc_html_e('Action', 'tseoindexing'); ?></th>
+                    <th style="width:10%;"><?php esc_html_e('Status', 'tseoindexing'); ?></th>
+                    <th style="width:15%"><?php esc_html_e('Type', 'tseoindexing'); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($urls_to_display as $url => $indexed) : ?>
                     <tr>
-                        <td><?php echo esc_url($url); ?></td>
-                        <td><?php echo $indexed ? esc_html__('Yes', 'tseoindexing') : esc_html__('No', 'tseoindexing'); ?></td>
-                        <td class="checkbox">
+                        <td class="url"><?php echo esc_url($url); ?></td>
+                        <td class="checkbox data-all">
                             <input type="checkbox" id="<?php echo $url; ?>" name="urls_to_index[]" value="<?php echo esc_url($url); ?>" <?php checked($indexed); ?>>
-                            <label for="<?php echo $url; ?>"></label>
+                            <label for="<?php echo $url; ?>"><?php echo $indexed ? esc_html__('Update', 'tseoindexing') : esc_html__('Remove', 'tseoindexing'); ?></label>
                         </td>
-                        <td>
+                        <td class="data-all"><?php echo $indexed ? esc_html__('Yes', 'tseoindexing') : esc_html__('No', 'tseoindexing'); ?></td>
+                        <td class="data-all">
                             <?php
                                 $post_id = url_to_postid($url);
                                 $post_type = get_post_type($post_id);
@@ -271,23 +278,41 @@ class TSEOIndexing_Main {
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?php
-        if ($total_pages > 1) {
-            $page_links = paginate_links(array(
-                'base' => add_query_arg('paged', '%#%'),
-                'format' => '',
-                'prev_text' => __('&laquo;'),
-                'next_text' => __('&raquo;'),
-                'total' => $total_pages,
-                'current' => $paged,
-            ));
-            if ($page_links) {
-                echo '<div class="tseoindexing-pagination">' . $page_links . '</div>';
+            <?php
+            if ($total_pages > 1) {
+                $page_links = paginate_links(array(
+                    'base' => add_query_arg('paged', '%#%'),
+                    'format' => '',
+                    'prev_text' => __('&laquo;'),
+                    'next_text' => __('&raquo;'),
+                    'total' => $total_pages,
+                    'current' => $paged,
+                ));
+                if ($page_links) {
+                    echo '<div class="tseoindexing-pagination">' . $page_links . '</div>';
+                }
             }
-        }
-        submit_button();
-        ?>
-        </form>
+            submit_button();
+            ?>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var checkboxes = document.querySelectorAll('.checkbox input[type="checkbox"]');
+                    checkboxes.forEach(function(checkbox) {
+                        checkbox.addEventListener("change", function() {
+                            var label = this.nextElementSibling;
+                            if (this.checked) {
+                                label.innerText = "<?php echo esc_html__('Update', 'tseoindexing'); ?>";
+                                label.classList.remove("remove");
+                                label.classList.add("update");
+                            } else {
+                                label.innerText = "<?php echo esc_html__('Remove', 'tseoindexing'); ?>";
+                                label.classList.remove("update");
+                                label.classList.add("remove");
+                            }
+                        });
+                    });
+                });
+            </script>
         <?php
     }
 

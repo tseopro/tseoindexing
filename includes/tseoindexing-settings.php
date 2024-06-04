@@ -36,7 +36,6 @@ function tseoindexing_create_tables() {
         }
     }
 }
-
 //register_activation_hook(__FILE__, 'tseoindexing_create_tables');
 
 
@@ -102,6 +101,34 @@ function tseoindexing_loading_overlay() {
                 <div class="tseoindexing-loading-spinner"></div>
                 <span><?php echo esc_html_e('Saving TSEO Indexing', 'tseoindexing'); ?></span>
             </div>
+        </div>
+    <?php
+}
+
+/**
+ * TSEO PRO Information Danger
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_danger_info() {
+    ?>
+        <div class="danger">
+            <?php esc_html_e('Warning: This is a development version of the plugin. Do not use it in a production environment.', 'tseoindexing'); ?>
+        </div>
+    <?php
+}
+
+/**
+ * TSEO PRO Information Success
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_success_info() {
+    ?>
+        <div class="success">
+            <?php esc_html_e('Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins.', 'tseoindexing'); ?>
         </div>
     <?php
 }

@@ -1,0 +1,41 @@
+/** Pagination **/
+.tseoindexing-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 3px;
+        padding: 10px;
+        background-color: $slate-100;
+        color: $dark;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 1px solid $slate-200;
+
+        &:hover {
+            background-color: $slate-200;
+            color: $dark;
+            transition: background-color 0.3s;
+        }
+        &:visited {
+            //background-color: transparent;
+            color: $dark;
+            transition: background-color 0.3s;
+        }
+    }
+
+    .current {
+        background-color: $bt_white;
+        border: 2px solid $green-400;
+        color: $green-400;
+        margin: 0 3px;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: default;
+    }
+}

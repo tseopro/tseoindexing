@@ -1,0 +1,188 @@
+/** Admin Panel two column layout **/
+.tseoindexing-admin-panel {
+    background: $slate-50;
+    padding: 2em;
+    margin: 1em;
+
+    display: flex;
+    margin-top: 2em;
+    background-color: $slate-50;
+    padding: 20px;
+    border: 1px solid $slate-100;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    width: 93% !important;
+
+    .main-content {
+        flex: 5; // Occupies 5 parts of the available space
+        padding: 0 0.8em;
+        p {
+            font-size: large;
+        }
+        .danger {
+            padding: 1em 0.8em;
+            margin: 1em;
+            border-radius: 5px;
+            border: 1px solid $red-200;
+            background: $red-100;
+            color: rgba($red-800, 0.8);
+            font-size: 0.95rem;
+        }
+        .success {
+            padding: 1em 0.8em;
+            margin: 1em;
+            border-radius: 5px;
+            border: 1px solid $green-200;
+            background: $green-100;
+            color: rgba($green-800, 0.8);
+            font-size: 0.95rem;
+        }
+
+        .checkbox {
+            input[type="checkbox"] {
+                position: absolute; 
+                //left: -10px;
+                display: none;
+
+                + label {
+                position: relative;
+                width: 90px; // Tamaño del toggle
+                height: 20px;
+                padding-left: 8px;
+                top: 0;
+                cursor: pointer;
+                display: inline-block;
+                background-color: $stone-200; // Color gris desactivado
+                border-radius: 3px; // Asegurarse que es la mitad de la altura para obtener bordes redondeados
+                transition: background-color 0.3s;
+
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 2.5px; // Espaciado vertical
+                        left: 8px; // Espaciado horizontal
+                        width: 15px; // Tamaño del círculo interno
+                        height: 15px;
+                        background-color: rgba($slate-50, 0.5); // Color del círculo interno
+                        border-radius: 50%; // Esto lo hace completamente redondo
+                        transition: left 0.3s; // Transición suave cuando el checkbox es activado
+                    }
+                }
+
+                &:checked + label {
+                    background-color: $green-700; // Color verde activado
+                    color: $slate-50;
+
+                    &:before {
+                        left: 75px; // Desplazar el círculo interno cuando esté activado
+                    }
+                }
+            }
+            span {
+                color: $gray-500;
+                font-weight: 600;
+            }
+            .update { 
+                color: $slate-50;
+                padding-left: 8px;
+            }
+            .remove { 
+                color: $red-700;
+                padding-left: 8px;
+            }
+        }
+
+    }
+
+    .sidebar {
+        flex: 1; // Ocupa 1 parte del espacio disponible
+        padding: 10px;
+        border-left: 1px solid #e5e5e5;
+        background-color: #f9f9f9;
+
+        h2, h3 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border: 3px solid $slate-50;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba($black, 0.2);
+            margin-top: 10px;
+        }
+        
+    }
+
+    h1, h2, h3 {
+        color: #333;
+    }
+
+    p {
+        color: #666;
+    }
+
+    // Estilos para los botones
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #0073aa;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #005a87;
+        }
+    }
+
+    // Estilos para las tablas
+    table.form-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+            text-align: left;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #e5e5e5;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #e5e5e5;
+        }
+    }
+
+    // Estilos para los campos de entrada
+    input[type="text"],
+    input[type="url"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    // Estilos para los checkboxes
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }   
+
+    textarea {
+        width: 100%;
+        height: 200px;
+    }
+
+    .button {
+        margin-top: 1em;
+    }
+}

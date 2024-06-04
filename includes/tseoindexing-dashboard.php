@@ -97,7 +97,7 @@ function tseoindexing_dashboard_options() {
         document.addEventListener('DOMContentLoaded', (event) => {
             <?php foreach ($cards as $key => $card_details) : ?>
                 document.querySelector('label[for="<?php echo $key; ?>"]').addEventListener('click', function(e) {
-                    window.open('<?php echo esc_url("https://tseo.pro/doc-cat/"); ?>', '_blank');
+                    window.open('<?php echo esc_url("https://tseo.pro/"); ?>', '_blank');
                 });
             <?php endforeach; ?>
         });
