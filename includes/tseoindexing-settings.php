@@ -40,6 +40,62 @@ function tseoindexing_create_tables() {
 
 
 /**
+ * Guarda registros y obtiene datos de Google API
+ * de la funcion tseoindexing_display_links_table()
+ *
+ * @param string $api_key JSON content to save.
+ * @param array $post_types Post types to save.
+ */
+add_action('wp_ajax_update_tseo_url', 'update_tseo_url');
+add_action('wp_ajax_nopriv_update_tseo_url', 'update_tseo_url');
+
+function update_tseo_url() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'tseo_indexing_links';
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('Unauthorized user');
+    }
+
+    check_ajax_referer('update_tseo_url_nonce', '_ajax_nonce');
+
+    $url = sanitize_text_field($_POST['url']);
+    $action = sanitize_text_field($_POST['action_type']);
+
+    if ($action === 'update') {
+        $status = get_google_indexing_status($url);
+        $exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$table_name} WHERE url = %s", $url));
+
+        if ($exists) {
+            $wpdb->update(
+                $table_name,
+                ['status' => $status, 'date_time' => current_time('mysql')],
+                ['url' => $url]
+            );
+        } else {
+            $wpdb->insert(
+                $table_name,
+                ['url' => $url, 'status' => $status, 'date_time' => current_time('mysql')],
+                ['%s', '%s', '%s']
+            );
+        }
+    } elseif ($action === 'remove') {
+        $wpdb->delete($table_name, ['url' => $url]);
+    }
+
+    wp_send_json_success('URL updated');
+}
+
+function get_google_indexing_status($url) {
+    // Implementar la llamada a la API de Google para obtener el estado de la URL
+    // Ejemplo simplificado:
+    $response = wp_remote_get($url);
+    $status_code = wp_remote_retrieve_response_code($response);
+    return (string)$status_code;
+}
+ 
+ 
+/**
  * Save API Key
  *
  * @param string $api_key JSON content to save.
@@ -87,6 +143,19 @@ function tseoindexing_admin_styles($hook) {
     wp_enqueue_script('tseoindexing-loading', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-loading.js', array(), TSEOINDEXING_VERSION, true);
 }
 add_action('admin_enqueue_scripts', 'tseoindexing_admin_styles');
+
+/**
+ * TSEO PRO Assets Ajax
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_enqueue_scripts() {
+    wp_enqueue_script('jquery');
+    wp_localize_script('jquery', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
+}
+add_action('admin_enqueue_scripts', 'tseoindexing_enqueue_scripts');
+
 
 /**
  * TSEO PRO Loading Overlay

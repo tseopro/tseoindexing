@@ -53,14 +53,14 @@
                 top: 0;
                 cursor: pointer;
                 display: inline-block;
-                background-color: $stone-200; // Color gris desactivado
+                background-color: $gray-200; // Color gris desactivado
                 border-radius: 3px; // Asegurarse que es la mitad de la altura para obtener bordes redondeados
                 transition: background-color 0.3s;
 
                     &:before {
                         content: "";
                         position: absolute;
-                        top: 6px; // Espaciado vertical
+                        top: 4px; // Espaciado vertical
                         left: 4px; // Espaciado horizontal
                         width: 11px; // Tamaño del círculo interno
                         height: 11px;

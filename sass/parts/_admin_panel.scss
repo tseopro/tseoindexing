@@ -144,24 +144,6 @@
         }
     }
 
-    // Estilos para las tablas
-    table.form-table {
-        width: 100%;
-        border-collapse: collapse;
-
-        th {
-            text-align: left;
-            padding: 10px;
-            background-color: #f5f5f5;
-            border: 1px solid #e5e5e5;
-        }
-
-        td {
-            padding: 10px;
-            border: 1px solid #e5e5e5;
-        }
-    }
-
     // Estilos para los campos de entrada
     input[type="text"],
     input[type="url"],

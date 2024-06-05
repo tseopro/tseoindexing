@@ -3,7 +3,7 @@
 ## *Plugin to display a gallery of websites developed with WordPress.*
 
 * Contributors: devtseo
-* Tags: indexing, website gallery, website showcase, display websites, website analytics, website marketing, SEO optimization, web development, performance analysis, WordPress indexing
+* Tags: wordpress, google, seo, indexing, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, tseopro
 * Requires at least: 6.0
 * Tested up to: 6.4.2
 * Stable tag: 1.0.0
