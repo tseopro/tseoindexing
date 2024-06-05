@@ -9,7 +9,7 @@
     background-color: $slate-50;
     padding: 20px;
     border: 1px solid $slate-100;
-    border-radius: 3px;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
     width: 93% !important;
@@ -37,6 +37,55 @@
             background: $green-100;
             color: rgba($green-800, 0.8);
             font-size: 0.95rem;
+        }
+
+        .status-null,
+        .status-updated,
+        .status-deleted {
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .status-null {
+            color: $dark;
+        }
+        .status-updated {
+            color: $green-600;
+        }
+        .status-deleted {
+            color: $red-700;
+        }
+
+        .table_link_info {
+            font-size: 0.85rem;
+            padding: 0.5em;
+            background: $bt_white;
+            border: 1px solid $gray-300;
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                li {
+                    display: inline;
+                    margin-right: 10px;
+                    a {
+                        color: $blue-600;
+                        text-decoration: none;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+            .status-null {
+                color: $dark;
+            }
+            .status-updated {
+                color: $green-600;
+            }
+            .status-deleted {
+                color: $red-700;
+            }
         }
 
         .checkbox {

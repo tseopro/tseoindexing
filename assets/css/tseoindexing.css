@@ -1,4 +1,59 @@
 /*! TSEO Indexing admin - Author: TSEO PRO - Version: 1.0.0 */
+/** Loading overlay **/
+.tseoindexing-admin-panel,
+.tseoindexing-admin-panel-all {
+  position: relative;
+}
+.tseoindexing-admin-panel #tseoindexing-loading-overlay,
+.tseoindexing-admin-panel-all #tseoindexing-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(248, 250, 252, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+}
+.tseoindexing-admin-panel #tseoindexing-loading-overlay .centered-content,
+.tseoindexing-admin-panel-all #tseoindexing-loading-overlay .centered-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.tseoindexing-admin-panel #tseoindexing-loading-overlay.show,
+.tseoindexing-admin-panel-all #tseoindexing-loading-overlay.show {
+  display: flex;
+}
+.tseoindexing-admin-panel #tseoindexing-loading-overlay .tseoindexing-loading-spinner,
+.tseoindexing-admin-panel-all #tseoindexing-loading-overlay .tseoindexing-loading-spinner {
+  border: 4px solid #f1f5f9;
+  border-top: 4px solid #1d4ed8;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin-top: 100px;
+}
+.tseoindexing-admin-panel #tseoindexing-loading-overlay span,
+.tseoindexing-admin-panel-all #tseoindexing-loading-overlay span {
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 28px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /** Admin Panel two column layout **/
 .tseoindexing-admin-panel {
   background: #f8fafc;
@@ -9,7 +64,7 @@
   background-color: #f8fafc;
   padding: 20px;
   border: 1px solid #f1f5f9;
-  border-radius: 3px;
+  border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 93% !important;
 }
@@ -123,20 +178,6 @@
 .tseoindexing-admin-panel .btn:hover {
   background-color: #005a87;
 }
-.tseoindexing-admin-panel table.form-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.tseoindexing-admin-panel table.form-table th {
-  text-align: left;
-  padding: 10px;
-  background-color: #f5f5f5;
-  border: 1px solid #e5e5e5;
-}
-.tseoindexing-admin-panel table.form-table td {
-  padding: 10px;
-  border: 1px solid #e5e5e5;
-}
 .tseoindexing-admin-panel input[type=text],
 .tseoindexing-admin-panel input[type=url],
 .tseoindexing-admin-panel textarea {
@@ -166,7 +207,7 @@
   background-color: #f8fafc;
   padding: 20px;
   border: 1px solid #f1f5f9;
-  border-radius: 3px;
+  border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 93% !important;
 }
@@ -195,6 +236,52 @@
   color: rgba(22, 101, 52, 0.8);
   font-size: 0.95rem;
 }
+.tseoindexing-admin-panel-all .main-content .status-null,
+.tseoindexing-admin-panel-all .main-content .status-updated,
+.tseoindexing-admin-panel-all .main-content .status-deleted {
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+.tseoindexing-admin-panel-all .main-content .status-null {
+  color: #212529;
+}
+.tseoindexing-admin-panel-all .main-content .status-updated {
+  color: #16a34a;
+}
+.tseoindexing-admin-panel-all .main-content .status-deleted {
+  color: #b91c1c;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info {
+  font-size: 0.85rem;
+  padding: 0.5em;
+  background: #fff;
+  border: 1px solid #d1d5db;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info ul li {
+  display: inline;
+  margin-right: 10px;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info ul li a {
+  color: #2563eb;
+  text-decoration: none;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info ul li a:hover {
+  text-decoration: underline;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info .status-null {
+  color: #212529;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info .status-updated {
+  color: #16a34a;
+}
+.tseoindexing-admin-panel-all .main-content .table_link_info .status-deleted {
+  color: #b91c1c;
+}
 .tseoindexing-admin-panel-all .main-content .checkbox input[type=checkbox] {
   position: absolute;
   display: none;
@@ -207,7 +294,7 @@
   top: 0;
   cursor: pointer;
   display: inline-block;
-  background-color: #e7e5e4;
+  background-color: #e5e7eb;
   border-radius: 3px;
   transition: background-color 0.3s;
 }
@@ -255,55 +342,6 @@
 }
 .tseoindexing-admin-panel-all table.form-table td.url {
   text-align: left !important;
-}
-
-/** Loading overlay **/
-.tseoindexing-admin-panel {
-  position: relative;
-}
-.tseoindexing-admin-panel #tseoindexing-loading-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(248, 250, 252, 0.8);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  flex-direction: column;
-}
-.tseoindexing-admin-panel #tseoindexing-loading-overlay .centered-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.tseoindexing-admin-panel #tseoindexing-loading-overlay.show {
-  display: flex;
-}
-.tseoindexing-admin-panel #tseoindexing-loading-overlay .tseoindexing-loading-spinner {
-  border: 4px solid #f1f5f9;
-  border-top: 4px solid #1d4ed8;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 2s linear infinite;
-  margin-top: 100px;
-}
-.tseoindexing-admin-panel #tseoindexing-loading-overlay span {
-  margin-top: 50px;
-  font-weight: bold;
-  font-size: 28px;
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 /** Pagination **/

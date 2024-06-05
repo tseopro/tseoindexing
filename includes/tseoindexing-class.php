@@ -55,8 +55,8 @@ class TSEOIndexing_Main {
 
         add_submenu_page(
             'tseoindexing',
-            __('Links', 'tseoindexing'),
-            __('Links', 'tseoindexing'),
+            __('Config URL´s', 'tseoindexing'),
+            __('Config URL´s', 'tseoindexing'),
             'manage_options',
             'tseoindexing-links',
             [$this, 'tseoindexing_links_page_content']
@@ -200,7 +200,7 @@ class TSEOIndexing_Main {
             foreach ($urls as $url) {
                 $url = trim($url);
                 if ($url) {
-                    $this->google_tseoindexing_api_publish_url($url, 'URL_REMOVED');
+                    $this->google_tseoindexing_api_publish_url($url, 'URL_DELETED');
                 }
             }
         }
@@ -219,7 +219,7 @@ class TSEOIndexing_Main {
         echo '<textarea name="tseoindexing_remove_urls" id="tseoindexing_remove_urls" rows="10" cols="50">' . esc_textarea(get_option('tseoindexing_remove_urls')) . '</textarea>';
     }
 
-        public function tseoindexing_setup_sections() {
+    public function tseoindexing_setup_sections() {
         add_settings_section('tseoindexing_section', '', null, 'tseoindexing');
     }
 
@@ -255,7 +255,7 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel-all">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
-                <h1><?php esc_html_e('TSEO Indexing Links', 'tseoindexing'); ?></h1>
+                <h1><?php esc_html_e('TSEO Indexing URL´s', 'tseoindexing'); ?></h1>
                 <?php $this->tseoindexing_display_links_table(); ?>
             </div>
         </div>
@@ -266,10 +266,10 @@ class TSEOIndexing_Main {
     public function tseoindexing_display_links_table() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
-
+    
         // Obtener datos de la base de datos
         $managed_urls = $wpdb->get_results("SELECT * FROM {$table_name}", OBJECT_K);
-
+    
         // Obtener URLs indexadas y eliminar las que ya están en la base de datos
         $indexed_urls = $this->tseoindexing_get_indexed_urls();
         foreach ($managed_urls as $managed_url) {
@@ -277,12 +277,12 @@ class TSEOIndexing_Main {
                 unset($indexed_urls[$managed_url->url]);
             }
         }
-
+    
         // Combinar managed_urls con indexed_urls para mostrar en la tabla
         $all_urls = array_merge($managed_urls, array_map(function($url) {
-            return (object) ['url' => $url, 'status' => '404', 'date_time' => 'N/A'];
+            return (object) ['url' => $url, 'status' => 'NULL', 'type' => 'NULL', 'date_time' => 'N/A'];
         }, array_keys($indexed_urls)));
-
+    
         // Paginación
         $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
         $per_page = 20;
@@ -291,6 +291,7 @@ class TSEOIndexing_Main {
         $offset = ($paged - 1) * $per_page;
         $urls_to_display = array_slice($all_urls, $offset, $per_page);
         ?>
+        <?php tseoindexing_table_link_info(); ?>
         <table class="wp-list-table widefat fixed striped form-table">
             <thead>
                 <tr>
@@ -301,14 +302,25 @@ class TSEOIndexing_Main {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($urls_to_display as $url_data): ?>
+                <?php foreach ($urls_to_display as $url_data): 
+                    $status_class = 'status-null';
+                    if ($url_data->type === 'URL_UPDATED') {
+                        $status_class = 'status-updated';
+                    } elseif ($url_data->type === 'URL_DELETED') {
+                        $status_class = 'status-deleted';
+                    }
+                ?>
                     <tr>
                         <td class="url"><?php echo esc_url($url_data->url); ?></td>
                         <td class="checkbox data-all">
-                            <input type="checkbox" id="<?php echo esc_attr($url_data->url); ?>" name="urls_to_index[]" value="<?php echo esc_url($url_data->url); ?>" <?php checked($url_data->status !== '404'); ?> class="submit">
-                            <label for="<?php echo esc_attr($url_data->url); ?>"><?php echo $url_data->status !== '404' ? esc_html__('Update', 'tseoindexing') : esc_html__('Add', 'tseoindexing'); ?></label>
+                            <input type="checkbox" id="<?php echo esc_attr($url_data->url); ?>" name="urls_to_index[]" value="<?php echo esc_url($url_data->url); ?>" <?php checked($url_data->type === 'URL_UPDATED'); ?> class="submit">
+                            <label for="<?php echo esc_attr($url_data->url); ?>">
+                                <?php echo $url_data->type === 'URL_UPDATED' ? esc_html__('Update', 'tseoindexing') : esc_html__('Add', 'tseoindexing'); ?>
+                            </label>
                         </td>
-                        <td class="data-all"><?php echo esc_html($url_data->status); ?></td>
+                        <td class="data-all status <?php echo $status_class; ?>">
+                            <?php echo esc_html($url_data->type); ?>
+                        </td>
                         <td class="data-all">
                             <?php
                                 $post_id = url_to_postid($url_data->url);
@@ -342,10 +354,10 @@ class TSEOIndexing_Main {
                     checkbox.addEventListener("change", function() {
                         var label = this.nextElementSibling;
                         var action = this.checked ? 'update' : 'remove';
-                        label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Remove', 'tseoindexing'); ?>";
+                        label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Add', 'tseoindexing'); ?>";
                         label.classList.toggle("update", this.checked);
-                        label.classList.toggle("remove", !this.checked);
-
+                        label.classList.toggle("add", !this.checked);
+    
                         // Enviar petición AJAX
                         jQuery.post(ajaxurl, {
                             action: 'update_tseo_url',
@@ -355,6 +367,11 @@ class TSEOIndexing_Main {
                         }, function(response) {
                             if (!response.success) {
                                 alert('Error: ' + response.data);
+                            } else {
+                                // Actualizar el campo `status` en la tabla
+                                var statusCell = checkbox.closest('tr').querySelector('.status');
+                                statusCell.innerText = response.data.type;
+                                statusCell.className = 'data-all status ' + (response.data.type === 'URL_UPDATED' ? 'status-updated' : (response.data.type === 'URL_DELETED' ? 'status-deleted' : 'status-null'));
                             }
                         });
                     });
@@ -363,6 +380,7 @@ class TSEOIndexing_Main {
         </script>
         <?php
     }
+    
 
     // Obtiene todas las URLs de las páginas, posts, productos y taxonomías
     public function tseoindexing_get_indexed_urls() {

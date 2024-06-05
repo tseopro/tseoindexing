@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-04T17:59:28+00:00\n"
+"POT-Creation-Date: 2024-06-05T18:42:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: tseoindexing\n"
@@ -39,87 +39,81 @@ msgstr ""
 msgid "https://tseo.pro/"
 msgstr ""
 
-#: includes/tseoindexing-class.php:43
-#: includes/tseoindexing-class.php:44
+#: includes/tseoindexing-class.php:49
+#: includes/tseoindexing-class.php:50
 #: tseoindexing.php:65
 msgid "Settings"
 msgstr ""
 
-#: includes/tseoindexing-class.php:52
-#: includes/tseoindexing-class.php:53
-msgid "Links"
+#: includes/tseoindexing-class.php:58
+#: includes/tseoindexing-class.php:59
+msgid "Config URL´s"
 msgstr ""
 
-#: includes/tseoindexing-class.php:74
-msgid "API Key and settings saved successfully."
-msgstr ""
-
-#: includes/tseoindexing-class.php:76
-msgid "Error uploading file. Please ensure it is a valid JSON file."
-msgstr ""
-
-#: includes/tseoindexing-class.php:102
-msgid "TSEO Indexing Settings"
-msgstr ""
-
-#: includes/tseoindexing-class.php:106
-msgid "Google Service Account JSON"
-msgstr ""
-
-#: includes/tseoindexing-class.php:108
-msgid "Submit Posts to Google"
-msgstr ""
-
-#: includes/tseoindexing-class.php:109
-msgid "Submit the following post types automatically to Google's Instant Indexing API when a post is published, edited, or deleted."
-msgstr ""
-
-#: includes/tseoindexing-class.php:116
-msgid "Upload JSON and Save Settings"
-msgstr ""
-
-#: includes/tseoindexing-class.php:119
-msgid "Current JSON"
-msgstr ""
-
-#: includes/tseoindexing-class.php:177
+#: includes/tseoindexing-class.php:77
 msgid "Dashboard"
 msgstr ""
 
-#: includes/tseoindexing-class.php:196
-msgid "TSEO Indexing Links"
+#: includes/tseoindexing-class.php:105
+msgid "API Key and settings saved successfully."
 msgstr ""
 
-#: includes/tseoindexing-class.php:255
-msgid "URL"
+#: includes/tseoindexing-class.php:107
+msgid "Error uploading file. Please ensure it is a valid JSON file."
 msgstr ""
 
-#: includes/tseoindexing-class.php:256
-msgid "Action"
+#: includes/tseoindexing-class.php:131
+msgid "TSEO Indexing Settings"
 msgstr ""
 
-#: includes/tseoindexing-class.php:257
-msgid "Status"
+#: includes/tseoindexing-class.php:135
+msgid "Google Service Account JSON"
+msgstr ""
+
+#: includes/tseoindexing-class.php:137
+msgid "Submit Posts to Google"
+msgstr ""
+
+#: includes/tseoindexing-class.php:138
+msgid "Submit the following post types automatically to Google's Instant Indexing API when a post is published, edited, or deleted."
+msgstr ""
+
+#: includes/tseoindexing-class.php:145
+msgid "Upload JSON and Save Settings"
+msgstr ""
+
+#: includes/tseoindexing-class.php:148
+msgid "Current JSON"
 msgstr ""
 
 #: includes/tseoindexing-class.php:258
+msgid "TSEO Indexing URL´s"
+msgstr ""
+
+#: includes/tseoindexing-class.php:298
+msgid "URL"
+msgstr ""
+
+#: includes/tseoindexing-class.php:299
+msgid "Action"
+msgstr ""
+
+#: includes/tseoindexing-class.php:300
+msgid "Status"
+msgstr ""
+
+#: includes/tseoindexing-class.php:301
 msgid "Type"
 msgstr ""
 
-#: includes/tseoindexing-class.php:267
+#: includes/tseoindexing-class.php:318
+#: includes/tseoindexing-class.php:357
 msgid "Update"
 msgstr ""
 
-#: includes/tseoindexing-class.php:267
-msgid "Remove"
-msgstr ""
-
-#: includes/tseoindexing-class.php:269
-msgid "Yes"
-msgstr ""
-
-#: includes/tseoindexing-class.php:269
-msgid "No"
+#: includes/tseoindexing-class.php:318
+#: includes/tseoindexing-class.php:357
+msgid "Add"
 msgstr ""
 
 #: includes/tseoindexing-dashboard.php:13
@@ -234,14 +228,30 @@ msgstr ""
 msgid "Visit TSEO PRO"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:102
+#: includes/tseoindexing-settings.php:168
 msgid "Saving TSEO Indexing"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:117
+#: includes/tseoindexing-settings.php:183
 msgid "Warning: This is a development version of the plugin. Do not use it in a production environment."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:131
+#: includes/tseoindexing-settings.php:197
 msgid "Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:211
+msgid "By default, all published URLs are retrieved and marked as NULL, which means they are not selected to be sent to Google Console."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:212
+msgid "They are the URLs marked to be published or updated in Google Console."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:213
+msgid "They are the URLs marked to be removed from Google Console."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:214
+msgid "Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed 20 at a time until the quota limit is reached. Increase the quota in Google Cloud API if necessary."
 msgstr ""

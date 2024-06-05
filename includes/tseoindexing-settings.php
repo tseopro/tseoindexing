@@ -47,7 +47,6 @@ function tseoindexing_create_tables() {
  * @param array $post_types Post types to save.
  */
 add_action('wp_ajax_update_tseo_url', 'update_tseo_url');
-add_action('wp_ajax_nopriv_update_tseo_url', 'update_tseo_url');
 
 function update_tseo_url() {
     global $wpdb;
@@ -61,30 +60,27 @@ function update_tseo_url() {
 
     $url = sanitize_text_field($_POST['url']);
     $action = sanitize_text_field($_POST['action_type']);
+    $type = ($action === 'update') ? 'URL_UPDATED' : 'URL_DELETED';
 
-    if ($action === 'update') {
-        $status = get_google_indexing_status($url);
-        $exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$table_name} WHERE url = %s", $url));
+    $exists = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$table_name} WHERE url = %s", $url));
 
-        if ($exists) {
-            $wpdb->update(
-                $table_name,
-                ['status' => $status, 'date_time' => current_time('mysql')],
-                ['url' => $url]
-            );
-        } else {
-            $wpdb->insert(
-                $table_name,
-                ['url' => $url, 'status' => $status, 'date_time' => current_time('mysql')],
-                ['%s', '%s', '%s']
-            );
-        }
-    } elseif ($action === 'remove') {
-        $wpdb->delete($table_name, ['url' => $url]);
+    if ($exists) {
+        $wpdb->update(
+            $table_name,
+            ['type' => $type, 'date_time' => current_time('mysql')],
+            ['url' => $url]
+        );
+    } else {
+        $wpdb->insert(
+            $table_name,
+            ['url' => $url, 'status' => 'NULL', 'type' => $type, 'date_time' => current_time('mysql')],
+            ['%s', '%s', '%s', '%s']
+        );
     }
 
-    wp_send_json_success('URL updated');
+    wp_send_json_success(['type' => $type]);
 }
+
 
 function get_google_indexing_status($url) {
     // Implementar la llamada a la API de Google para obtener el estado de la URL
@@ -93,6 +89,7 @@ function get_google_indexing_status($url) {
     $status_code = wp_remote_retrieve_response_code($response);
     return (string)$status_code;
 }
+
  
  
 /**
@@ -199,5 +196,22 @@ function tseoindexing_success_info() {
         <div class="success">
             <?php esc_html_e('Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins.', 'tseoindexing'); ?>
         </div>
+    <?php
+}
+
+/**
+ * TSEO PRO TSEO Indexing URL´s
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_table_link_info() {
+    ?>
+    <ul class="table_link_info">
+        <li><span class="status-null">NULL:</span> <?php esc_html_e('By default, all published URLs are retrieved and marked as NULL, which means they are not selected to be sent to Google Console.', 'tseoindexing'); ?></li>
+        <li><span class="status-updated">URL_UPDATED:</span> <?php esc_html_e('They are the URLs marked to be published or updated in Google Console.', 'tseoindexing'); ?></li>
+        <li><span class="status-deleted">URL_DELETED:</span> <?php esc_html_e('They are the URLs marked to be removed from Google Console.', 'tseoindexing'); ?></li>
+        <li class="success"><?php esc_html_e('Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed 20 at a time until the quota limit is reached. Increase the quota in Google Cloud API if necessary.', 'tseoindexing'); ?></li>
+    </ul>
     <?php
 }
