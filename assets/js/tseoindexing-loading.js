@@ -19,6 +19,14 @@ jQuery(document).ready(function($) {
     $('#tseoindexing-loading-overlay').show();
   });
 
+  $('#load-updated-urls').on('click', function() {
+    $('#tseoindexing-loading-overlay').show();
+  });
+
+  $('#load-deleted-urls').on('click', function() {
+    $('#tseoindexing-loading-overlay').show();
+  });
+
   /**
    * Event handler for the completion of an AJAX request.
    * Hides the loading overlay.
