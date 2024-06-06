@@ -18,6 +18,7 @@ function tseoindexing_create_tables() {
                 id mediumint(9) NOT NULL AUTO_INCREMENT,
                 url varchar(255) NOT NULL,
                 status varchar(20) NOT NULL,
+                type varchar(20) NOT NULL,
                 date_time datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 PRIMARY KEY  (id)
             ) $charset_collate;"
@@ -47,7 +48,6 @@ function tseoindexing_create_tables() {
  * @param array $post_types Post types to save.
  */
 add_action('wp_ajax_update_tseo_url', 'update_tseo_url');
-
 function update_tseo_url() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'tseo_indexing_links';
@@ -80,7 +80,6 @@ function update_tseo_url() {
 
     wp_send_json_success(['type' => $type]);
 }
-
 
 function get_google_indexing_status($url) {
     // Implementar la llamada a la API de Google para obtener el estado de la URL
@@ -128,7 +127,8 @@ function tseoindexing_admin_styles($hook) {
     $valid_hooks = array(
         'toplevel_page_tseoindexing',
         'tseo-indexing_page_tseoindexing-settings',
-        'tseo-indexing_page_tseoindexing-links'
+        'tseo-indexing_page_tseoindexing-links',
+        'tseo-indexing_page_tseoindexing-console'
     );
 
     if (!in_array($hook, $valid_hooks)) {
@@ -212,6 +212,105 @@ function tseoindexing_table_link_info() {
         <li><span class="status-updated">URL_UPDATED:</span> <?php esc_html_e('They are the URLs marked to be published or updated in Google Console.', 'tseoindexing'); ?></li>
         <li><span class="status-deleted">URL_DELETED:</span> <?php esc_html_e('They are the URLs marked to be removed from Google Console.', 'tseoindexing'); ?></li>
         <li class="success"><?php esc_html_e('Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed 20 at a time until the quota limit is reached. Increase the quota in Google Cloud API if necessary.', 'tseoindexing'); ?></li>
+    </ul>
+    <?php
+}
+
+/**
+ * TSEO PRO TSEO Console
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_display_console() {
+    // Selecciona y obtiene URLs de tseoindexing_display_links_table() para eníar URL´s a Google Console
+    ?>
+    <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>
+    <form>
+        <textarea name="" id="" placeholder="https://..."></textarea>
+        <button class="success"><?php esc_html_e('URL_UPDATED', 'tseoindexing'); ?></button>
+        <button class="danger"><?php esc_html_e('URL_DELETED', 'tseoindexing'); ?></button>
+        <input type="checkbox" name="" id="status" class="checkbox">
+        <label for="status"><?php esc_html_e('Get URL status', 'tseoindexing'); ?></label>
+
+        <div class="url-send-removed">
+            <p class="text-success">
+                <?php esc_html_e('URLs to be sent to Google Console:', 'tseoindexing'); ?> <span>0</span>
+            </p>
+            <p class="text-danger">
+                <?php esc_html_e('URLs to be removed from Google Console:', 'tseoindexing'); ?> <span>0</span>
+            </p>        
+        </div>        
+
+        <?php submit_button(__('Send to API', 'tseoindexing')); ?>
+    </form>
+    <?php
+}
+
+/**
+ * TSEO PRO TSEO Console response
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_display_console_response() {
+    // Obtiene datos de respuesta de la API de Google
+    ?>
+        <div class="response">
+            <p><?php esc_html_e('Response', 'tseoindexing'); ?></p>
+            <code>
+                <strong>
+                    update, remove o getstatus
+                </strong> 
+                https://tseo.test/
+            </code>
+            <h2 class="response-title">
+                Error 403
+            </h2>
+            <p class="response-message">
+                Permission denied. Failed to verify the URL ownership.
+            </p>
+        </div>
+        <div class="show-raw-response">
+            <p><?php esc_html_e('Show raw response:', 'tseoindexing'); ?></p>
+            <textarea name="" id="">
+11:39:34 update: https://tseo.test/
+{
+  "error": {
+    "code": 403,
+    "message": "Permission denied. Failed to verify the URL ownership.",
+    "errors": [
+      {
+        "message": "Permission denied. Failed to verify the URL ownership.",
+        "domain": "global",
+        "reason": "forbidden"
+      }
+    ],
+    "status": "PERMISSION_DENIED"
+  }
+}
+--------------------------------------------------------
+            </textarea>
+        </div>
+    <?php
+}
+
+/**
+ * TSEO PRO TSEO Remaining Quota - Console
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_remaining_quota() {
+    // Obtiene datos de cuota de la API de Google
+    ?>
+    <a href="<?php echo esc_url('https://developers.google.com/search/apis/indexing-api/v3/quota-pricing'); ?>" target="_black">
+        <?php esc_html_e('Google API Remaining Quota:', 'tseoindexing'); ?>
+    </a>
+    <ul class="table_console_info">
+        <li>PublishRequestsPerDayPerProject = 200 / 200</li>
+        <li>MetadataRequestsPerMinutePerProject = 180 / 180</li>
+        <li>RequestsPerMinutePerProject = 600 / 600</li>
     </ul>
     <?php
 }

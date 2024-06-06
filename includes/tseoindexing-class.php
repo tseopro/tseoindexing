@@ -55,15 +55,24 @@ class TSEOIndexing_Main {
 
         add_submenu_page(
             'tseoindexing',
-            __('Config URL´s', 'tseoindexing'),
-            __('Config URL´s', 'tseoindexing'),
+            __('Config URLs', 'tseoindexing'),
+            __('Config URLs', 'tseoindexing'),
             'manage_options',
             'tseoindexing-links',
             [$this, 'tseoindexing_links_page_content']
         );
+
+        add_submenu_page(
+            'tseoindexing',
+            __('Console', 'tseoindexing'),
+            __('Console', 'tseoindexing'),
+            'manage_options',
+            'tseoindexing-console',
+            [$this, 'tseoindexing_console_page_content']
+        );
     }
 
-     /**
+    /**
      * Display the dashboard page content
      *
      * @package TSEOIndexing
@@ -155,94 +164,6 @@ class TSEOIndexing_Main {
         </div>
         <?php
     }
-
-    /**
-     * API Google Indexing
-     *
-     * @package TSEOIndexing
-     * @version 1.0.0
-     */
-    public function google_tseoindexing_api_publish_url($url, $type = 'URL_UPDATED') {
-        $service_account_file = get_option('tseo_indexing_options_key');
-        if (!$service_account_file) {
-            error_log('Service account file is not set in TSEO Indexing plugin settings.');
-            return false;
-        }
-
-        $client = new Client();
-        $client->setAuthConfig($service_account_file);
-        $client->addScope('https://www.googleapis.com/auth/indexing');
-
-        $indexingService = new Indexing($client);
-
-        $postBody = new Indexing\UrlNotification();
-        $postBody->setUrl($url);
-        $postBody->setType($type);
-
-        try {
-            $response = $indexingService->urlNotifications->publish($postBody);
-            return $response;
-        } catch (Exception $e) {
-            error_log('Error al publicar URL en Google Indexing API: ' . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function tseo_notify_google_about_new_post($ID, $post) {
-        $url = get_permalink($ID);
-        $this->google_tseoindexing_api_publish_url($url);
-    }
-
-    public function tseo_notify_google_about_removed_urls() {
-        $urls_to_remove = get_option('tseoindexing_remove_urls');
-        if ($urls_to_remove) {
-            $urls = explode(PHP_EOL, $urls_to_remove);
-            foreach ($urls as $url) {
-                $url = trim($url);
-                if ($url) {
-                    $this->google_tseoindexing_api_publish_url($url, 'URL_DELETED');
-                }
-            }
-        }
-    }
-
-    // TENGO DUDAS DE ESTAS FUNCIONES
-    public function tseoindexing_field_callback($arguments) {
-        $file_url = get_option('tseoindexing_service_account_file');
-        echo '<input name="tseoindexing_service_account_file" id="tseoindexing_service_account_file" type="file" />';
-        if ($file_url) {
-            echo '<p>' . esc_html(basename($file_url)) . '</p>';
-        }
-    }
-
-    public function tseoindexing_field_callback_remove_urls($arguments) {
-        echo '<textarea name="tseoindexing_remove_urls" id="tseoindexing_remove_urls" rows="10" cols="50">' . esc_textarea(get_option('tseoindexing_remove_urls')) . '</textarea>';
-    }
-
-    public function tseoindexing_setup_sections() {
-        add_settings_section('tseoindexing_section', '', null, 'tseoindexing');
-    }
-
-    public function tseoindexing_setup_fields() {
-        add_settings_field(
-            'tseoindexing_service_account_file',
-            'Service Account File',
-            [$this, 'tseoindexing_field_callback'],
-            'tseoindexing',
-            'tseoindexing_section'
-        );
-        add_settings_field(
-            'tseoindexing_remove_urls',
-            'URLs to Remove (one per line)',
-            [$this, 'tseoindexing_field_callback_remove_urls'],
-            'tseoindexing',
-            'tseoindexing_section'
-        );
-        register_setting('tseoindexing', 'tseoindexing_service_account_file');
-        register_setting('tseoindexing', 'tseoindexing_remove_urls');
-    }
-    // #TENGO DUDAS DE ESTAS FUNCIONES
-
     
     /**
      * Display the links page content
@@ -255,7 +176,7 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel-all">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
-                <h1><?php esc_html_e('TSEO Indexing URL´s', 'tseoindexing'); ?></h1>
+                <h1><?php esc_html_e('TSEO Indexing URLs', 'tseoindexing'); ?></h1>
                 <?php $this->tseoindexing_display_links_table(); ?>
             </div>
         </div>
@@ -429,10 +350,17 @@ class TSEOIndexing_Main {
         return $indexed_urls;
     }
 
+    /**
+     * Inserts a URL and its status into the tseo_indexing_links table.
+     *
+     * @param string $url The URL to be inserted.
+     * @param string $status The status of the URL.
+     * @return void
+     */
     public function insert_url($url, $status) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
-    
+
         $wpdb->insert(
             $table_name,
             [
@@ -446,12 +374,168 @@ class TSEOIndexing_Main {
         );
     }
     
+    /**
+     * Retrieves all URLs from the database.
+     *
+     * @return array The array of URLs retrieved from the database.
+     */
     public function get_urls() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
         $result = $wpdb->get_results("SELECT * FROM $table_name", OBJECT);
         return $result;
     }
+
+    /**
+     * Display the console page content
+     *
+     * @package TSEOIndexing
+     * @version 1.0.0
+     */
+    public function tseoindexing_console_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel-all">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('Console', 'tseoindexing'); ?></h1>
+
+                <div class="wrap-console">
+                    <div class="console">
+                        <?php tseoindexing_display_console(); ?>
+                    </div>
+                    <div class="quota">
+                        <?php tseoindexing_remaining_quota(); ?>
+                    </div>
+                </div>
+
+                <div class="wrap-console-response">
+                    <?php tseoindexing_display_console_response(); ?>
+                </div>
+                
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * API Google Indexing. Publishes a URL to the Google Indexing API.
+     *
+     * @param string $url The URL to be published.
+     * @param string $type The type of URL notification. Default is 'URL_UPDATED'.
+     * @return mixed The response from the Google Indexing API if successful, false otherwise.
+     * @package TSEOIndexing
+     * @version 1.0.0
+     */
+    public function google_tseoindexing_api_publish_url($url, $type = 'URL_UPDATED') {
+        $service_account_file = get_option('tseo_indexing_options_key');
+        if (!$service_account_file) {
+            error_log('Service account file is not set in TSEO Indexing plugin settings.');
+            return false;
+        }
+
+        $client = new Client();
+        $client->setAuthConfig($service_account_file);
+        $client->addScope('https://www.googleapis.com/auth/indexing');
+
+        $indexingService = new Indexing($client);
+
+        $postBody = new Indexing\UrlNotification();
+        $postBody->setUrl($url);
+        $postBody->setType($type);
+
+        try {
+            $response = $indexingService->urlNotifications->publish($postBody);
+            return $response;
+        } catch (Exception $e) {
+            error_log('Error publishing URL in Google Indexing API: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Notifies Google about a new post.
+     *
+     * @param int $ID The ID of the post.
+     * @param WP_Post $post The post object.
+     * @return void
+     */
+    public function tseo_notify_google_about_new_post($ID, $post) {
+        $url = get_permalink($ID);
+        $this->google_tseoindexing_api_publish_url($url);
+    }
+
+    /**
+     * Notifies Google about the removed URLs.
+     *
+     * This method retrieves the URLs to be removed from the options and sends a request to the Google TSEO Indexing API
+     * for each URL to notify Google about the removal.
+     *
+     * @return void
+     */
+    public function tseo_notify_google_about_removed_urls() {
+        $urls_to_remove = get_option('tseoindexing_remove_urls');
+        if ($urls_to_remove) {
+            $urls = explode(PHP_EOL, $urls_to_remove);
+            foreach ($urls as $url) {
+                $url = trim($url);
+                if ($url) {
+                    $this->google_tseoindexing_api_publish_url($url, 'URL_DELETED');
+                }
+            }
+        }
+    }
+
+    // TENGO DUDAS DE ESTAS FUNCIONES
+    /**
+     * Callback function for the tseoindexing_field.
+     *
+     * This function is responsible for rendering the input field and displaying the uploaded file name.
+     *
+     * @param array $arguments The arguments passed to the callback function.
+     * @return void
+     */
+    public function tseoindexing_field_callback($arguments) {
+        $file_url = get_option('tseoindexing_service_account_file');
+        echo '<input name="tseoindexing_service_account_file" id="tseoindexing_service_account_file" type="file" />';
+        if ($file_url) {
+            echo '<p>' . esc_html(basename($file_url)) . '</p>';
+        }
+    }
+
+    /**
+     * Callback function for the tseoindexing_remove_urls field.
+     * Renders a textarea input field with the current value of the tseoindexing_remove_urls option.
+     *
+     * @param array $arguments The arguments passed to the callback function.
+     * @return void
+     */
+    public function tseoindexing_field_callback_remove_urls($arguments) {
+        echo '<textarea name="tseoindexing_remove_urls" id="tseoindexing_remove_urls" rows="10" cols="50">' . esc_textarea(get_option('tseoindexing_remove_urls')) . '</textarea>';
+    }
+
+    public function tseoindexing_setup_sections() {
+        add_settings_section('tseoindexing_section', '', null, 'tseoindexing');
+    }
+
+    public function tseoindexing_setup_fields() {
+        add_settings_field(
+            'tseoindexing_service_account_file',
+            'Service Account File',
+            [$this, 'tseoindexing_field_callback'],
+            'tseoindexing',
+            'tseoindexing_section'
+        );
+        add_settings_field(
+            'tseoindexing_remove_urls',
+            'URLs to Remove (one per line)',
+            [$this, 'tseoindexing_field_callback_remove_urls'],
+            'tseoindexing',
+            'tseoindexing_section'
+        );
+        register_setting('tseoindexing', 'tseoindexing_service_account_file');
+        register_setting('tseoindexing', 'tseoindexing_remove_urls');
+    }
+    // #TENGO DUDAS DE ESTAS FUNCIONES
 }
 
 $tseoindexing_main = new TSEOIndexing_Main();

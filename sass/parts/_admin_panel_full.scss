@@ -166,4 +166,123 @@
             text-align: left !important;
         }
     }
+
+    .wrap-console {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 1em;
+        .console {
+            flex: 3;
+
+            .url-send-removed {
+                margin-top: 1.8em;
+                p {
+                    padding: 0;
+                    margin: 0;
+                    font-size: 1rem;
+                }
+                .text-success {
+                    color: $green-800;
+                }
+                .text-danger {
+                    color: $red-800;
+                }
+            }
+
+            textarea {
+                width: 100%;
+                height: 200px;
+                padding: 8px;
+                border: 1px solid $gray-300;
+                border-radius: 3px;
+            }
+
+            button {
+                padding: 0.5em 1em;
+                margin: 0.3em;
+                font-size: 0.95rem;
+                border-radius: 5px;
+                cursor: pointer;
+                .danger {
+                    border: 1px solid $red-200;
+                    background: $red-100;
+                    color: rgba($red-800, 0.8);
+    
+                }
+                .success {
+                    border: 1px solid $green-200;
+                    background: $green-100;
+                    color: rgba($green-800, 0.8);
+                }
+            }
+            button:hover {
+                opacity: 0.8;
+            }
+        }
+        .quota {
+            flex: 2;
+            border: 1px solid $slate-100;
+            border-radius: 5px;
+            background: $slate-50;
+            margin-left: 1em;
+
+            .table_console_info {
+                font-size: 0.85rem;
+                padding: 0.5em;
+                background: $bt_white;
+                border: 1px solid $gray-300;
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+                    margin: 0px 0px;
+                    li {
+                        display: inline;
+                        margin-right: 10px;
+                        a {
+                            color: $blue-600;
+                            text-decoration: none;
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .wrap-console-response {
+        display: block;
+        align-content: center;
+        align-items: center;
+
+        .response {
+            text-align: center;
+            padding: 0.3em 1em;
+            border-radius: 5px;
+            border: 1px solid $gray-300;
+            background: $bt_white;
+            font-size: 0.95rem;
+            color: $dark;
+
+            .response-title {
+                font-size: 1.8rem;
+            }
+            .response-message {
+                font-size: 0.85rem;
+            }
+        }
+        .show-raw-response {
+            text-align: left;
+
+            textarea {
+                width: 100%;
+                height: 200px;
+                padding: 8px;
+                border: 1px solid $gray-300;
+                border-radius: 3px;
+            }
+        }
+    }
 }
