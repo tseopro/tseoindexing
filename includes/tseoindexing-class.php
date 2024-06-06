@@ -25,6 +25,10 @@ class TSEOIndexing_Main {
         // Hook to notify Google about URLs to be removed upon plugin activation or update
         register_activation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
         register_deactivation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
+
+        // AJAX actions
+        add_action('wp_ajax_load_urls_by_type', [$this, 'load_urls_by_type']);
+        add_action('wp_ajax_send_urls_to_google', [$this, 'send_urls_to_google']);
     }
 
     /**
@@ -125,7 +129,7 @@ class TSEOIndexing_Main {
 
     // Display the settings page content
     public function tseoindexing_settings_page_content() {
-        $this->tseoindexing_handle_file_upload(); // Handle the file upload if it exists.
+        $this->tseoindexing_handle_file_upload();
 
         $options = $this->get_saved_options();
         $json_content = isset($options['json_key']) ? $options['json_key'] : '';
@@ -166,9 +170,9 @@ class TSEOIndexing_Main {
         </div>
         <?php
     }
-    
+
     /**
-     * Display the links page content
+     * Display the links (URLs) page content
      *
      * @package TSEOIndexing
      * @version 1.0.0
@@ -185,14 +189,14 @@ class TSEOIndexing_Main {
         <?php
     }
 
-    // Muestra la tabla de registros de URLs y da opción de actualizar o eliminar
+    // Display the table of URL records and provide options to update or delete
     public function tseoindexing_display_links_table() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
-    
+
         // Obtener datos de la base de datos
         $managed_urls = $wpdb->get_results("SELECT * FROM {$table_name}", OBJECT_K);
-    
+
         // Obtener URLs indexadas y eliminar las que ya están en la base de datos
         $indexed_urls = $this->tseoindexing_get_indexed_urls();
         foreach ($managed_urls as $managed_url) {
@@ -200,13 +204,13 @@ class TSEOIndexing_Main {
                 unset($indexed_urls[$managed_url->url]);
             }
         }
-    
+
         // Combinar managed_urls con indexed_urls para mostrar en la tabla
         $all_urls = array_merge($managed_urls, array_map(function($url) {
             return (object) ['url' => $url, 'status' => 'NULL', 'type' => 'NULL', 'date_time' => 'N/A'];
         }, array_keys($indexed_urls)));
-    
-        // Paginación
+
+        // Pagination
         $paged = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
         $per_page = 20;
         $total_items = count($all_urls);
@@ -280,8 +284,7 @@ class TSEOIndexing_Main {
                         label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Add', 'tseoindexing'); ?>";
                         label.classList.toggle("update", this.checked);
                         label.classList.toggle("add", !this.checked);
-    
-                        // Enviar petición AJAX
+
                         jQuery.post(ajaxurl, {
                             action: 'update_tseo_url',
                             url: this.value,
@@ -291,7 +294,6 @@ class TSEOIndexing_Main {
                             if (!response.success) {
                                 alert('Error: ' + response.data);
                             } else {
-                                // Actualizar el campo `status` en la tabla
                                 var statusCell = checkbox.closest('tr').querySelector('.status');
                                 statusCell.innerText = response.data.type;
                                 statusCell.className = 'data-all status ' + (response.data.type === 'URL_UPDATED' ? 'status-updated' : (response.data.type === 'URL_DELETED' ? 'status-deleted' : 'status-null'));
@@ -303,27 +305,23 @@ class TSEOIndexing_Main {
         </script>
         <?php
     }
-    
 
     // Obtiene todas las URLs de las páginas, posts, productos y taxonomías
     public function tseoindexing_get_indexed_urls() {
         $indexed_urls = [];
 
-        // Get all pages
         $pages = get_pages();
         foreach ($pages as $page) {
             $url = get_permalink($page->ID);
             $indexed_urls[$url] = true;
         }
 
-        // Get all posts
         $posts = get_posts(['post_type' => 'post']);
         foreach ($posts as $post) {
             $url = get_permalink($post->ID);
             $indexed_urls[$url] = true;
         }
 
-        // Get all product pages (assuming WooCommerce is installed)
         if (class_exists('WooCommerce')) {
             $products = get_posts(['post_type' => 'product']);
             foreach ($products as $product) {
@@ -332,7 +330,6 @@ class TSEOIndexing_Main {
             }
         }
 
-        // Get all custom taxonomies
         $taxonomies = get_taxonomies();
         foreach ($taxonomies as $taxonomy) {
             $terms = get_terms($taxonomy);
@@ -342,7 +339,6 @@ class TSEOIndexing_Main {
             }
         }
 
-        // Get all categories
         $categories = get_categories();
         foreach ($categories as $category) {
             $url = get_category_link($category);
@@ -375,7 +371,7 @@ class TSEOIndexing_Main {
             ]
         );
     }
-    
+
     /**
      * Retrieves all URLs from the database.
      *
@@ -410,11 +406,8 @@ class TSEOIndexing_Main {
                     </div>
                 </div>
 
-                <div class="wrap-console-response">
-                    <?php
-                    // El CSS .wrap-console-response inicialmente es display: none y cuando se recibe respuesta de la API se cambia a display: block.
-                    tseoindexing_display_console_response();
-                    ?>
+                <div class="wrap-console-response" style="display: none;">
+                    <?php tseoindexing_display_console_response(); ?>
                 </div>
                 
             </div>
@@ -432,19 +425,27 @@ class TSEOIndexing_Main {
      * @version 1.0.0
      */
     public function google_tseoindexing_api_publish_url($url, $type = 'URL_UPDATED') {
-        $service_account_file = get_option('tseo_indexing_options_key');
-        if (!$service_account_file) {
+        $options = get_option('tseo_indexing_options_key');
+        if (!$options) {
             error_log('Service account file is not set in TSEO Indexing plugin settings.');
             return false;
         }
 
-        $client = new Client();
+        $options = maybe_unserialize($options);
+
+        $service_account_file = isset($options['json_key']) ? json_decode($options['json_key'], true) : null;
+        if (!$service_account_file) {
+            error_log('Invalid service account file in TSEO Indexing plugin settings.');
+            return false;
+        }
+
+        $client = new Google\Client();
         $client->setAuthConfig($service_account_file);
         $client->addScope('https://www.googleapis.com/auth/indexing');
 
-        $indexingService = new Indexing($client);
+        $indexingService = new Google\Service\Indexing($client);
 
-        $postBody = new Indexing\UrlNotification();
+        $postBody = new Google\Service\Indexing\UrlNotification();
         $postBody->setUrl($url);
         $postBody->setType($type);
 
@@ -490,7 +491,6 @@ class TSEOIndexing_Main {
         }
     }
 
-    // TENGO DUDAS DE ESTAS FUNCIONES
     /**
      * Callback function for the tseoindexing_field.
      *
@@ -540,7 +540,157 @@ class TSEOIndexing_Main {
         register_setting('tseoindexing', 'tseoindexing_service_account_file');
         register_setting('tseoindexing', 'tseoindexing_remove_urls');
     }
-    // #TENGO DUDAS DE ESTAS FUNCIONES
+
+    public function load_urls_by_type() {
+        check_ajax_referer('tseoindexing_console', '_ajax_nonce');
+
+        $type = sanitize_text_field($_POST['type']);
+        $urls = $this->get_urls_by_type($type);
+
+        wp_send_json_success($urls);
+    }
+
+    public function send_urls_to_google() {
+        check_ajax_referer('tseoindexing_console', '_ajax_nonce');
+
+        $urls = array_map('esc_url_raw', $_POST['urls']);
+        $get_status = isset($_POST['get_status']) ? (bool) $_POST['get_status'] : false;
+
+        $results = [];
+        foreach ($urls as $url) {
+            if ($get_status) {
+                $response = $this->get_google_indexing_status($url);
+                $action = 'getstatus';
+            } else {
+                $type = $this->get_url_type($url);
+                $response = $this->google_tseoindexing_api_publish_url($url, $type);
+                $action = $type === 'URL_UPDATED' ? 'publish/update' : 'remove';
+            }
+            $results[] = [
+                'url' => $url,
+                'action' => $action,
+                'response' => $response,
+            ];
+        }
+
+        wp_send_json_success($results);
+    }
+
+    public function get_urls_by_type($type) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'tseo_indexing_links';
+
+        $urls = $wpdb->get_results($wpdb->prepare("SELECT url FROM {$table_name} WHERE type = %s", $type), ARRAY_A);
+        return wp_list_pluck($urls, 'url');
+    }
+
+    public function get_url_type($url) {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'tseo_indexing_links';
+        return $wpdb->get_var($wpdb->prepare("SELECT type FROM {$table_name} WHERE url = %s", $url));
+    }
+
+    public function get_google_indexing_status($url) {
+        $options = get_option('tseo_indexing_options_key');
+        if (!$options) {
+            return ['error' => ['code' => 500, 'message' => 'Service account file is not set']];
+        }
+
+        $options = maybe_unserialize($options);
+
+        $service_account_file = isset($options['json_key']) ? json_decode($options['json_key'], true) : null;
+        if (!$service_account_file) {
+            return ['error' => ['code' => 500, 'message' => 'Invalid service account file']];
+        }
+
+        $client = new Google\Client();
+        $client->setAuthConfig($service_account_file);
+        $client->addScope('https://www.googleapis.com/auth/indexing');
+
+        $indexingService = new Google\Service\Indexing($client);
+
+        try {
+            $response = $indexingService->urlNotifications->getMetadata(['url' => $url]);
+            return $response;
+        } catch (Exception $e) {
+            return ['error' => ['code' => $e->getCode(), 'message' => $e->getMessage()]];
+        }
+    }
+
+    /**
+     * Retrieves the Google indexing quota data.
+     *
+     * This function retrieves the Google indexing quota data by making use of the Google Cloud Monitoring API.
+     * It fetches the quota usage for various metrics such as PublishRequestsPerDayPerProject, MetadataRequestsPerMinutePerProject, and RequestsPerMinutePerProject.
+     * The function requires a valid service account file to be set in the plugin options.
+     *
+     * @return array An array containing the quota data for each metric. The default values are provided, and the actual values need to be processed from the API response.
+     *               The array has the following structure:
+     *               [
+     *                  'PublishRequestsPerDayPerProject' => '0 / 200',
+     *                  'MetadataRequestsPerMinutePerProject' => '0 / 180',
+     *                  'RequestsPerMinutePerProject' => '0 / 600'
+     *               ]
+     *               The values '0 / 200', '0 / 180', and '0 / 600' are the default values and need to be adjusted based on the API response.
+     *               If there is an error in retrieving the quota data, an array with the 'error' key and the corresponding error message will be returned.
+     */
+    public function get_google_indexing_quota() {
+        $options = get_option('tseo_indexing_options_key');
+        if (!$options) {
+            return ['error' => 'Service account file is not set'];
+        }
+    
+        $options = maybe_unserialize($options);
+        $service_account_file = isset($options['json_key']) ? json_decode($options['json_key'], true) : null;
+    
+        if (!$service_account_file) {
+            return ['error' => 'Invalid service account file'];
+        }
+    
+        $client = new Google\Client();
+        $client->setAuthConfig($service_account_file);
+        $client->addScope('https://www.googleapis.com/auth/cloud-platform');
+    
+        try {
+            $monitoring = new Google\Cloud\Monitoring\V3\MetricServiceClient([
+                'credentials' => $service_account_file
+            ]);
+            
+            $projectId = $service_account_file['project_id'];
+            $projectName = $monitoring->projectName($projectId);
+            
+            $interval = new Google\Cloud\Monitoring\V3\TimeInterval();
+            
+            $endTime = new Google\Protobuf\Timestamp();
+            $endTime->fromDateTime(new \DateTime());
+            $startTime = new Google\Protobuf\Timestamp();
+            $startTime->fromDateTime((new \DateTime())->modify('-1 day'));
+    
+            $interval->setEndTime($endTime);
+            $interval->setStartTime($startTime);
+    
+            $filter = 'metric.type="serviceruntime.googleapis.com/api/request_count"';
+            $results = $monitoring->listTimeSeries($projectName, $filter, $interval, Google\Cloud\Monitoring\V3\ListTimeSeriesRequest_TimeSeriesView::FULL);
+    
+            $quota_data = [
+                'PublishRequestsPerDayPerProject' => '0 / 200', // Default values, you need to process $results to get actual values
+                'MetadataRequestsPerMinutePerProject' => '0 / 180',
+                'RequestsPerMinutePerProject' => '0 / 600'
+            ];
+    
+            foreach ($results->iterateAllElements() as $result) {
+                // Process $result to extract and calculate quota usage
+                // Adjust $quota_data accordingly
+            }
+    
+            return $quota_data;
+        } catch (Exception $e) {
+            echo '<div class="danger">';
+                return ['error' => $e->getMessage()];
+            echo '</div>';
+        }
+    }
+    
 }
 
 $tseoindexing_main = new TSEOIndexing_Main();

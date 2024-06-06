@@ -39,7 +39,6 @@ function tseoindexing_create_tables() {
 }
 //register_activation_hook(__FILE__, 'tseoindexing_create_tables');
 
-
 /**
  * Guarda registros y obtiene datos de Google API
  * de la funcion tseoindexing_display_links_table()
@@ -80,16 +79,6 @@ function update_tseo_url() {
 
     wp_send_json_success(['type' => $type]);
 }
-
-function get_google_indexing_status($url) {
-    // Implementar la llamada a la API de Google para obtener el estado de la URL
-    // Ejemplo simplificado:
-    $response = wp_remote_get($url);
-    $status_code = wp_remote_retrieve_response_code($response);
-    return (string)$status_code;
-}
-
- 
  
 /**
  * Save API Key
@@ -138,6 +127,8 @@ function tseoindexing_admin_styles($hook) {
     wp_enqueue_style('tseoindexing-admin', plugin_dir_url(dirname(__FILE__)) . 'assets/css/tseoindexing.min.css', array(), TSEOINDEXING_VERSION, 'all');
 
     wp_enqueue_script('tseoindexing-loading', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-loading.js', array(), TSEOINDEXING_VERSION, true);
+
+    wp_enqueue_script('tseoindexing', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing.js', array(), TSEOINDEXING_VERSION, true);
 }
 add_action('admin_enqueue_scripts', 'tseoindexing_admin_styles');
 
@@ -152,7 +143,6 @@ function tseoindexing_enqueue_scripts() {
     wp_localize_script('jquery', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
 }
 add_action('admin_enqueue_scripts', 'tseoindexing_enqueue_scripts');
-
 
 /**
  * TSEO PRO Loading Overlay
@@ -223,38 +213,27 @@ function tseoindexing_table_link_info() {
  * @version 1.0.0
  */
 function tseoindexing_display_console() {
-    // Selecciona y obtiene URLs de tseoindexing_display_links_table() para eníar URL´s a Google Console
     ?>
-    
-        
-    <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>    
-    <form>
-        <textarea name="" id="" placeholder="https://..."></textarea>
+    <form id="tseoindexing-console-form" method="post" action="">
+        <?php wp_nonce_field('tseoindexing_console', 'tseoindexing_console_nonce'); ?>
+        <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>
+        <textarea name="tseo_urls" id="tseo_urls" rows="10" cols="50" placeholder="https://..."></textarea>
         <div class="buttons-group">
-            <button class="success">
-                <?php esc_html_e('URL_UPDATED', 'tseoindexing'); ?>
-            </button>
-            
-            <button class="danger">
-                <?php esc_html_e('URL_DELETED', 'tseoindexing'); ?>
-            </button>
-
+            <button type="button" id="load-updated-urls" class="success"><?php esc_html_e('URL_UPDATED', 'tseoindexing'); ?></button>
+            <button type="button" id="load-deleted-urls" class="danger"><?php esc_html_e('URL_DELETED', 'tseoindexing'); ?></button>
             <span class="checkbox">
-                <input type="checkbox" name="" id="status">
-                <label for="status">
-                    <?php esc_html_e('Get URL status', 'tseoindexing'); ?>
-                </label>            
-            </span>        
+                <input type="checkbox" name="get_status" id="get_status">
+                <label for="get_status"><?php esc_html_e('Get URL status', 'tseoindexing'); ?></label>
+            </span>
         </div>
         <div class="url-send">
             <p class="text-success">
-                <?php esc_html_e('URLs to be sent to Google Console:', 'tseoindexing'); ?> <span>0</span>
+                <?php esc_html_e('URLs to be sent to Google Console:', 'tseoindexing'); ?> <span id="updated-urls-count">0</span>
             </p>
             <p class="text-danger">
-                <?php esc_html_e('URLs to be removed from Google Console:', 'tseoindexing'); ?> <span>0</span>
-            </p>        
-        </div>        
-
+                <?php esc_html_e('URLs to be removed from Google Console:', 'tseoindexing'); ?> <span id="deleted-urls-count">0</span>
+            </p>
+        </div>
         <div class="button-panel">
             <?php submit_button(__('Send to API', 'tseoindexing')); ?>
         </div>
@@ -269,44 +248,20 @@ function tseoindexing_display_console() {
  * @version 1.0.0
  */
 function tseoindexing_display_console_response() {
-    // Obtiene datos de respuesta de la API de Google
     ?>
-        <div class="response">
-            <p><?php esc_html_e('Response', 'tseoindexing'); ?></p>
-            <code>
-                <strong>
-                    update, remove o getstatus
-                </strong> 
-                https://tseo.test/
-            </code>
-            <h2 class="response-title">
-                Error 403
-            </h2>
-            <p class="response-message">
-                Permission denied. Failed to verify the URL ownership.
-            </p>
-        </div>
-        <div class="show-raw-response">
-            <p><?php esc_html_e('Show raw response:', 'tseoindexing'); ?></p>
-            <textarea name="" id="">
-11:39:34 update: https://tseo.test/
-{
-  "error": {
-    "code": 403,
-    "message": "Permission denied. Failed to verify the URL ownership.",
-    "errors": [
-      {
-        "message": "Permission denied. Failed to verify the URL ownership.",
-        "domain": "global",
-        "reason": "forbidden"
-      }
-    ],
-    "status": "PERMISSION_DENIED"
-  }
-}
---------------------------------------------------------
-            </textarea>
-        </div>
+    <div class="response">
+        <p><?php esc_html_e('Response', 'tseoindexing'); ?></p>
+        <code>
+            <strong class="response-action"></strong>
+            <span class="response-url"></span>
+        </code>
+        <h2 class="response-title"></h2>
+        <p class="response-message"></p>
+    </div>
+    <div class="show-raw-response">
+        <p><?php esc_html_e('Show raw response:', 'tseoindexing'); ?></p>
+        <textarea id="raw-response"></textarea>
+    </div>
     <?php
 }
 
@@ -317,15 +272,21 @@ function tseoindexing_display_console_response() {
  * @version 1.0.0
  */
 function tseoindexing_remaining_quota() {
-    // Obtiene datos de cuota de la API de Google
+    $quota_info = (new TSEOIndexing_Main())->get_google_indexing_quota();
+
+    if (isset($quota_info['error'])) {
+        echo '<p>Error: ' . esc_html($quota_info['error']) . '</p>';
+        return;
+    }
+
     ?>
-    <a href="<?php echo esc_url('https://developers.google.com/search/apis/indexing-api/v3/quota-pricing'); ?>" target="_black">
+    <a href="<?php echo esc_url('https://developers.google.com/search/apis/indexing-api/v3/quota-pricing'); ?>" target="_blank">
         <?php esc_html_e('Google API Remaining Quota:', 'tseoindexing'); ?>
     </a>
     <ul class="table_console_info">
-        <li>PublishRequestsPerDayPerProject = 200 / 200</li>
-        <li>MetadataRequestsPerMinutePerProject = 180 / 180</li>
-        <li>RequestsPerMinutePerProject = 600 / 600</li>
+        <li>PublishRequestsPerDayPerProject = <?php echo esc_html($quota_info['PublishRequestsPerDayPerProject']); ?></li>
+        <li>MetadataRequestsPerMinutePerProject = <?php echo esc_html($quota_info['MetadataRequestsPerMinutePerProject']); ?></li>
+        <li>RequestsPerMinutePerProject = <?php echo esc_html($quota_info['RequestsPerMinutePerProject']); ?></li>
     </ul>
     <?php
 }
