@@ -75,6 +75,11 @@
 .tseoindexing-admin-panel .main-content p {
   font-size: large;
 }
+.tseoindexing-admin-panel .main-content .button-panel {
+  padding: 0;
+  margin: 0;
+  width: 0%;
+}
 .tseoindexing-admin-panel .main-content .danger {
   padding: 1em 0.8em;
   margin: 1em;
@@ -143,7 +148,6 @@
   flex: 1;
   padding: 10px;
   border-left: 1px solid #e5e5e5;
-  background-color: #f9f9f9;
 }
 .tseoindexing-admin-panel .sidebar h2, .tseoindexing-admin-panel .sidebar h3 {
   color: #333;
@@ -217,6 +221,11 @@
 }
 .tseoindexing-admin-panel-all .main-content p {
   font-size: large;
+}
+.tseoindexing-admin-panel-all .main-content .button-panel {
+  padding: 0;
+  margin: 0;
+  width: 0%;
 }
 .tseoindexing-admin-panel-all .main-content .danger {
   padding: 1em 0.8em;
@@ -342,6 +351,122 @@
 }
 .tseoindexing-admin-panel-all table.form-table td.url {
   text-align: left !important;
+}
+.tseoindexing-admin-panel-all .wrap-console {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+.tseoindexing-admin-panel-all .wrap-console .console {
+  flex: 3;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .url-send {
+  margin-top: 1.8em;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .url-send p {
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .url-send .text-success {
+  color: #166534;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .url-send .text-danger {
+  color: #991b1b;
+}
+.tseoindexing-admin-panel-all .wrap-console .console textarea {
+  width: 100%;
+  height: 200px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .buttons-group {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .buttons-group button {
+  padding: 0.3em 1em;
+  margin-top: 3px;
+  margin: 0;
+  margin-right: 10px;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.tseoindexing-admin-panel-all .wrap-console .console .buttons-group button .danger {
+  border: 1px solid #fecaca;
+  background: #fee2e2;
+  color: rgba(153, 27, 27, 0.8);
+}
+.tseoindexing-admin-panel-all .wrap-console .console .buttons-group button .success {
+  border: 1px solid #bbf7d0;
+  background: #dcfce7;
+  color: rgba(22, 101, 52, 0.8);
+}
+.tseoindexing-admin-panel-all .wrap-console .console .buttons-group button:hover {
+  opacity: 0.8;
+}
+.tseoindexing-admin-panel-all .wrap-console .quota {
+  flex: 2;
+  border: 1px solid #f1f5f9;
+  border-radius: 5px;
+  background: #f8fafc;
+  margin-left: 1em;
+}
+.tseoindexing-admin-panel-all .wrap-console .quota .table_console_info {
+  font-size: 0.85rem;
+  padding: 0.5em;
+  background: #fff;
+  border: 1px solid #d1d5db;
+}
+.tseoindexing-admin-panel-all .wrap-console .quota .table_console_info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0px 0px;
+}
+.tseoindexing-admin-panel-all .wrap-console .quota .table_console_info ul li {
+  display: inline;
+  margin-right: 10px;
+}
+.tseoindexing-admin-panel-all .wrap-console .quota .table_console_info ul li a {
+  color: #2563eb;
+  text-decoration: none;
+}
+.tseoindexing-admin-panel-all .wrap-console .quota .table_console_info ul li a:hover {
+  text-decoration: underline;
+}
+.tseoindexing-admin-panel-all .wrap-console-response {
+  display: block;
+  align-content: center;
+  align-items: center;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .response {
+  text-align: center;
+  padding: 0.3em 1em;
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  font-size: 0.95rem;
+  color: #212529;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .response .response-title {
+  font-size: 1.8rem;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .response .response-message {
+  font-size: 0.85rem;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .show-raw-response {
+  text-align: left;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .show-raw-response textarea {
+  width: 100%;
+  height: 200px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
 }
 
 /** Pagination **/

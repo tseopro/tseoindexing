@@ -151,12 +151,14 @@ class TSEOIndexing_Main {
                             <?php echo esc_html($post_type->label); ?>
                         </label><br/>
                     <?php endforeach; ?>
-                    <?php submit_button(__('Upload JSON and Save Settings', 'tseoindexing')); ?>
+                    <div class="button-panel">
+                        <?php submit_button(__('Upload JSON and Save Settings', 'tseoindexing')); ?>
+                    </div>
                 </form>
-                <form method="post" action="">
+                <div>
                     <h2><?php esc_html_e('Current JSON', 'tseoindexing'); ?></h2>
                     <textarea name="tseoindexing_service_account_json" id="tseoindexing_service_account_json" rows="10" cols="50" readonly><?php echo esc_textarea($json_content); ?></textarea>
-                </form>
+                </div>
             </div>    
             <div class="sidebar">
                 <?php tseoindexing_display_info_sidebar(); ?>
@@ -409,7 +411,10 @@ class TSEOIndexing_Main {
                 </div>
 
                 <div class="wrap-console-response">
-                    <?php tseoindexing_display_console_response(); ?>
+                    <?php
+                    // El CSS .wrap-console-response inicialmente es display: none y cuando se recibe respuesta de la API se cambia a display: block.
+                    tseoindexing_display_console_response();
+                    ?>
                 </div>
                 
             </div>

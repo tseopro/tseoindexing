@@ -20,6 +20,11 @@
         p {
             font-size: large;
         }
+        .button-panel {
+            padding: 0;
+            margin: 0;
+            width: 0%;
+        }
         .danger {
             padding: 1em 0.8em;
             margin: 1em;
@@ -175,7 +180,7 @@
         .console {
             flex: 3;
 
-            .url-send-removed {
+            .url-send {
                 margin-top: 1.8em;
                 p {
                     padding: 0;
@@ -198,27 +203,36 @@
                 border-radius: 3px;
             }
 
-            button {
-                padding: 0.5em 1em;
-                margin: 0.3em;
-                font-size: 0.95rem;
-                border-radius: 5px;
-                cursor: pointer;
-                .danger {
-                    border: 1px solid $red-200;
-                    background: $red-100;
-                    color: rgba($red-800, 0.8);
-    
+            .buttons-group {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                button {
+                    padding: 0.3em 1em;
+                    margin-top: 3px;
+                    margin: 0;
+                    margin-right: 10px;
+                    font-size: 0.95rem;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    .danger {
+                        border: 1px solid $red-200;
+                        background: $red-100;
+                        color: rgba($red-800, 0.8);        
+                    }
+                    .success {
+                        border: 1px solid $green-200;
+                        background: $green-100;
+                        color: rgba($green-800, 0.8);
+                    }
                 }
-                .success {
-                    border: 1px solid $green-200;
-                    background: $green-100;
-                    color: rgba($green-800, 0.8);
+                button:hover {
+                    opacity: 0.8;
                 }
+
             }
-            button:hover {
-                opacity: 0.8;
-            }
+
         }
         .quota {
             flex: 2;

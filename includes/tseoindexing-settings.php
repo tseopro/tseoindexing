@@ -225,15 +225,28 @@ function tseoindexing_table_link_info() {
 function tseoindexing_display_console() {
     // Selecciona y obtiene URLs de tseoindexing_display_links_table() para eníar URL´s a Google Console
     ?>
-    <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>
+    
+        
+    <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>    
     <form>
         <textarea name="" id="" placeholder="https://..."></textarea>
-        <button class="success"><?php esc_html_e('URL_UPDATED', 'tseoindexing'); ?></button>
-        <button class="danger"><?php esc_html_e('URL_DELETED', 'tseoindexing'); ?></button>
-        <input type="checkbox" name="" id="status" class="checkbox">
-        <label for="status"><?php esc_html_e('Get URL status', 'tseoindexing'); ?></label>
+        <div class="buttons-group">
+            <button class="success">
+                <?php esc_html_e('URL_UPDATED', 'tseoindexing'); ?>
+            </button>
+            
+            <button class="danger">
+                <?php esc_html_e('URL_DELETED', 'tseoindexing'); ?>
+            </button>
 
-        <div class="url-send-removed">
+            <span class="checkbox">
+                <input type="checkbox" name="" id="status">
+                <label for="status">
+                    <?php esc_html_e('Get URL status', 'tseoindexing'); ?>
+                </label>            
+            </span>        
+        </div>
+        <div class="url-send">
             <p class="text-success">
                 <?php esc_html_e('URLs to be sent to Google Console:', 'tseoindexing'); ?> <span>0</span>
             </p>
@@ -242,7 +255,9 @@ function tseoindexing_display_console() {
             </p>        
         </div>        
 
-        <?php submit_button(__('Send to API', 'tseoindexing')); ?>
+        <div class="button-panel">
+            <?php submit_button(__('Send to API', 'tseoindexing')); ?>
+        </div>
     </form>
     <?php
 }

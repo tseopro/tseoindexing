@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TSEO Indexing 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tseoindexing\n"
-"POT-Creation-Date: 2024-06-05T18:42:00+00:00\n"
-"PO-Revision-Date: 2024-06-05 20:45+0200\n"
+"POT-Creation-Date: 2024-06-06T11:26:40+00:00\n"
+"PO-Revision-Date: 2024-06-06 13:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -51,36 +51,41 @@ msgid "Settings"
 msgstr "Ajustes"
 
 #: includes/tseoindexing-class.php:58 includes/tseoindexing-class.php:59
-msgid "Config URL´s"
-msgstr "Configurar URL´s"
+msgid "Config URLs"
+msgstr "Configurar URLs"
 
-#: includes/tseoindexing-class.php:77
+#: includes/tseoindexing-class.php:67 includes/tseoindexing-class.php:68
+#: includes/tseoindexing-class.php:402
+msgid "Console"
+msgstr "Consola"
+
+#: includes/tseoindexing-class.php:86
 msgid "Dashboard"
 msgstr "Escritorio"
 
-#: includes/tseoindexing-class.php:105
+#: includes/tseoindexing-class.php:114
 msgid "API Key and settings saved successfully."
 msgstr "Clave de API y configuraciones guardadas exitosamente."
 
-#: includes/tseoindexing-class.php:107
+#: includes/tseoindexing-class.php:116
 msgid "Error uploading file. Please ensure it is a valid JSON file."
 msgstr ""
 "Error al subir el archivo. Por favor, asegúrate de que sea un archivo JSON "
 "válido."
 
-#: includes/tseoindexing-class.php:131
+#: includes/tseoindexing-class.php:140
 msgid "TSEO Indexing Settings"
 msgstr "TSEO Indexing Ajustes"
 
-#: includes/tseoindexing-class.php:135
+#: includes/tseoindexing-class.php:144
 msgid "Google Service Account JSON"
 msgstr "JSON de la Cuenta de Servicio de Google"
 
-#: includes/tseoindexing-class.php:137
+#: includes/tseoindexing-class.php:146
 msgid "Submit Posts to Google"
 msgstr "Enviar Publicaciones a Google"
 
-#: includes/tseoindexing-class.php:138
+#: includes/tseoindexing-class.php:147
 msgid ""
 "Submit the following post types automatically to Google's Instant Indexing "
 "API when a post is published, edited, or deleted."
@@ -89,39 +94,39 @@ msgstr ""
 "Indexación Instantánea de Google cuando una publicación se publique, edite o "
 "elimine."
 
-#: includes/tseoindexing-class.php:145
+#: includes/tseoindexing-class.php:155
 msgid "Upload JSON and Save Settings"
 msgstr "Subir JSON y Guardar Configuraciones"
 
-#: includes/tseoindexing-class.php:148
+#: includes/tseoindexing-class.php:159
 msgid "Current JSON"
 msgstr "JSON Actual"
 
-#: includes/tseoindexing-class.php:258
-msgid "TSEO Indexing URL´s"
-msgstr "TSEO Indexing URL´s"
+#: includes/tseoindexing-class.php:181
+msgid "TSEO Indexing URLs"
+msgstr "TSEO Indexing URLs"
 
-#: includes/tseoindexing-class.php:298
+#: includes/tseoindexing-class.php:221
 msgid "URL"
 msgstr "URL"
 
-#: includes/tseoindexing-class.php:299
+#: includes/tseoindexing-class.php:222
 msgid "Action"
 msgstr "Acción"
 
-#: includes/tseoindexing-class.php:300
+#: includes/tseoindexing-class.php:223
 msgid "Status"
 msgstr "Estado"
 
-#: includes/tseoindexing-class.php:301
+#: includes/tseoindexing-class.php:224
 msgid "Type"
 msgstr "Tipo"
 
-#: includes/tseoindexing-class.php:318 includes/tseoindexing-class.php:357
+#: includes/tseoindexing-class.php:241 includes/tseoindexing-class.php:280
 msgid "Update"
 msgstr "Actualizar"
 
-#: includes/tseoindexing-class.php:318 includes/tseoindexing-class.php:357
+#: includes/tseoindexing-class.php:241 includes/tseoindexing-class.php:280
 msgid "Add"
 msgstr "Agregar"
 
@@ -363,6 +368,46 @@ msgstr ""
 "o eliminar, diríjase a la pestaña Console para enviar las solicitudes en "
 "lote. Estas se procesarán de 20 en 20 hasta alcanzar el límite de la cuota. "
 "Aumente la cuota en Google Cloud API si es necesario."
+
+#: includes/tseoindexing-settings.php:230
+msgid "URLs (one per line, up to 100 for Google and 10,000 for IndexNow):"
+msgstr "URL (una por línea, hasta 100 para Google y 10.000 para IndexNow):"
+
+#: includes/tseoindexing-settings.php:235
+msgid "URL_UPDATED"
+msgstr "URL_ACTUALIZADA"
+
+#: includes/tseoindexing-settings.php:239
+msgid "URL_DELETED"
+msgstr "URL_BORRADA"
+
+#: includes/tseoindexing-settings.php:245
+msgid "Get URL status"
+msgstr "Obtener URL"
+
+#: includes/tseoindexing-settings.php:251
+msgid "URLs to be sent to Google Console:"
+msgstr "URL que se enviarán a Google Console:"
+
+#: includes/tseoindexing-settings.php:254
+msgid "URLs to be removed from Google Console:"
+msgstr "URL que se eliminarán de Google Console:"
+
+#: includes/tseoindexing-settings.php:259
+msgid "Send to API"
+msgstr "Enviar a API"
+
+#: includes/tseoindexing-settings.php:275
+msgid "Response"
+msgstr "Respuesta"
+
+#: includes/tseoindexing-settings.php:290
+msgid "Show raw response:"
+msgstr "Mostrar respuesta cruda:"
+
+#: includes/tseoindexing-settings.php:323
+msgid "Google API Remaining Quota:"
+msgstr "Cuota restante de la API de Google:"
 
 #~ msgid "Links"
 #~ msgstr "Enlaces"
