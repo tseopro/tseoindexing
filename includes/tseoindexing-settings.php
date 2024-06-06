@@ -155,7 +155,7 @@ function tseoindexing_loading_overlay() {
         <div id="tseoindexing-loading-overlay">
             <div class="centered-content">
                 <div class="tseoindexing-loading-spinner"></div>
-                <span><?php echo esc_html_e('Saving TSEO Indexing', 'tseoindexing'); ?></span>
+                <span><?php echo esc_html_e('Running service...', 'tseoindexing'); ?></span>
             </div>
         </div>
     <?php

@@ -56,7 +56,9 @@ jQuery(document).ready(function($) {
 
     function displayResponse(data) {
         var rawResponse = '';
-
+        var responseObject = {};
+        var timestamp = new Date().toLocaleTimeString();
+    
         $.each(data, function(index, item) {
             $('.response-action').text(item.action);
             $('.response-url').text(item.url);
@@ -68,9 +70,12 @@ jQuery(document).ready(function($) {
                 $('.response-message').text('URL processed successfully.');
             }
             rawResponse += item.url + ': ' + JSON.stringify(item.response) + '\n';
+            
+            responseObject[`url-${index}`] = item.response;
         });
-
-        $('#raw-response').val(rawResponse);
+    
+        var formattedResponse = `${timestamp} update: (batch)\n${JSON.stringify(responseObject, null, 2)}`;
+        $('#raw-response').val(formattedResponse);
         $('.wrap-console-response').show();
     }
 });
