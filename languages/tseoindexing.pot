@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-06T20:03:43+00:00\n"
+"POT-Creation-Date: 2024-06-07T12:33:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: tseoindexing\n"
@@ -266,38 +266,54 @@ msgstr ""
 msgid "URLs (one per line, up to 100 for Google and 10,000 for IndexNow):"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:222
-msgid "URL_UPDATED"
+#: includes/tseoindexing-settings.php:225
+msgid "Updated URLs"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:223
-msgid "URL_DELETED"
-msgstr ""
-
-#: includes/tseoindexing-settings.php:226
-msgid "Get URL status"
+#: includes/tseoindexing-settings.php:228
+msgid "Deleted URLs"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:231
-msgid "URLs to be sent to Google Console:"
+msgid "Clear URLs"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:234
-msgid "URLs to be removed from Google Console:"
+#: includes/tseoindexing-settings.php:236
+msgid "Action:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:238
-msgid "Send to API"
+#: includes/tseoindexing-settings.php:239
+msgid "Publish/update URL"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:243
+msgid "Remove URL"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:247
+msgid "Get URL status"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:253
+msgid "URLs to be sent to Google Console:"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:256
+msgid "URLs to be removed from Google Console:"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:260
+msgid "Send to API"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:277
 msgid "Response"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:262
+#: includes/tseoindexing-settings.php:286
 msgid "Show raw response:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:284
+#: includes/tseoindexing-settings.php:306
 msgid "Google API Remaining Quota:"
 msgstr ""

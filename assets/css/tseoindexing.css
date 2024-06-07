@@ -409,6 +409,11 @@
 .tseoindexing-admin-panel-all .wrap-console .console .buttons-group button:hover {
   opacity: 0.8;
 }
+.tseoindexing-admin-panel-all .wrap-console .console .buttons-group .primary {
+  border: 1px solid #94a3b8;
+  background: #cbd5e1;
+  color: rgba(30, 41, 59, 0.8);
+}
 .tseoindexing-admin-panel-all .wrap-console .quota {
   flex: 2;
   border: 1px solid #f1f5f9;
@@ -454,6 +459,12 @@
 }
 .tseoindexing-admin-panel-all .wrap-console-response .response .response-title {
   font-size: 1.8rem;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .response .response-title .title-error {
+  color: #b91c1c;
+}
+.tseoindexing-admin-panel-all .wrap-console-response .response .response-title .title-success {
+  color: #16a34a;
 }
 .tseoindexing-admin-panel-all .wrap-console-response .response .response-message {
   font-size: 0.85rem;

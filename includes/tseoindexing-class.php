@@ -430,34 +430,41 @@ class TSEOIndexing_Main {
             error_log('Service account file is not set in TSEO Indexing plugin settings.');
             return false;
         }
-
+    
         $options = maybe_unserialize($options);
-
         $service_account_file = isset($options['json_key']) ? json_decode($options['json_key'], true) : null;
         if (!$service_account_file) {
             error_log('Invalid service account file in TSEO Indexing plugin settings.');
             return false;
         }
-
+    
         $client = new Google\Client();
         $client->setAuthConfig($service_account_file);
         $client->addScope('https://www.googleapis.com/auth/indexing');
-
+    
         $indexingService = new Google\Service\Indexing($client);
-
+    
         $postBody = new Google\Service\Indexing\UrlNotification();
         $postBody->setUrl($url);
         $postBody->setType($type);
-
+    
+        error_log('Publishing URL with type: ' . $type);
+    
         try {
             $response = $indexingService->urlNotifications->publish($postBody);
+            error_log('Successfully published URL: ' . $url . ' with type: ' . $type);
             return $response;
         } catch (Exception $e) {
             error_log('Error publishing URL in Google Indexing API: ' . $e->getMessage());
-            return false;
+            return [
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage()
+                ]
+            ];
         }
     }
-
+    
     /**
      * Notifies Google about a new post.
      *
@@ -552,30 +559,98 @@ class TSEOIndexing_Main {
 
     public function send_urls_to_google() {
         check_ajax_referer('tseoindexing_console', '_ajax_nonce');
-
+    
         $urls = array_map('esc_url_raw', $_POST['urls']);
-        $get_status = isset($_POST['get_status']) ? (bool) $_POST['get_status'] : false;
-
+        $action = sanitize_text_field($_POST['api_action']);  // Obtener el valor de api_action
+    
+        error_log('Received action: ' . $action);
+    
         $results = [];
         foreach ($urls as $url) {
-            if ($get_status) {
-                $response = $this->get_google_indexing_status($url);
-                $action = 'getstatus';
-            } else {
-                $type = $this->get_url_type($url);
-                $response = $this->google_tseoindexing_api_publish_url($url, $type);
-                $action = $type === 'URL_UPDATED' ? 'publish/update' : 'remove';
+            $action_type = '';  // Inicializamos el tipo de acción
+            $response = [];  // Inicializamos la respuesta
+    
+            // Dependiendo del valor de 'api_action', enviamos la solicitud correcta
+            switch ($action) {
+                case 'URL_UPDATED':
+                    error_log('Publishing URL as URL_UPDATED: ' . $url);
+                    $response = $this->google_tseoindexing_api_publish_url($url, 'URL_UPDATED');
+                    $action_type = 'URL_UPDATED';
+                    break;
+                case 'URL_DELETED':
+                    error_log('Publishing URL as URL_DELETED: ' . $url);
+                    $response = $this->google_tseoindexing_api_publish_url($url, 'URL_DELETED');
+                    $action_type = 'URL_DELETED';
+                    break;
+                case 'getstatus':
+                    error_log('Getting status for URL: ' . $url);
+                    $response = $this->get_google_indexing_status($url);
+                    $action_type = 'getstatus';
+                    break;
+                default:
+                    $response = ['error' => ['code' => 400, 'message' => 'Invalid action type']];
+                    $action_type = 'invalid';
+                    break;
             }
+    
+            // Formatear la respuesta para ser más legible en el frontend
+            $formatted_response = $this->format_api_response($response);
+    
+            // Registrar la respuesta
+            error_log('API Response: ' . print_r($response, true));
+    
+            // Agregar el resultado al array de resultados
             $results[] = [
                 'url' => $url,
-                'action' => $action,
-                'response' => $response,
+                'action' => $action_type,
+                'response' => $formatted_response,
             ];
+    
+            error_log('Processed action: ' . $action_type);
         }
-
+    
+        // Enviar la respuesta de vuelta a la solicitud AJAX
         wp_send_json_success($results);
     }
-
+    
+    private function format_api_response($response) {
+        if (isset($response['error'])) {
+            return [
+                'status' => 'error',
+                'code' => $response['error']['code'],
+                'message' => $response['error']['message']
+            ];
+        }
+    
+        // Formato específico para la respuesta de URL_UPDATED o URL_DELETED
+        if ($response instanceof Google\Service\Indexing\PublishUrlNotificationResponse) {
+            return [
+                'status' => 'success',
+                'url' => $response->urlNotificationMetadata->url,
+                'type' => $response->urlNotificationMetadata->latestUpdate ? $response->urlNotificationMetadata->latestUpdate->type : $response->urlNotificationMetadata->latestRemove->type,
+                'notifyTime' => $response->urlNotificationMetadata->latestUpdate ? $response->urlNotificationMetadata->latestUpdate->notifyTime : $response->urlNotificationMetadata->latestRemove->notifyTime
+            ];
+        }
+    
+        // Formato específico para la respuesta de getstatus
+        if ($response instanceof Google\Service\Indexing\UrlNotificationMetadata) {
+            return [
+                'url' => $response->url,
+                'latestUpdate' => $response->latestUpdate ? [
+                    'type' => $response->latestUpdate->type,
+                    'notifyTime' => $response->latestUpdate->notifyTime
+                ] : null,
+                'latestRemove' => $response->latestRemove ? [
+                    'type' => $response->latestRemove->type,
+                    'notifyTime' => $response->latestRemove->notifyTime
+                ] : null
+            ];
+        }
+    
+        return $response;  // Retornar como está si no hay formato específico.
+    }
+      
+    
     public function get_urls_by_type($type) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
@@ -595,99 +670,31 @@ class TSEOIndexing_Main {
         if (!$options) {
             return ['error' => ['code' => 500, 'message' => 'Service account file is not set']];
         }
-
+    
         $options = maybe_unserialize($options);
-
         $service_account_file = isset($options['json_key']) ? json_decode($options['json_key'], true) : null;
         if (!$service_account_file) {
             return ['error' => ['code' => 500, 'message' => 'Invalid service account file']];
         }
-
+    
         $client = new Google\Client();
         $client->setAuthConfig($service_account_file);
         $client->addScope('https://www.googleapis.com/auth/indexing');
-
+    
         $indexingService = new Google\Service\Indexing($client);
-
+    
         try {
             $response = $indexingService->urlNotifications->getMetadata(['url' => $url]);
+            error_log('Successfully retrieved status for URL: ' . $url);
             return $response;
         } catch (Exception $e) {
-            return ['error' => ['code' => $e->getCode(), 'message' => $e->getMessage()]];
-        }
-    }
-
-    /**
-     * Retrieves the Google indexing quota data.
-     *
-     * This function retrieves the Google indexing quota data by making use of the Google Cloud Monitoring API.
-     * It fetches the quota usage for various metrics such as PublishRequestsPerDayPerProject, MetadataRequestsPerMinutePerProject, and RequestsPerMinutePerProject.
-     * The function requires a valid service account file to be set in the plugin options.
-     *
-     * @return array An array containing the quota data for each metric. The default values are provided, and the actual values need to be processed from the API response.
-     *               The array has the following structure:
-     *               [
-     *                  'PublishRequestsPerDayPerProject' => '0 / 200',
-     *                  'MetadataRequestsPerMinutePerProject' => '0 / 180',
-     *                  'RequestsPerMinutePerProject' => '0 / 600'
-     *               ]
-     *               The values '0 / 200', '0 / 180', and '0 / 600' are the default values and need to be adjusted based on the API response.
-     *               If there is an error in retrieving the quota data, an array with the 'error' key and the corresponding error message will be returned.
-     */
-    public function get_google_indexing_quota() {
-        $options = get_option('tseo_indexing_options_key');
-        if (!$options) {
-            return ['error' => 'Service account file is not set'];
-        }
-    
-        $options = maybe_unserialize($options);
-        $service_account_file = isset($options['json_key']) ? json_decode($options['json_key'], true) : null;
-    
-        if (!$service_account_file) {
-            return ['error' => 'Invalid service account file'];
-        }
-    
-        $client = new Google\Client();
-        $client->setAuthConfig($service_account_file);
-        $client->addScope('https://www.googleapis.com/auth/cloud-platform');
-    
-        try {
-            $monitoring = new Google\Cloud\Monitoring\V3\MetricServiceClient([
-                'credentials' => $service_account_file
-            ]);
-            
-            $projectId = $service_account_file['project_id'];
-            $projectName = $monitoring->projectName($projectId);
-            
-            $interval = new Google\Cloud\Monitoring\V3\TimeInterval();
-            
-            $endTime = new Google\Protobuf\Timestamp();
-            $endTime->fromDateTime(new \DateTime());
-            $startTime = new Google\Protobuf\Timestamp();
-            $startTime->fromDateTime((new \DateTime())->modify('-1 day'));
-    
-            $interval->setEndTime($endTime);
-            $interval->setStartTime($startTime);
-    
-            $filter = 'metric.type="serviceruntime.googleapis.com/api/request_count"';
-            $results = $monitoring->listTimeSeries($projectName, $filter, $interval, Google\Cloud\Monitoring\V3\ListTimeSeriesRequest_TimeSeriesView::FULL);
-    
-            $quota_data = [
-                'PublishRequestsPerDayPerProject' => '0 / 200', // Default values, you need to process $results to get actual values
-                'MetadataRequestsPerMinutePerProject' => '0 / 180',
-                'RequestsPerMinutePerProject' => '0 / 600'
+            error_log('Error retrieving status for URL in Google Indexing API: ' . $e->getMessage());
+            return [
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage()
+                ]
             ];
-    
-            foreach ($results->iterateAllElements() as $result) {
-                // Process $result to extract and calculate quota usage
-                // Adjust $quota_data accordingly
-            }
-    
-            return $quota_data;
-        } catch (Exception $e) {
-            echo '<div class="danger">';
-                return ['error' => $e->getMessage()];
-            echo '</div>';
         }
     }
     

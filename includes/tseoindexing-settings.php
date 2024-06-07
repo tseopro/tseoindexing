@@ -217,15 +217,37 @@ function tseoindexing_display_console() {
     <form id="tseoindexing-console-form" method="post" action="">
         <?php wp_nonce_field('tseoindexing_console', 'tseoindexing_console_nonce'); ?>
         <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>
+        
         <textarea name="tseo_urls" id="tseo_urls" rows="10" cols="50" placeholder="https://..."></textarea>
+        
         <div class="buttons-group">
-            <button type="button" id="load-updated-urls" class="success"><?php esc_html_e('URL_UPDATED', 'tseoindexing'); ?></button>
-            <button type="button" id="load-deleted-urls" class="danger"><?php esc_html_e('URL_DELETED', 'tseoindexing'); ?></button>
-            <span class="checkbox">
-                <input type="checkbox" name="get_status" id="get_status">
-                <label for="get_status"><?php esc_html_e('Get URL status', 'tseoindexing'); ?></label>
-            </span>
+            <button type="button" id="load-updated-urls" class="success">
+                <?php esc_html_e('Updated URLs', 'tseoindexing'); ?>
+            </button>
+            <button type="button" id="load-deleted-urls" class="danger">
+                <?php esc_html_e('Deleted URLs', 'tseoindexing'); ?>
+            </button>
+            <button type="button" id="clear-urls" class="primary">
+                <?php esc_html_e('Clear URLs', 'tseoindexing'); ?>
+            </button>
         </div>
+
+        <div style="padding: 1em 0em" class="url-send">
+            <strong><?php esc_html_e('Action:', 'tseoindexing'); ?></strong>
+            <p>
+                <input type="radio" name="api_action" value="URL_UPDATED" id="send_update" checked="checked">
+                <label for="send_update"><?php esc_html_e('Publish/update URL', 'tseoindexing'); ?></label>
+            </p>
+            <p>
+                <input type="radio" name="api_action" value="URL_DELETED" id="send_remove">
+                <label for="send_remove"><?php esc_html_e('Remove URL', 'tseoindexing'); ?></label>
+            </p>
+            <p>
+                <input type="radio" name="api_action" value="getstatus" id="send_status">
+                <label for="send_status"><?php esc_html_e('Get URL status', 'tseoindexing'); ?></label>
+            </p>
+        </div>
+
         <div class="url-send">
             <p class="text-success">
                 <?php esc_html_e('URLs to be sent to Google Console:', 'tseoindexing'); ?> <span id="updated-urls-count">0</span>
@@ -240,6 +262,8 @@ function tseoindexing_display_console() {
     </form>
     <?php
 }
+
+
 
 /**
  * TSEO PRO TSEO Console response
@@ -272,13 +296,11 @@ function tseoindexing_display_console_response() {
  * @version 1.0.0
  */
 function tseoindexing_remaining_quota() {
-    $quota_info = (new TSEOIndexing_Main())->get_google_indexing_quota();
-
-    if (isset($quota_info['error'])) {
-        echo '<p>Error: ' . esc_html($quota_info['error']) . '</p>';
-        return;
-    }
-
+    $quota_info = [
+        'PublishRequestsPerDayPerProject' => '0 / 200', // Default values, you need to process $results to get actual values
+        'MetadataRequestsPerMinutePerProject' => '0 / 180',
+        'RequestsPerMinutePerProject' => '0 / 600'
+    ];
     ?>
     <a href="<?php echo esc_url('https://developers.google.com/search/apis/indexing-api/v3/quota-pricing'); ?>" target="_blank">
         <?php esc_html_e('Google API Remaining Quota:', 'tseoindexing'); ?>

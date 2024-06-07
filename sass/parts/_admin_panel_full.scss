@@ -230,7 +230,11 @@
                 button:hover {
                     opacity: 0.8;
                 }
-
+                .primary {
+                    border: 1px solid $slate-400;
+                    background: $slate-300;
+                    color: rgba($slate-800, 0.8);
+                }
             }
 
         }
@@ -282,6 +286,12 @@
 
             .response-title {
                 font-size: 1.8rem;
+                .title-error {
+                    color: $red-700;
+                }
+                .title-success {
+                    color: $green-600;
+                }
             }
             .response-message {
                 font-size: 0.85rem;

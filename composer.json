@@ -11,8 +11,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "google/apiclient": "2.16.0",
-        "google/cloud-monitoring": "^1.10"
+        "google/apiclient": "2.16.0"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",

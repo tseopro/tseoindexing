@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TSEO Indexing 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tseoindexing\n"
-"POT-Creation-Date: 2024-06-06T20:03:43+00:00\n"
-"PO-Revision-Date: 2024-06-06 22:04+0200\n"
+"POT-Creation-Date: 2024-06-07T12:33:43+00:00\n"
+"PO-Revision-Date: 2024-06-07 14:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -373,50 +373,69 @@ msgstr ""
 msgid "URLs (one per line, up to 100 for Google and 10,000 for IndexNow):"
 msgstr "URL (una por línea, hasta 100 para Google y 10.000 para IndexNow):"
 
-#: includes/tseoindexing-settings.php:222
-msgid "URL_UPDATED"
-msgstr "URL_ACTUALIZADA"
+#: includes/tseoindexing-settings.php:225
+msgid "Updated URLs"
+msgstr "Actualizar URLs"
 
-#: includes/tseoindexing-settings.php:223
-msgid "URL_DELETED"
-msgstr "URL_BORRADA"
-
-#: includes/tseoindexing-settings.php:226
-msgid "Get URL status"
-msgstr "Obtener URL"
+#: includes/tseoindexing-settings.php:228
+msgid "Deleted URLs"
+msgstr "Eliminar URLs"
 
 #: includes/tseoindexing-settings.php:231
+msgid "Clear URLs"
+msgstr "Limpiar URLs"
+
+#: includes/tseoindexing-settings.php:236
+msgid "Action:"
+msgstr "Acción:"
+
+#: includes/tseoindexing-settings.php:239
+msgid "Publish/update URL"
+msgstr "Publicar/Actualizar URL"
+
+#: includes/tseoindexing-settings.php:243
+msgid "Remove URL"
+msgstr "Eliminar URL"
+
+#: includes/tseoindexing-settings.php:247
+msgid "Get URL status"
+msgstr "Obtener estado URL"
+
+#: includes/tseoindexing-settings.php:253
 msgid "URLs to be sent to Google Console:"
 msgstr "URL que se enviarán a Google Console:"
 
-#: includes/tseoindexing-settings.php:234
+#: includes/tseoindexing-settings.php:256
 msgid "URLs to be removed from Google Console:"
 msgstr "URL que se eliminarán de Google Console:"
 
-#: includes/tseoindexing-settings.php:238
+#: includes/tseoindexing-settings.php:260
 msgid "Send to API"
 msgstr "Enviar a API"
 
-#: includes/tseoindexing-settings.php:253
+#: includes/tseoindexing-settings.php:277
 msgid "Response"
 msgstr "Respuesta"
 
-#: includes/tseoindexing-settings.php:262
+#: includes/tseoindexing-settings.php:286
 msgid "Show raw response:"
 msgstr "Mostrar respuesta cruda:"
 
-#: includes/tseoindexing-settings.php:284
+#: includes/tseoindexing-settings.php:306
 msgid "Google API Remaining Quota:"
 msgstr "Cuota restante de la API de Google:"
+
+#~ msgid "URL_UPDATED"
+#~ msgstr "URL_ACTUALIZADA"
+
+#~ msgid "URL_DELETED"
+#~ msgstr "URL_BORRADA"
 
 #~ msgid "Saving TSEO Indexing"
 #~ msgstr "Guardando TSEO Indexing"
 
 #~ msgid "Links"
 #~ msgstr "Enlaces"
-
-#~ msgid "Remove"
-#~ msgstr "Quitar"
 
 #~ msgid "Yes"
 #~ msgstr "Sí"

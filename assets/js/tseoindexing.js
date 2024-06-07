@@ -7,6 +7,10 @@ jQuery(document).ready(function($) {
         loadUrls('URL_DELETED');
     });
 
+    $('#clear-urls').click(function() {
+        $('#tseo_urls').val('');  // Limpia el contenido del textarea
+    });
+
     function loadUrls(type) {
         $.post(ajaxurl, {
             action: 'load_urls_by_type',
@@ -30,8 +34,15 @@ jQuery(document).ready(function($) {
         e.preventDefault();
 
         var urls = $('#tseo_urls').val().trim().split("\n");
-        var get_status = $('#get_status').is(':checked');
         var nonce = $('#tseoindexing_console_nonce').val();
+        var action = $('input[name="api_action"]:checked').val();
+
+        console.log('Selected action:', action);
+
+        if (!action) {
+            alert('Please select an action.');
+            return;
+        }
 
         $('.wrap-console-response').hide();
         $('.response-action').text('');
@@ -43,9 +54,10 @@ jQuery(document).ready(function($) {
         $.post(ajaxurl, {
             action: 'send_urls_to_google',
             urls: urls,
-            get_status: get_status,
+            api_action: action,
             _ajax_nonce: nonce
         }, function(response) {
+            console.log('API Response:', response);
             if (response.success) {
                 displayResponse(response.data);
             } else {
@@ -58,22 +70,23 @@ jQuery(document).ready(function($) {
         var rawResponse = '';
         var responseObject = {};
         var timestamp = new Date().toLocaleTimeString();
-    
+
         $.each(data, function(index, item) {
             $('.response-action').text(item.action);
-            $('.response-url').text(item.url);
-            if (item.response.error) {
-                $('.response-title').text('Error ' + item.response.error.code);
-                $('.response-message').text(item.response.error.message);
+            //$('.response-url').text(item.url);
+            if (item.response.status === 'error') {
+                $('.response-title').html('<span class="title-error">Error ' + item.response.code + '</span>');
+                $('.response-message').text(item.response.message);
             } else {
-                $('.response-title').text('Success');
-                $('.response-message').text('URL processed successfully.');
+                $('.response-title').html('<span class="title-success">Success</span>');
+                //$('.response-message').html('URL: ' + item.response.url + '<br>Type: ' + item.response.type + '<br>Notify Time: ' + item.response.notifyTime);
+                $('.response-message').html('Type: ' + item.response.type + '<br>Notify Time: ' + item.response.notifyTime);
             }
             rawResponse += item.url + ': ' + JSON.stringify(item.response) + '\n';
-            
+
             responseObject[`url-${index}`] = item.response;
         });
-    
+
         var formattedResponse = `${timestamp} update: (batch)\n${JSON.stringify(responseObject, null, 2)}`;
         $('#raw-response').val(formattedResponse);
         $('.wrap-console-response').show();
