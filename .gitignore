@@ -7,11 +7,14 @@
 node_modules/
 dist/
 vendor/
-vendor-tmp
+vendor-temp/
 .vscode/
 _psd/
+tseoindexing-dist/
 composer.lock
 package-lock.json
+INSTRUCCIONES.md
+pack.sh
 
 # Log files
 *.log
