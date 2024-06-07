@@ -223,9 +223,12 @@ class TSEOIndexing_Main {
             <thead>
                 <tr>
                     <th style="width:60%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
-                    <th style="width:15%"><?php esc_html_e('Action', 'tseoindexing'); ?></th>
+                    <th style="width:10%"><?php esc_html_e('Action', 'tseoindexing'); ?></th>
                     <th style="width:10%"><?php esc_html_e('Status', 'tseoindexing'); ?></th>
-                    <th style="width:15%"><?php esc_html_e('Type', 'tseoindexing'); ?></th>
+                    <th style="width:10%"><?php esc_html_e('Type', 'tseoindexing'); ?></th>
+                    <th style="width:10%">
+                        <button type="button" id="delete-selected" class="button button-secondary"><?php esc_html_e('Delete', 'tseoindexing'); ?></button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -255,6 +258,11 @@ class TSEOIndexing_Main {
                                 echo esc_html($post_type);
                             ?>
                         </td>
+                        <td class="data-all" id="delete-<?php echo esc_attr($url_data->url); ?>">
+                            <?php if (in_array($url_data->type, ['URL_UPDATED', 'URL_DELETED'])): ?>
+                                <input type="checkbox" name="urls_to_delete[]" value="<?php echo esc_url($url_data->url); ?>">
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -273,57 +281,34 @@ class TSEOIndexing_Main {
                 echo '<div class="tseoindexing-pagination">' . $page_links . '</div>';
             }
         }
-        ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var checkboxes = document.querySelectorAll('.checkbox input[type="checkbox"]');
-                checkboxes.forEach(function(checkbox) {
-                    checkbox.addEventListener("change", function() {
-                        var label = this.nextElementSibling;
-                        var action = this.checked ? 'update' : 'remove';
-                        label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Add', 'tseoindexing'); ?>";
-                        label.classList.toggle("update", this.checked);
-                        label.classList.toggle("add", !this.checked);
-
-                        jQuery.post(ajaxurl, {
-                            action: 'update_tseo_url',
-                            url: this.value,
-                            action_type: action,
-                            _ajax_nonce: '<?php echo wp_create_nonce('update_tseo_url_nonce'); ?>'
-                        }, function(response) {
-                            if (!response.success) {
-                                alert('Error: ' + response.data);
-                            } else {
-                                var statusCell = checkbox.closest('tr').querySelector('.status');
-                                statusCell.innerText = response.data.type;
-                                statusCell.className = 'data-all status ' + (response.data.type === 'URL_UPDATED' ? 'status-updated' : (response.data.type === 'URL_DELETED' ? 'status-deleted' : 'status-null'));
-                            }
-                        });
-                    });
-                });
-            });
-        </script>
-        <?php
+        // JavaScript from tseoindexing-settings.php
+        tseoindexing_php_script_embedded_links_table();
     }
 
-    // Obtiene todas las URLs de las páginas, posts, productos y taxonomías
+    // Retrieves all URLs from pages, posts, products, and taxonomies
     public function tseoindexing_get_indexed_urls() {
         $indexed_urls = [];
 
-        $pages = get_pages();
+        $pages = get_pages(['number' => 0]);
         foreach ($pages as $page) {
             $url = get_permalink($page->ID);
             $indexed_urls[$url] = true;
         }
 
-        $posts = get_posts(['post_type' => 'post']);
+        $posts = get_posts([
+            'post_type' => 'post',
+            'numberposts' => -1
+        ]);
         foreach ($posts as $post) {
             $url = get_permalink($post->ID);
             $indexed_urls[$url] = true;
         }
 
         if (class_exists('WooCommerce')) {
-            $products = get_posts(['post_type' => 'product']);
+            $products = get_posts([
+                'post_type' => 'product',
+                'numberposts' => -1
+            ]);
             foreach ($products as $product) {
                 $url = get_permalink($product->ID);
                 $indexed_urls[$url] = true;
@@ -332,14 +317,24 @@ class TSEOIndexing_Main {
 
         $taxonomies = get_taxonomies();
         foreach ($taxonomies as $taxonomy) {
-            $terms = get_terms($taxonomy);
+            $terms = get_terms([
+                'taxonomy' => $taxonomy,
+                'hide_empty' => false,
+                'number' => 0
+            ]);
+        
             foreach ($terms as $term) {
                 $url = get_term_link($term);
-                $indexed_urls[$url] = false;
+                if ($url && preg_match('/^[a-zA-Z0-9-_]+$/', basename($url))) {
+                    $indexed_urls[$url] = false;
+                }
             }
         }
 
-        $categories = get_categories();
+        $categories = get_categories([
+            'hide_empty' => false,
+            'number' => 0
+        ]);
         foreach ($categories as $category) {
             $url = get_category_link($category);
             $indexed_urls[$url] = false;
@@ -561,16 +556,16 @@ class TSEOIndexing_Main {
         check_ajax_referer('tseoindexing_console', '_ajax_nonce');
     
         $urls = array_map('esc_url_raw', $_POST['urls']);
-        $action = sanitize_text_field($_POST['api_action']);  // Obtener el valor de api_action
+        $action = sanitize_text_field($_POST['api_action']);  // Get the value of api_action
     
         error_log('Received action: ' . $action);
     
         $results = [];
         foreach ($urls as $url) {
-            $action_type = '';  // Inicializamos el tipo de acción
-            $response = [];  // Inicializamos la respuesta
+            $action_type = '';  // Initialize the action type
+            $response = [];  // Initialize the response
     
-            // Dependiendo del valor de 'api_action', enviamos la solicitud correcta
+            // Depending on the value of 'api_action', we send the correct request
             switch ($action) {
                 case 'URL_UPDATED':
                     error_log('Publishing URL as URL_UPDATED: ' . $url);
@@ -593,13 +588,13 @@ class TSEOIndexing_Main {
                     break;
             }
     
-            // Formatear la respuesta para ser más legible en el frontend
+            // Format the response to be more readable on the frontend
             $formatted_response = $this->format_api_response($response);
     
-            // Registrar la respuesta
+            // Register the response
             error_log('API Response: ' . print_r($response, true));
     
-            // Agregar el resultado al array de resultados
+            // Add the result to the results array
             $results[] = [
                 'url' => $url,
                 'action' => $action_type,
@@ -609,7 +604,7 @@ class TSEOIndexing_Main {
             error_log('Processed action: ' . $action_type);
         }
     
-        // Enviar la respuesta de vuelta a la solicitud AJAX
+        // Send the response back to the AJAX request
         wp_send_json_success($results);
     }
     
@@ -622,7 +617,7 @@ class TSEOIndexing_Main {
             ];
         }
     
-        // Formato específico para la respuesta de URL_UPDATED o URL_DELETED
+        // Specific format for URL_UPDATED or URL_DELETED response
         if ($response instanceof Google\Service\Indexing\PublishUrlNotificationResponse) {
             return [
                 'status' => 'success',
@@ -632,7 +627,7 @@ class TSEOIndexing_Main {
             ];
         }
     
-        // Formato específico para la respuesta de getstatus
+        // Specific format for getstatus response
         if ($response instanceof Google\Service\Indexing\UrlNotificationMetadata) {
             return [
                 'url' => $response->url,
@@ -647,9 +642,8 @@ class TSEOIndexing_Main {
             ];
         }
     
-        return $response;  // Retornar como está si no hay formato específico.
+        return $response;  // Return as is if there is no specific format.
     }
-      
     
     public function get_urls_by_type($type) {
         global $wpdb;

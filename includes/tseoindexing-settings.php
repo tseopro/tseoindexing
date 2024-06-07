@@ -79,6 +79,44 @@ function update_tseo_url() {
 
     wp_send_json_success(['type' => $type]);
 }
+
+
+/**
+ * Deletes TSEO URLs via AJAX request.
+ *
+ * This function is hooked to the 'wp_ajax_delete_tseo_urls' action and is used to delete TSEO URLs from the database.
+ * It checks the AJAX referer, user capabilities, and receives the URLs to delete from the AJAX request.
+ * If the user has the necessary permissions and URLs are provided, it deletes the URLs from the database.
+ *
+ * @since 1.0.0
+ */
+add_action('wp_ajax_delete_tseo_urls', 'delete_tseo_urls_callback');
+function delete_tseo_urls_callback() {
+    check_ajax_referer('delete_tseo_urls_nonce', '_ajax_nonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('No tienes permiso para realizar esta acción.');
+    }
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'tseo_indexing_links';
+
+    // Recibir las URLs a eliminar desde la solicitud AJAX
+    $urls_to_delete = isset($_POST['urls']) ? $_POST['urls'] : [];
+
+    if (!empty($urls_to_delete)) {
+        // Eliminar las URLs de la base de datos
+        foreach ($urls_to_delete as $url) {
+            $wpdb->delete($table_name, ['url' => $url], ['%s']);
+        }
+
+        wp_send_json_success('URLs eliminadas exitosamente.');
+    } else {
+        wp_send_json_error('No se recibió ninguna URL para eliminar.');
+    }
+}
+
+
  
 /**
  * Save API Key
@@ -288,6 +326,98 @@ function tseoindexing_display_console_response() {
     </div>
     <?php
 }
+
+
+/**
+ * TSEO PRO TSEO <script> embedded in the links table
+ *
+ * This function generates a JavaScript script that handles the updating and deleting of URLs.
+ * It attaches event listeners to checkboxes and a delete button, and makes AJAX requests to update or delete URLs.
+ * The function is embedded in a PHP file located at /c:/laragon/www/tseo/wp-content/plugins/tseoindexing/includes/tseoindexing-settings.php.
+ * 
+ * @package TSEOIndexing
+ * @version 1.0.0
+ * 
+ */
+function tseoindexing_php_script_embedded_links_table() {
+?>
+    <script>
+        // Update or remove URLs
+        document.addEventListener("DOMContentLoaded", function() {
+            var checkboxes = document.querySelectorAll('.checkbox input[type="checkbox"]');
+            
+            checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener("change", function() {
+                var label = this.nextElementSibling;
+                var action = this.checked ? 'update' : 'remove';
+                label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Add', 'tseoindexing'); ?>";
+                label.classList.toggle("update", this.checked);
+                label.classList.toggle("add", !this.checked);
+
+                    jQuery.post(ajaxurl, {
+                        action: 'update_tseo_url',
+                        url: this.value,
+                        action_type: action,
+                        _ajax_nonce: '<?php echo wp_create_nonce('update_tseo_url_nonce'); ?>'
+                    }, function(response) {
+                        if (!response.success) {
+                            alert('Error: ' + response.data);
+                        } else {
+                            var statusCell = checkbox.closest('tr').querySelector('.status');
+                            statusCell.innerText = response.data.type;
+                            statusCell.className = 'data-all status ' + (response.data.type === 'URL_UPDATED' ? 'status-updated' : (response.data.type === 'URL_DELETED' ? 'status-deleted' : 'status-null'));
+
+                            // Additional logic to show or hide the delete checkbox
+                            var deleteCellId = 'delete-' + checkbox.value;
+                            var deleteCell = document.getElementById(deleteCellId);
+
+                            if (deleteCell) {
+                                if (checkbox.checked && (response.data.type === 'URL_UPDATED' || response.data.type === 'URL_DELETED')) {
+                                    // Show the delete checkbox if the type is URL_UPDATED or URL_DELETED
+                                    deleteCell.innerHTML = '<input type="checkbox" name="urls_to_delete[]" value="' + checkbox.value + '">';
+                                } else {
+                                    // Remove the delete checkbox if it does not meet the conditions
+                                    deleteCell.innerHTML = '';
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+        });
+        // Delete selected URLs
+        document.addEventListener("DOMContentLoaded", function() {
+            var deleteButton = document.getElementById('delete-selected');
+            deleteButton.addEventListener("click", function() {
+                var checkboxes = document.querySelectorAll('input[name="urls_to_delete[]"]:checked');
+                var urlsToDelete = [];
+                checkboxes.forEach(function(checkbox) {
+                    urlsToDelete.push(checkbox.value);
+                });
+                if (urlsToDelete.length > 0) {
+                    if (confirm('<?php echo esc_html__('Do you want to remove these URLs from the list?', 'tseoindexing'); ?>')) {
+                        jQuery.post(ajaxurl, {
+                            action: 'delete_tseo_urls',
+                            urls: urlsToDelete,
+                            _ajax_nonce: '<?php echo wp_create_nonce('delete_tseo_urls_nonce'); ?>'
+                        }, function(response) {
+                            if (response.success) {
+                                alert('<?php echo esc_html__('URLs successfully deleted!', 'tseoindexing'); ?>');
+                                location.reload();
+                            } else {
+                                alert('<?php echo esc_html__('Error deleting URLs: ', 'tseoindexing'); ?>' + response.data);
+                            }
+                        });
+                    }
+                } else {
+                    alert('<?php echo esc_html__('Please select at least one URL to delete.', 'tseoindexing'); ?>');
+                }
+            });
+        });
+    </script>
+<?php
+}
+
 
 /**
  * TSEO PRO TSEO Remaining Quota - Console
