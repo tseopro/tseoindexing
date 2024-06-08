@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'tseoindexing';
   src:
-    url('fonts/tseoindexing.ttf?t3lbrd') format('truetype'),
-    url('fonts/tseoindexing.woff?t3lbrd') format('woff'),
-    url('fonts/tseoindexing.svg?t3lbrd#tseoindexing') format('svg');
+    url('fonts/tseoindexing.ttf?vrm4gh') format('truetype'),
+    url('fonts/tseoindexing.woff?vrm4gh') format('woff'),
+    url('fonts/tseoindexing.svg?vrm4gh#tseoindexing') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -36,23 +36,14 @@ i {
 .tseoindexing-database:before {
   content: "\e964";
 }
-.tseoindexing-spinner:before {
-  content: "\e97a";
-}
 .tseoindexing-cogs:before {
   content: "\e995";
-}
-.tseoindexing-stats-dots:before {
-  content: "\e99b";
 }
 .tseoindexing-fire:before {
   content: "\e9a9";
 }
 .tseoindexing-sphere:before {
   content: "\e9c9";
-}
-.tseoindexing-earth:before {
-  content: "\e9ca";
 }
 .tseoindexing-link:before {
   content: "\e9cb";
@@ -78,9 +69,6 @@ i {
 .tseoindexing-checkmark2:before {
   content: "\ea11";
 }
-.tseoindexing-circle-right:before {
-  content: "\ea42";
-}
-.tseoindexing-circle-left:before {
-  content: "\ea44";
+.tseoindexing-bin:before {
+  content: "\e9ac";
 }

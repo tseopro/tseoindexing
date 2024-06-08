@@ -146,6 +146,23 @@
                 //padding-left: 8px;
             }
         }
+        @media (max-width: 850px) {
+            .checkbox {
+                input[type="checkbox"] {
+                    + label {
+                    width: 70px; // Tamaño del toggle
+                    height: 20px;
+                        &:before {
+                            content: "";
+                            top: 4px; // Espaciado vertical
+                            left: 4px; // Espaciado horizontal
+                            width: 11px; // Tamaño del círculo interno
+                            height: 11px;
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
@@ -158,58 +175,126 @@
     }
 
     // Estilos para las tablas
-    table.form-table {
-        th, td {
-            text-align: center;
-            vertical-align: middle;
-            margin: 0;
-            padding: 0.5em 0em;
-        }
+    .flex-table {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border: 1px solid $gray-300;
+        border-radius: 5px;
+        overflow: hidden; // Asegura que no haya overflow de bordes redondeados
+        background: $bt_white;
     
-        th {
-            i.sphere {
-                font-size: 1.5em;
-                margin: 0;
-                padding: 0;
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-bottom: 1px solid $gray-200;
+            transition: background-color 0.3s ease; // Suavizar el cambio de color de fondo
+    
+            &:last-child {
+                border-bottom: none; // Eliminar el borde para la última fila
             }
-        }
     
-        td {
-            padding: 5px !important;
+            &:hover {
+                background-color: $gray-100; // Color de fondo al pasar el ratón
+            }
+    
+            .line_one {
+                flex: 3; // Ocupa más espacio que .line_two
+                display: flex;
+                justify-content: flex-start;
+                padding: 3px;
+            }
+    
+            .line_two {
+                flex: 3; // Ocupa menos espacio que .line_one
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                padding: 3px;
+    
+                .flex-cell {
+                    flex: 1 0 50px; // flex-grow: 1, flex-shrink: 0, flex-basis: 50px
+                    min-width: 50px; // Asegura que el ancho mínimo sea 50px
+                    max-width: 200px; // Opcional: define un ancho máximo para evitar que las celdas se extiendan demasiado
+                    text-align: center; // Alineación central para el contenido
+                }
 
-            .button-eye {
-                padding-top: 2px !important;
-                padding: 0em 1em;
-                margin: 0;
-                background: $slate-100;
-                border: 1px solid $slate-200;
-                border-radius: 3px;
-            }
-            .button-eye:focus {
-                border: 1px solid $green-200;
+                i.tseoindexing-bin {
+                    color: $red-800;
+                }
+
+                a.button-eye {
+                    text-decoration: none;
+                }
+
+                .button-eye {
+                    padding-top: 2px !important;
+                    padding: 0em 1em;
+                    margin: 0;
+                    background: $slate-100;
+                    border: 1px solid $slate-200;
+                    border-radius: 3px;
+                }
+        
+                .button-eye:focus {
+                    border: 1px solid $green-200;
+                }
+        
+                i.eye {
+                    font-size: 1.3em;
+                    color: $gray-800;
+                    cursor: pointer;
+        
+                    &:hover {
+                        color: $green-600;
+                    }
+                }
+
             }
     
-            i.eye {
-                font-size: 1.3em;
-                color: $gray-800;
-                cursor: pointer;
+            .flex-cell {
+                padding: 5px;
+                text-align: center;
+            }
     
-                &:hover {
-                    color: $green-600;
+            .status {
+                font-size: 0.6rem;
+            }
+        }
+    
+        .header {
+            background-color: $slate-100;
+            font-weight: bold;
+            padding: 0.3em 0.1em;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        // Responsividad para pantallas pequeñas
+        @media (max-width: 850px) {
+            .flex-row {
+                flex-direction: column; // Cambia a disposición vertical en pantallas pequeñas
+                align-items: flex-start;
+    
+                .line_one, .line_two {
+                    flex: 1;
+                    width: 100%;
+                    padding: 5px 0;
+    
+                    // Distribuye los elementos uniformemente en .line_two
+                    .line_two {
+                        justify-content: space-between;
+                    }
+                }
+    
+                .flex-cell {
+                    flex: 1 0 auto; // Resetea la base flexible en pantallas pequeñas
+                    width: 100%; // Cada celda ocupa el ancho completo
                 }
             }
-    
-            &.url {
-                text-align: left !important;
-            }
-        }
-    
-        // Aplicar el :hover a la fila completa
-        tr:hover {
-            background-color: $gray-100;
         }
     }
-    
     
     .wrap-console {
         display: flex;

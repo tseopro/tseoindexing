@@ -6,9 +6,9 @@
 @font-face {
   font-family: '#{$icomoon-font-family}';
   src:
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?t3lbrd') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?t3lbrd') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?t3lbrd##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?vrm4gh') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?vrm4gh') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?vrm4gh##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -49,19 +49,9 @@ i {
     content: $tseoindexing-database; 
   }
 }
-.tseoindexing-spinner {
-  &:before {
-    content: $tseoindexing-spinner; 
-  }
-}
 .tseoindexing-cogs {
   &:before {
     content: $tseoindexing-cogs; 
-  }
-}
-.tseoindexing-stats-dots {
-  &:before {
-    content: $tseoindexing-stats-dots; 
   }
 }
 .tseoindexing-fire {
@@ -72,11 +62,6 @@ i {
 .tseoindexing-sphere {
   &:before {
     content: $tseoindexing-sphere; 
-  }
-}
-.tseoindexing-earth {
-  &:before {
-    content: $tseoindexing-earth; 
   }
 }
 .tseoindexing-link {
@@ -119,15 +104,9 @@ i {
     content: $tseoindexing-checkmark2; 
   }
 }
-.tseoindexing-circle-right {
+.tseoindexing-bin {
   &:before {
-    content: $tseoindexing-circle-right; 
+    content: $tseoindexing-bin; 
   }
 }
-.tseoindexing-circle-left {
-  &:before {
-    content: $tseoindexing-circle-left; 
-  }
-}
-
 
