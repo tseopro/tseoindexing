@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-07T21:39:16+00:00\n"
+"POT-Creation-Date: 2024-06-08T19:51:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: tseoindexing\n"
@@ -57,10 +57,10 @@ msgstr ""
 
 #: includes/tseoindexing-class.php:71
 #: includes/tseoindexing-class.php:72
-#: includes/tseoindexing-class.php:393
+#: includes/tseoindexing-class.php:408
 #: tseoindexing-dist/includes/tseoindexing-class.php:71
 #: tseoindexing-dist/includes/tseoindexing-class.php:72
-#: tseoindexing-dist/includes/tseoindexing-class.php:398
+#: tseoindexing-dist/includes/tseoindexing-class.php:393
 msgid "Console"
 msgstr ""
 
@@ -114,41 +114,36 @@ msgstr ""
 msgid "TSEO Indexing URLs"
 msgstr ""
 
-#: includes/tseoindexing-class.php:225
-#: tseoindexing-dist/includes/tseoindexing-class.php:225
-msgid "URL"
-msgstr ""
-
-#: includes/tseoindexing-class.php:226
+#: includes/tseoindexing-class.php:229
 #: tseoindexing-dist/includes/tseoindexing-class.php:226
 msgid "Action"
 msgstr ""
 
-#: includes/tseoindexing-class.php:227
+#: includes/tseoindexing-class.php:230
 #: tseoindexing-dist/includes/tseoindexing-class.php:227
 msgid "Status"
 msgstr ""
 
-#: includes/tseoindexing-class.php:228
+#: includes/tseoindexing-class.php:231
 #: tseoindexing-dist/includes/tseoindexing-class.php:228
 msgid "Type"
 msgstr ""
 
-#: includes/tseoindexing-class.php:230
-msgid "Delete"
+#: includes/tseoindexing-class.php:254
+msgid "View"
 msgstr ""
 
-#: includes/tseoindexing-class.php:248
+#: includes/tseoindexing-class.php:261
 #: includes/tseoindexing-settings.php:353
-#: tseoindexing-dist/includes/tseoindexing-class.php:245
-#: tseoindexing-dist/includes/tseoindexing-class.php:284
+#: tseoindexing-dist/includes/tseoindexing-class.php:248
+#: tseoindexing-dist/includes/tseoindexing-settings.php:353
 msgid "Update"
 msgstr ""
 
-#: includes/tseoindexing-class.php:248
+#: includes/tseoindexing-class.php:261
 #: includes/tseoindexing-settings.php:353
-#: tseoindexing-dist/includes/tseoindexing-class.php:245
-#: tseoindexing-dist/includes/tseoindexing-class.php:284
+#: tseoindexing-dist/includes/tseoindexing-class.php:248
+#: tseoindexing-dist/includes/tseoindexing-settings.php:353
 msgid "Add"
 msgstr ""
 
@@ -293,122 +288,140 @@ msgid "Visit TSEO PRO"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:196
-#: tseoindexing-dist/includes/tseoindexing-settings.php:158
+#: tseoindexing-dist/includes/tseoindexing-settings.php:196
 msgid "Running service..."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:211
-#: tseoindexing-dist/includes/tseoindexing-settings.php:173
-msgid "Warning: This is a development version of the plugin. Do not use it in a production environment."
+msgid "Warning: This is a version of TSEO Indexing in development. Use at your own risk."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:225
-#: tseoindexing-dist/includes/tseoindexing-settings.php:187
+#: tseoindexing-dist/includes/tseoindexing-settings.php:225
 msgid "Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:239
-#: tseoindexing-dist/includes/tseoindexing-settings.php:201
+#: tseoindexing-dist/includes/tseoindexing-settings.php:239
 msgid "By default, all published URLs are retrieved and marked as NULL, which means they are not selected to be sent to Google Console."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:240
-#: tseoindexing-dist/includes/tseoindexing-settings.php:202
+#: tseoindexing-dist/includes/tseoindexing-settings.php:240
 msgid "They are the URLs marked to be published or updated in Google Console."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:241
-#: tseoindexing-dist/includes/tseoindexing-settings.php:203
+#: tseoindexing-dist/includes/tseoindexing-settings.php:241
 msgid "They are the URLs marked to be removed from Google Console."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:242
-#: tseoindexing-dist/includes/tseoindexing-settings.php:204
-msgid "Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed 20 at a time until the quota limit is reached. Increase the quota in Google Cloud API if necessary."
+msgid "Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed until the quota limit is reached. Increase the quota in Google Cloud API Indexing if necessary."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:257
-#: tseoindexing-dist/includes/tseoindexing-settings.php:219
+#: tseoindexing-dist/includes/tseoindexing-settings.php:257
 msgid "URLs (one per line, up to 100 for Google and 10,000 for IndexNow):"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:263
-#: tseoindexing-dist/includes/tseoindexing-settings.php:225
+#: tseoindexing-dist/includes/tseoindexing-settings.php:263
 msgid "Updated URLs"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:266
-#: tseoindexing-dist/includes/tseoindexing-settings.php:228
+#: tseoindexing-dist/includes/tseoindexing-settings.php:266
 msgid "Deleted URLs"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:269
-#: tseoindexing-dist/includes/tseoindexing-settings.php:231
+#: tseoindexing-dist/includes/tseoindexing-settings.php:269
 msgid "Clear URLs"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:274
-#: tseoindexing-dist/includes/tseoindexing-settings.php:236
+#: tseoindexing-dist/includes/tseoindexing-settings.php:274
 msgid "Action:"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:277
-#: tseoindexing-dist/includes/tseoindexing-settings.php:239
+#: tseoindexing-dist/includes/tseoindexing-settings.php:277
 msgid "Publish/update URL"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:281
-#: tseoindexing-dist/includes/tseoindexing-settings.php:243
+#: tseoindexing-dist/includes/tseoindexing-settings.php:281
 msgid "Remove URL"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:285
-#: tseoindexing-dist/includes/tseoindexing-settings.php:247
+#: tseoindexing-dist/includes/tseoindexing-settings.php:285
 msgid "Get URL status"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:291
-#: tseoindexing-dist/includes/tseoindexing-settings.php:253
+#: tseoindexing-dist/includes/tseoindexing-settings.php:291
 msgid "URLs to be sent to Google Console:"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:294
-#: tseoindexing-dist/includes/tseoindexing-settings.php:256
+#: tseoindexing-dist/includes/tseoindexing-settings.php:294
 msgid "URLs to be removed from Google Console:"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:298
-#: tseoindexing-dist/includes/tseoindexing-settings.php:260
+#: tseoindexing-dist/includes/tseoindexing-settings.php:298
 msgid "Send to API"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:315
-#: tseoindexing-dist/includes/tseoindexing-settings.php:277
+#: tseoindexing-dist/includes/tseoindexing-settings.php:315
 msgid "Response"
 msgstr ""
 
 #: includes/tseoindexing-settings.php:324
-#: tseoindexing-dist/includes/tseoindexing-settings.php:286
+#: tseoindexing-dist/includes/tseoindexing-settings.php:324
 msgid "Show raw response:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:398
+#: includes/tseoindexing-settings.php:402
+#: tseoindexing-dist/includes/tseoindexing-settings.php:398
 msgid "Do you want to remove these URLs from the list?"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:405
+#: includes/tseoindexing-settings.php:409
+#: tseoindexing-dist/includes/tseoindexing-settings.php:405
 msgid "URLs successfully deleted!"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:408
+#: includes/tseoindexing-settings.php:412
+#: tseoindexing-dist/includes/tseoindexing-settings.php:408
 msgid "Error deleting URLs: "
 msgstr ""
 
-#: includes/tseoindexing-settings.php:413
+#: includes/tseoindexing-settings.php:417
+#: tseoindexing-dist/includes/tseoindexing-settings.php:413
 msgid "Please select at least one URL to delete."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:436
-#: tseoindexing-dist/includes/tseoindexing-settings.php:306
+#: includes/tseoindexing-settings.php:440
+#: tseoindexing-dist/includes/tseoindexing-settings.php:436
 msgid "Google API Remaining Quota:"
+msgstr ""
+
+#: tseoindexing-dist/includes/tseoindexing-class.php:225
+msgid "URL"
+msgstr ""
+
+#: tseoindexing-dist/includes/tseoindexing-class.php:230
+msgid "Delete"
+msgstr ""
+
+#: tseoindexing-dist/includes/tseoindexing-settings.php:211
+msgid "Warning: This is a development version of the plugin. Do not use it in a production environment."
+msgstr ""
+
+#: tseoindexing-dist/includes/tseoindexing-settings.php:242
+msgid "Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed 20 at a time until the quota limit is reached. Increase the quota in Google Cloud API if necessary."
 msgstr ""
