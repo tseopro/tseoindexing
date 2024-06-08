@@ -1,6 +1,6 @@
 # TSEO Indexing
 
-## *Plugin to display a gallery of websites developed with WordPress.*
+## *Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages.*
 
 * Contributors: devtseo
 * Tags: wordpress, google, seo, indexing, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, tseopro
