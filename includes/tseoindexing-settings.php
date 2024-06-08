@@ -208,7 +208,7 @@ function tseoindexing_loading_overlay() {
 function tseoindexing_danger_info() {
     ?>
         <div class="danger">
-            <?php esc_html_e('Warning: This is a development version of the plugin. Do not use it in a production environment.', 'tseoindexing'); ?>
+            <?php esc_html_e('Warning: This is a version of TSEO Indexing in development. Use at your own risk.', 'tseoindexing'); ?>
         </div>
     <?php
 }
@@ -239,7 +239,7 @@ function tseoindexing_table_link_info() {
         <li><span class="status-null">NULL:</span> <?php esc_html_e('By default, all published URLs are retrieved and marked as NULL, which means they are not selected to be sent to Google Console.', 'tseoindexing'); ?></li>
         <li><span class="status-updated">URL_UPDATED:</span> <?php esc_html_e('They are the URLs marked to be published or updated in Google Console.', 'tseoindexing'); ?></li>
         <li><span class="status-deleted">URL_DELETED:</span> <?php esc_html_e('They are the URLs marked to be removed from Google Console.', 'tseoindexing'); ?></li>
-        <li class="success"><?php esc_html_e('Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed 20 at a time until the quota limit is reached. Increase the quota in Google Cloud API if necessary.', 'tseoindexing'); ?></li>
+        <li class="success"><?php esc_html_e('Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed until the quota limit is reached. Increase the quota in Google Cloud API Indexing if necessary.', 'tseoindexing'); ?></li>
     </ul>
     <?php
 }
@@ -347,13 +347,14 @@ function tseoindexing_php_script_embedded_links_table() {
             var checkboxes = document.querySelectorAll('.checkbox input[type="checkbox"]');
             
             checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener("change", function() {
-                var label = this.nextElementSibling;
-                var action = this.checked ? 'update' : 'remove';
-                label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Add', 'tseoindexing'); ?>";
-                label.classList.toggle("update", this.checked);
-                label.classList.toggle("add", !this.checked);
+                checkbox.addEventListener("change", function() {
+                    var label = this.nextElementSibling;
+                    var action = this.checked ? 'update' : 'remove';
+                    label.innerText = this.checked ? "<?php echo esc_html__('Update', 'tseoindexing'); ?>" : "<?php echo esc_html__('Add', 'tseoindexing'); ?>";
+                    label.classList.toggle("update", this.checked);
+                    label.classList.toggle("add", !this.checked);
 
+                    // Enviar solicitud AJAX para actualizar el estado de la URL
                     jQuery.post(ajaxurl, {
                         action: 'update_tseo_url',
                         url: this.value,
@@ -363,20 +364,23 @@ function tseoindexing_php_script_embedded_links_table() {
                         if (!response.success) {
                             alert('Error: ' + response.data);
                         } else {
-                            var statusCell = checkbox.closest('tr').querySelector('.status');
+                            // Encontrar la fila (.flex-row) más cercana
+                            var flexRow = checkbox.closest('.flex-row');
+                            var statusCell = flexRow.querySelector('.status');
+                            
+                            // Actualizar el contenido y la clase de la celda de estado
                             statusCell.innerText = response.data.type;
-                            statusCell.className = 'data-all status ' + (response.data.type === 'URL_UPDATED' ? 'status-updated' : (response.data.type === 'URL_DELETED' ? 'status-deleted' : 'status-null'));
+                            statusCell.className = 'flex-cell status ' + (response.data.type === 'URL_UPDATED' ? 'status-updated' : (response.data.type === 'URL_DELETED' ? 'status-deleted' : 'status-null'));
 
-                            // Additional logic to show or hide the delete checkbox
+                            // Lógica adicional para mostrar u ocultar el checkbox de eliminación
                             var deleteCellId = 'delete-' + checkbox.value;
                             var deleteCell = document.getElementById(deleteCellId);
 
                             if (deleteCell) {
-                                if (checkbox.checked && (response.data.type === 'URL_UPDATED' || response.data.type === 'URL_DELETED')) {
-                                    // Show the delete checkbox if the type is URL_UPDATED or URL_DELETED
+                                // Mostrar el checkbox de eliminación si el tipo es URL_UPDATED o URL_DELETED
+                                if (response.data.type === 'URL_UPDATED' || response.data.type === 'URL_DELETED') {
                                     deleteCell.innerHTML = '<input type="checkbox" name="urls_to_delete[]" value="' + checkbox.value + '">';
                                 } else {
-                                    // Remove the delete checkbox if it does not meet the conditions
                                     deleteCell.innerHTML = '';
                                 }
                             }

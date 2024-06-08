@@ -218,61 +218,68 @@ class TSEOIndexing_Main {
         $offset = ($paged - 1) * $per_page;
         $urls_to_display = array_slice($all_urls, $offset, $per_page);
         ?>
-        <?php tseoindexing_table_link_info(); ?>
-        <table class="wp-list-table widefat fixed striped form-table">
-            <thead>
-                <tr>
-                    <th style="width:50%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
-                    <th style="width:10%"><i class="tseoindexing-sphere sphere"></i></th>
-                    <th style="width:10%"><?php esc_html_e('Action', 'tseoindexing'); ?></th>
-                    <th style="width:10%"><?php esc_html_e('Status', 'tseoindexing'); ?></th>
-                    <th style="width:10%"><?php esc_html_e('Type', 'tseoindexing'); ?></th>
-                    <th style="width:10%">
-                        <button type="button" id="delete-selected" class="button button-secondary"><?php esc_html_e('Delete', 'tseoindexing'); ?></button>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($urls_to_display as $url_data): 
-                    $status_class = 'status-null';
-                    if ($url_data->type === 'URL_UPDATED') {
-                        $status_class = 'status-updated';
-                    } elseif ($url_data->type === 'URL_DELETED') {
-                        $status_class = 'status-deleted';
-                    }
-                ?>
-                    <tr>
-                        <td class="url"><?php echo esc_url($url_data->url); ?></td>
-                        <td class="data-all">
-                            <a href="<?php echo esc_url($url_data->url); ?>" class="button-eye" target="_black">
-                                <i class="tseoindexing-eye eye"></i>
-                            </a>
-                        </td>
-                        <td class="checkbox data-all">
-                            <input type="checkbox" id="<?php echo esc_attr($url_data->url); ?>" name="urls_to_index[]" value="<?php echo esc_url($url_data->url); ?>" <?php checked($url_data->type === 'URL_UPDATED'); ?> class="submit">
-                            <label for="<?php echo esc_attr($url_data->url); ?>">
-                                <?php echo $url_data->type === 'URL_UPDATED' ? esc_html__('Update', 'tseoindexing') : esc_html__('Add', 'tseoindexing'); ?>
-                            </label>
-                        </td>
-                        <td class="data-all status <?php echo $status_class; ?>">
-                            <?php echo esc_html($url_data->type); ?>
-                        </td>
-                        <td class="data-all">
-                            <?php
-                                $post_id = url_to_postid($url_data->url);
-                                $post_type = get_post_type($post_id);
-                                echo esc_html($post_type);
-                            ?>
-                        </td>
-                        <td class="data-all" id="delete-<?php echo esc_attr($url_data->url); ?>">
-                            <?php if (in_array($url_data->type, ['URL_UPDATED', 'URL_DELETED'])): ?>
-                                <input type="checkbox" name="urls_to_delete[]" value="<?php echo esc_url($url_data->url); ?>">
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="flex-table">
+            <!-- Cabecera -->
+            <div class="flex-row header">
+                <div class="line_one">
+                    <div class="flex-cell">URL</div>
+                </div>
+                <div class="line_two">   
+                    <div class="flex-cell"><i class="tseoindexing-sphere sphere"></i></div>
+                    <div class="flex-cell"><?php esc_html_e('Action', 'tseoindexing'); ?></div>
+                    <div class="flex-cell"><?php esc_html_e('Status', 'tseoindexing'); ?></div>
+                    <div class="flex-cell"><?php esc_html_e('Type', 'tseoindexing'); ?></div>
+                    <div class="flex-cell">
+                        <button type="button" id="delete-selected" class="button button-secondary">
+                            <i class="tseoindexing-bin"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Filas de Datos -->
+            <?php foreach ($urls_to_display as $url_data): 
+                $status_class = 'status-null';
+                if ($url_data->type === 'URL_UPDATED') {
+                    $status_class = 'status-updated';
+                } elseif ($url_data->type === 'URL_DELETED') {
+                    $status_class = 'status-deleted';
+                }
+            ?>
+            <div class="flex-row">
+                <div class="line_one">
+                    <div class="flex-cell"><?php echo esc_url($url_data->url); ?></div>
+                </div>
+                <div class="line_two">
+                    <div class="flex-cell">
+                        <a href="<?php echo esc_url($url_data->url); ?>" class="button-eye" target="_black" title="<?php esc_html_e('View', 'tseoindexing'); ?>">
+                            <i class="tseoindexing-eye eye"></i>
+                        </a>
+                    </div>
+                    <div class="flex-cell checkbox">
+                        <input type="checkbox" id="<?php echo esc_attr($url_data->url); ?>" name="urls_to_index[]" value="<?php echo esc_url($url_data->url); ?>" <?php checked($url_data->type === 'URL_UPDATED'); ?> class="submit">
+                        <label for="<?php echo esc_attr($url_data->url); ?>">
+                            <?php echo $url_data->type === 'URL_UPDATED' ? esc_html__('Update', 'tseoindexing') : esc_html__('Add', 'tseoindexing'); ?>
+                        </label>
+                    </div>
+                    <div class="flex-cell data-all status <?php echo $status_class; ?>">
+                        <?php echo esc_html($url_data->type); ?>
+                    </div>
+                    <div class="flex-cell">
+                        <?php
+                            $post_id = url_to_postid($url_data->url);
+                            $post_type = get_post_type($post_id);
+                            echo esc_html($post_type);
+                        ?>
+                    </div>
+                    <div class="flex-cell" id="delete-<?php echo esc_attr($url_data->url); ?>">
+                        <?php if (in_array($url_data->type, ['URL_UPDATED', 'URL_DELETED'])): ?>
+                            <input type="checkbox" name="urls_to_delete[]" value="<?php echo esc_url($url_data->url); ?>">
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
         <?php
         if ($total_pages > 1) {
             $page_links = paginate_links([
@@ -289,6 +296,8 @@ class TSEOIndexing_Main {
         }
         // JavaScript from tseoindexing-settings.php
         tseoindexing_php_script_embedded_links_table();
+        // Table Infornation
+        tseoindexing_table_link_info();
     }
 
     // Retrieves all URLs from pages, posts, products, and taxonomies
