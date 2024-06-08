@@ -159,19 +159,58 @@
 
     // Estilos para las tablas
     table.form-table {
-        th {
-            text-align: center;
-        }
-        td {
+        th, td {
             text-align: center;
             vertical-align: middle;
-            padding: 5px !important;
+            margin: 0;
+            padding: 0.5em 0em;
         }
-        td.url {
-            text-align: left !important;
+    
+        th {
+            i.sphere {
+                font-size: 1.5em;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    
+        td {
+            padding: 5px !important;
+
+            .button-eye {
+                padding-top: 2px !important;
+                padding: 0em 1em;
+                margin: 0;
+                background: $slate-100;
+                border: 1px solid $slate-200;
+                border-radius: 3px;
+            }
+            .button-eye:focus {
+                border: 1px solid $green-200;
+            }
+    
+            i.eye {
+                font-size: 1.3em;
+                color: $gray-800;
+                cursor: pointer;
+    
+                &:hover {
+                    color: $green-600;
+                }
+            }
+    
+            &.url {
+                text-align: left !important;
+            }
+        }
+    
+        // Aplicar el :hover a la fila completa
+        tr:hover {
+            background-color: $gray-100;
         }
     }
-
+    
+    
     .wrap-console {
         display: flex;
         flex-wrap: wrap;

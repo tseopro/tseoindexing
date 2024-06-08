@@ -222,7 +222,8 @@ class TSEOIndexing_Main {
         <table class="wp-list-table widefat fixed striped form-table">
             <thead>
                 <tr>
-                    <th style="width:60%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
+                    <th style="width:50%"><?php esc_html_e('URL', 'tseoindexing'); ?></th>
+                    <th style="width:10%"><i class="tseoindexing-sphere sphere"></i></th>
                     <th style="width:10%"><?php esc_html_e('Action', 'tseoindexing'); ?></th>
                     <th style="width:10%"><?php esc_html_e('Status', 'tseoindexing'); ?></th>
                     <th style="width:10%"><?php esc_html_e('Type', 'tseoindexing'); ?></th>
@@ -242,6 +243,11 @@ class TSEOIndexing_Main {
                 ?>
                     <tr>
                         <td class="url"><?php echo esc_url($url_data->url); ?></td>
+                        <td class="data-all">
+                            <a href="<?php echo esc_url($url_data->url); ?>" class="button-eye" target="_black">
+                                <i class="tseoindexing-eye eye"></i>
+                            </a>
+                        </td>
                         <td class="checkbox data-all">
                             <input type="checkbox" id="<?php echo esc_attr($url_data->url); ?>" name="urls_to_index[]" value="<?php echo esc_url($url_data->url); ?>" <?php checked($url_data->type === 'URL_UPDATED'); ?> class="submit">
                             <label for="<?php echo esc_attr($url_data->url); ?>">
