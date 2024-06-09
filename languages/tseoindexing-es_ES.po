@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TSEO Indexing 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tseoindexing\n"
-"POT-Creation-Date: 2024-06-09T18:39:53+00:00\n"
-"PO-Revision-Date: 2024-06-09 20:40+0200\n"
+"POT-Creation-Date: 2024-06-09T20:12:55+00:00\n"
+"PO-Revision-Date: 2024-06-09 22:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -125,11 +125,11 @@ msgstr "Tipo"
 msgid "View"
 msgstr "Ver"
 
-#: includes/tseoindexing-class.php:270 includes/tseoindexing-settings.php:354
+#: includes/tseoindexing-class.php:270 includes/tseoindexing-settings.php:381
 msgid "Update"
 msgstr "Actualizar"
 
-#: includes/tseoindexing-class.php:270 includes/tseoindexing-settings.php:354
+#: includes/tseoindexing-class.php:270 includes/tseoindexing-settings.php:381
 msgid "Add"
 msgstr "Agregar"
 
@@ -424,31 +424,41 @@ msgstr "URL que se eliminarán de Google Console:"
 msgid "Send to API"
 msgstr "Enviar a API"
 
-#: includes/tseoindexing-settings.php:316
+#: includes/tseoindexing-settings.php:319
+msgid "First clear the list of URLs in the Tools tab and try again here."
+msgstr ""
+"Primero borre la lista de URLs en la pestaña Herramientas y vuelva a "
+"intentarlo aquí."
+
+#: includes/tseoindexing-settings.php:321
+msgid "Please enter a valid URL."
+msgstr "Por favor introduzca una URL válida."
+
+#: includes/tseoindexing-settings.php:343
 msgid "Response"
 msgstr "Respuesta"
 
-#: includes/tseoindexing-settings.php:325
+#: includes/tseoindexing-settings.php:352
 msgid "Show raw response:"
 msgstr "Mostrar respuesta cruda:"
 
-#: includes/tseoindexing-settings.php:403
+#: includes/tseoindexing-settings.php:430
 msgid "Do you want to remove these URLs from the list?"
 msgstr "¿Deseas eliminar estas URLs de la lista?"
 
-#: includes/tseoindexing-settings.php:410
+#: includes/tseoindexing-settings.php:437
 msgid "URLs successfully deleted!"
 msgstr "¡URLs eliminadas exitosamente!"
 
-#: includes/tseoindexing-settings.php:413
+#: includes/tseoindexing-settings.php:440
 msgid "Error deleting URLs: "
 msgstr "Error al eliminar URLs: "
 
-#: includes/tseoindexing-settings.php:418
+#: includes/tseoindexing-settings.php:445
 msgid "Please select at least one URL to delete."
 msgstr "Por favor, selecciona al menos una URL para eliminar."
 
-#: includes/tseoindexing-settings.php:441
+#: includes/tseoindexing-settings.php:468
 msgid "Google API Remaining Quota:"
 msgstr "Cuota restante de la API de Google:"
 
