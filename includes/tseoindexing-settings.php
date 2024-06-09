@@ -299,10 +299,37 @@ function tseoindexing_display_console() {
             <?php submit_button(__('Send to API', 'tseoindexing')); ?>
         </div>
     </form>
+    <script>
+        let timeout = null;
+        let lastEventWasPaste = false;
+        document.getElementById('tseo_urls').addEventListener('paste', function(e) {
+            lastEventWasPaste = true;
+        });
+        document.getElementById('tseo_urls').addEventListener('input', function(e) {
+            if (timeout !== null) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(function() {
+                let text = e.target.value;
+                let urlPattern = /(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/g;
+                let lines = text.split('\n');
+                for (let i = 0; i < lines.length; i++) {
+                    if (lines[i].trim() !== '' && !lines[i].startsWith('http') && !urlPattern.test(lines[i])) {
+                        if (lastEventWasPaste) {
+                            e.target.value = '<?php esc_html_e('First clear the list of URLs in the Tools tab and try again here.', 'tseoindexing'); ?>';
+                        } else {
+                            e.target.value = '<?php esc_html_e('Please enter a valid URL.', 'tseoindexing'); ?>';
+                        }
+                        return;
+                    }
+                }
+                timeout = null;
+                lastEventWasPaste = false;
+            }, 500);
+        });
+    </script>
     <?php
 }
-
-
 
 /**
  * TSEO PRO TSEO Console response
