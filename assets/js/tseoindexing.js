@@ -75,12 +75,12 @@ jQuery(document).ready(function($) {
             $('.response-action').text(item.action);
             //$('.response-url').text(item.url);
             if (item.response.status === 'error') {
-                $('.response-title').html('<span class="title-error">Error ' + item.response.code + '</span>');
+                $('.response-title').html('<span class="title-error"><i class="tseoindexing-cross"></i> Error ' + item.response.code + '</span>');
                 $('.response-message').text(item.response.message);
             } else {
-                $('.response-title').html('<span class="title-success">Success</span>');
-                //$('.response-message').html('URL: ' + item.response.url + '<br>Type: ' + item.response.type + '<br>Notify Time: ' + item.response.notifyTime);
-                $('.response-message').html('Type: ' + item.response.type + '<br>Notify Time: ' + item.response.notifyTime);
+                $('.response-title').html('<span class="title-success"><i class="tseoindexing-checkmark"></i> Success</span>');
+                $('.response-message').html('URL: ' + item.response.url + '<br>Type: ' + item.response.type + '<br>Notify Time: ' + item.response.notifyTime);
+                //$('.response-message').html('Type: ' + item.response.type + '<br>Notify Time: ' + item.response.notifyTime);
             }
             rawResponse += item.url + ': ' + JSON.stringify(item.response) + '\n';
 

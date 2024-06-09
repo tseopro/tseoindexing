@@ -74,6 +74,15 @@ class TSEOIndexing_Main {
             'tseoindexing-console',
             [$this, 'tseoindexing_console_page_content']
         );
+
+        add_submenu_page(
+            'tseoindexing',
+            __('Tools', 'tseoindexing'),
+            __('Tools', 'tseoindexing'),
+            'manage_options',
+            'tseoindexing-tools',
+            [$this, 'tseoindexing_tools_page_content']
+        );
     }
 
     /**
@@ -405,7 +414,7 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel-all">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
-                <h1><?php esc_html_e('Console', 'tseoindexing'); ?></h1>
+                <h1><?php esc_html_e('TSEO Console', 'tseoindexing'); ?></h1>
 
                 <div class="wrap-console">
                     <div class="console">
@@ -419,6 +428,26 @@ class TSEOIndexing_Main {
                 <div class="wrap-console-response" style="display: none;">
                     <?php tseoindexing_display_console_response(); ?>
                 </div>
+                
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Display the tools page content
+     *
+     * @package TSEOIndexing
+     * @version 1.0.0
+     */
+    public function tseoindexing_tools_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel-all">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content">
+                <h1><?php esc_html_e('TSEO tools', 'tseoindexing'); ?></h1>
+
+                <?php tseoindexing_display_tools(); ?>
                 
             </div>
         </div>

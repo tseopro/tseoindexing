@@ -15,6 +15,7 @@ composer.lock
 package-lock.json
 INSTRUCCIONES.md
 pack.sh
+URL Último rastreo.md
 
 # Log files
 *.log

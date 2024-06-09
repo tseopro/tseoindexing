@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TSEO Indexing 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tseoindexing\n"
-"POT-Creation-Date: 2024-06-08T19:51:22+00:00\n"
-"PO-Revision-Date: 2024-06-08 21:53+0200\n"
+"POT-Creation-Date: 2024-06-09T18:39:53+00:00\n"
+"PO-Revision-Date: 2024-06-09 20:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -46,60 +46,49 @@ msgid "https://tseo.pro/"
 msgstr "https://tseo.pro/"
 
 #: includes/tseoindexing-class.php:53 includes/tseoindexing-class.php:54
-#: tseoindexing-dist/includes/tseoindexing-class.php:53
-#: tseoindexing-dist/includes/tseoindexing-class.php:54
-#: tseoindexing-dist/tseoindexing.php:65 tseoindexing.php:65
+#: tseoindexing.php:66
 msgid "Settings"
 msgstr "Ajustes"
 
 #: includes/tseoindexing-class.php:62 includes/tseoindexing-class.php:63
-#: tseoindexing-dist/includes/tseoindexing-class.php:62
-#: tseoindexing-dist/includes/tseoindexing-class.php:63
 msgid "Config URLs"
 msgstr "Configurar URLs"
 
 #: includes/tseoindexing-class.php:71 includes/tseoindexing-class.php:72
-#: includes/tseoindexing-class.php:408
-#: tseoindexing-dist/includes/tseoindexing-class.php:71
-#: tseoindexing-dist/includes/tseoindexing-class.php:72
-#: tseoindexing-dist/includes/tseoindexing-class.php:393
 msgid "Console"
 msgstr "Consola"
 
-#: includes/tseoindexing-class.php:90
-#: tseoindexing-dist/includes/tseoindexing-class.php:90
+#: includes/tseoindexing-class.php:80 includes/tseoindexing-class.php:81
+msgid "Tools"
+msgstr "Herramientas"
+
+#: includes/tseoindexing-class.php:99
 msgid "Dashboard"
 msgstr "Escritorio"
 
-#: includes/tseoindexing-class.php:118
-#: tseoindexing-dist/includes/tseoindexing-class.php:118
+#: includes/tseoindexing-class.php:127
 msgid "API Key and settings saved successfully."
 msgstr "Clave de API y configuraciones guardadas exitosamente."
 
-#: includes/tseoindexing-class.php:120
-#: tseoindexing-dist/includes/tseoindexing-class.php:120
+#: includes/tseoindexing-class.php:129
 msgid "Error uploading file. Please ensure it is a valid JSON file."
 msgstr ""
 "Error al subir el archivo. Por favor, asegúrate de que sea un archivo JSON "
 "válido."
 
-#: includes/tseoindexing-class.php:144
-#: tseoindexing-dist/includes/tseoindexing-class.php:144
+#: includes/tseoindexing-class.php:153
 msgid "TSEO Indexing Settings"
 msgstr "TSEO Indexing Ajustes"
 
-#: includes/tseoindexing-class.php:148
-#: tseoindexing-dist/includes/tseoindexing-class.php:148
+#: includes/tseoindexing-class.php:157
 msgid "Google Service Account JSON"
 msgstr "JSON de la Cuenta de Servicio de Google"
 
-#: includes/tseoindexing-class.php:150
-#: tseoindexing-dist/includes/tseoindexing-class.php:150
+#: includes/tseoindexing-class.php:159
 msgid "Submit Posts to Google"
 msgstr "Enviar Publicaciones a Google"
 
-#: includes/tseoindexing-class.php:151
-#: tseoindexing-dist/includes/tseoindexing-class.php:151
+#: includes/tseoindexing-class.php:160
 msgid ""
 "Submit the following post types automatically to Google's Instant Indexing "
 "API when a post is published, edited, or deleted."
@@ -108,59 +97,55 @@ msgstr ""
 "Indexación Instantánea de Google cuando una publicación se publique, edite o "
 "elimine."
 
-#: includes/tseoindexing-class.php:159
-#: tseoindexing-dist/includes/tseoindexing-class.php:159
+#: includes/tseoindexing-class.php:168
 msgid "Upload JSON and Save Settings"
 msgstr "Subir JSON y Guardar Configuraciones"
 
-#: includes/tseoindexing-class.php:163
-#: tseoindexing-dist/includes/tseoindexing-class.php:163
+#: includes/tseoindexing-class.php:172
 msgid "Current JSON"
 msgstr "JSON Actual"
 
-#: includes/tseoindexing-class.php:185
-#: tseoindexing-dist/includes/tseoindexing-class.php:185
+#: includes/tseoindexing-class.php:194
 msgid "TSEO Indexing URLs"
 msgstr "TSEO Indexing URLs"
 
-#: includes/tseoindexing-class.php:229
-#: tseoindexing-dist/includes/tseoindexing-class.php:226
+#: includes/tseoindexing-class.php:238
 msgid "Action"
 msgstr "Acción"
 
-#: includes/tseoindexing-class.php:230
-#: tseoindexing-dist/includes/tseoindexing-class.php:227
+#: includes/tseoindexing-class.php:239
 msgid "Status"
 msgstr "Estado"
 
-#: includes/tseoindexing-class.php:231
-#: tseoindexing-dist/includes/tseoindexing-class.php:228
+#: includes/tseoindexing-class.php:240
 msgid "Type"
 msgstr "Tipo"
 
-#: includes/tseoindexing-class.php:254
+#: includes/tseoindexing-class.php:263
 msgid "View"
 msgstr "Ver"
 
-#: includes/tseoindexing-class.php:261 includes/tseoindexing-settings.php:353
-#: tseoindexing-dist/includes/tseoindexing-class.php:248
-#: tseoindexing-dist/includes/tseoindexing-settings.php:353
+#: includes/tseoindexing-class.php:270 includes/tseoindexing-settings.php:354
 msgid "Update"
 msgstr "Actualizar"
 
-#: includes/tseoindexing-class.php:261 includes/tseoindexing-settings.php:353
-#: tseoindexing-dist/includes/tseoindexing-class.php:248
-#: tseoindexing-dist/includes/tseoindexing-settings.php:353
+#: includes/tseoindexing-class.php:270 includes/tseoindexing-settings.php:354
 msgid "Add"
 msgstr "Agregar"
 
+#: includes/tseoindexing-class.php:417
+msgid "TSEO Console"
+msgstr "TSEO Consola"
+
+#: includes/tseoindexing-class.php:448
+msgid "TSEO tools"
+msgstr "TSEO herramientas"
+
 #: includes/tseoindexing-dashboard.php:13
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:13
 msgid "SEO Options"
 msgstr "Opciones SEO"
 
 #: includes/tseoindexing-dashboard.php:14
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:14
 msgid ""
 "By activating SEO Options, you have a set of powerful tools without the need "
 "for third-party plugins: sitemaps, schema, open graph, image compressor and "
@@ -171,12 +156,10 @@ msgstr ""
 "graph, compresor y convertidor de imágenes, etc."
 
 #: includes/tseoindexing-dashboard.php:18
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:18
 msgid "Services"
 msgstr "Servicios"
 
 #: includes/tseoindexing-dashboard.php:19
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:19
 msgid ""
 "General settings on the various services integrated within TSEO PRO without "
 "the use of any plugins. Knowing these different sections is of utmost "
@@ -187,12 +170,10 @@ msgstr ""
 "de suma importancia."
 
 #: includes/tseoindexing-dashboard.php:23
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:23
 msgid "RGPD"
 msgstr "RGPD"
 
 #: includes/tseoindexing-dashboard.php:24
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:24
 msgid ""
 "The theme comes integrated with the necessary legal documentation to get "
 "started, which you can activate from the corresponding section. For now, it "
@@ -203,12 +184,10 @@ msgstr ""
 "está disponible en español o inglés."
 
 #: includes/tseoindexing-dashboard.php:28
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:28
 msgid "Woocommerce"
 msgstr "Woocommerce"
 
 #: includes/tseoindexing-dashboard.php:29
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:29
 msgid ""
 "If you use WooCommerce as an online store, activate this service to enable "
 "multiple tools to customize the store."
@@ -217,12 +196,10 @@ msgstr ""
 "habilitar múltiples herramientas para personalizar la tienda."
 
 #: includes/tseoindexing-dashboard.php:33
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:33
 msgid "Marketing"
 msgstr "Marketing"
 
 #: includes/tseoindexing-dashboard.php:34
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:34
 msgid ""
 "Powerful marketing toolset: Notifications, Chatbot, WhatsApp, Landing Page, "
 "Google Reviews, and Banners. Stand out and grow your business!"
@@ -232,12 +209,10 @@ msgstr ""
 "tu negocio!"
 
 #: includes/tseoindexing-dashboard.php:38
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:38
 msgid "YouTube Videos"
 msgstr "Videos de Youtube"
 
 #: includes/tseoindexing-dashboard.php:39
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:39
 msgid ""
 "Create a catalog of YouTube videos with their own covers, and you can "
 "trigger the playback of each video in a pop-up window using a custom "
@@ -248,12 +223,10 @@ msgstr ""
 "[shortcode] personalizado."
 
 #: includes/tseoindexing-dashboard.php:43
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:43
 msgid "Documentation"
 msgstr "Documentación"
 
 #: includes/tseoindexing-dashboard.php:44
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:44
 msgid ""
 "If you have a product or service that requires technical documentation for "
 "its use, activate this service. Two new tabs will be activated: "
@@ -264,12 +237,10 @@ msgstr ""
 "Snippets."
 
 #: includes/tseoindexing-dashboard.php:48
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:48
 msgid "PWA Web"
 msgstr "PWA Web"
 
 #: includes/tseoindexing-dashboard.php:49
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:49
 msgid ""
 "Turn the Web into an App with a powerful natural cache. It can also be "
 "installed on desktop and mobile devices. In the footer and on compatible "
@@ -280,12 +251,10 @@ msgstr ""
 "y en dispositivos compatibles, se solicitará su instalación."
 
 #: includes/tseoindexing-dashboard.php:53
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:53
 msgid "PWA App (Beta)"
 msgstr "PWA App (Beta)"
 
 #: includes/tseoindexing-dashboard.php:54
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:54
 msgid ""
 "This is a service under development to launch a professional App that can be "
 "downloaded and installed without the need for app stores. It works in "
@@ -296,12 +265,10 @@ msgstr ""
 "Funciona junto con la principal PWA Web."
 
 #: includes/tseoindexing-dashboard.php:58
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:58
 msgid "International SEO"
 msgstr "SEO internacional"
 
 #: includes/tseoindexing-dashboard.php:59
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:59
 msgid ""
 "When you activate international SEO, the tool automatically generates "
 "hreflang tags across all editors: Pages, Posts, Docs, and Products."
@@ -311,12 +278,10 @@ msgstr ""
 "y Productos."
 
 #: includes/tseoindexing-dashboard.php:63
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:63
 msgid "Token"
 msgstr "Token"
 
 #: includes/tseoindexing-dashboard.php:64
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:64
 msgid ""
 "We explain how you can enable the section to promote your own cryptocurrency "
 "(token) from your website with links to the Ethereum or Binance networks."
@@ -326,12 +291,10 @@ msgstr ""
 "o Binance."
 
 #: includes/tseoindexing-dashboard.php:68
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:68
 msgid "Advanced settings"
 msgstr "Ajustes avanzados"
 
 #: includes/tseoindexing-dashboard.php:69
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:69
 msgid ""
 "Advanced web configuration section. In this section, we teach you how ."
 "htaccess works for Linux or web.config for Windows."
@@ -340,17 +303,14 @@ msgstr ""
 "funciona .htaccess para Linux o web.config para Windows."
 
 #: includes/tseoindexing-dashboard.php:117
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:117
 msgid "Information"
 msgstr "Información"
 
 #: includes/tseoindexing-dashboard.php:121
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:121
 msgid "Boost your business with our TSEO PRO theme"
 msgstr "Impulsa tu negocio con nuestro tema TSEO PRO"
 
 #: includes/tseoindexing-dashboard.php:123
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:123
 msgid ""
 "A Hassle-Free, Comprehensive Solution: If you're aiming to establish a "
 "powerful and seamless online presence, you've come to the right place. With "
@@ -366,16 +326,14 @@ msgstr ""
 "significativas."
 
 #: includes/tseoindexing-dashboard.php:125
-#: tseoindexing-dist/includes/tseoindexing-dashboard.php:125
 msgid "Visit TSEO PRO"
 msgstr "Visita TSEO PRO"
 
-#: includes/tseoindexing-settings.php:196
-#: tseoindexing-dist/includes/tseoindexing-settings.php:196
+#: includes/tseoindexing-settings.php:197
 msgid "Running service..."
 msgstr "Ejecutando servicio..."
 
-#: includes/tseoindexing-settings.php:211
+#: includes/tseoindexing-settings.php:212
 msgid ""
 "Warning: This is a version of TSEO Indexing in development. Use at your own "
 "risk."
@@ -383,8 +341,7 @@ msgstr ""
 "Advertencia: Esta es una versión en desarrollo de TSEO Indexing. Úsala bajo "
 "tu propio riesgo."
 
-#: includes/tseoindexing-settings.php:225
-#: tseoindexing-dist/includes/tseoindexing-settings.php:225
+#: includes/tseoindexing-settings.php:226
 msgid ""
 "Take advantage of the power of TSEO PRO and do your own SEO like a true "
 "professional with multiple optimized tools without depending on external "
@@ -394,8 +351,7 @@ msgstr ""
 "profesional con múltiples herramientas optimizadas sin depender de plugins "
 "externos."
 
-#: includes/tseoindexing-settings.php:239
-#: tseoindexing-dist/includes/tseoindexing-settings.php:239
+#: includes/tseoindexing-settings.php:240
 msgid ""
 "By default, all published URLs are retrieved and marked as NULL, which means "
 "they are not selected to be sent to Google Console."
@@ -403,18 +359,16 @@ msgstr ""
 "Por defecto, se obtienen todas las URLs publicadas y se marcan como NULL, lo "
 "que significa que no están seleccionadas para ser enviadas a Google Console."
 
-#: includes/tseoindexing-settings.php:240
-#: tseoindexing-dist/includes/tseoindexing-settings.php:240
+#: includes/tseoindexing-settings.php:241
 msgid "They are the URLs marked to be published or updated in Google Console."
 msgstr ""
 "Son las URLs marcadas para ser publicadas o actualizadas en Google Console."
 
-#: includes/tseoindexing-settings.php:241
-#: tseoindexing-dist/includes/tseoindexing-settings.php:241
+#: includes/tseoindexing-settings.php:242
 msgid "They are the URLs marked to be removed from Google Console."
 msgstr "Son las URLs marcadas para ser eliminadas de Google Console."
 
-#: includes/tseoindexing-settings.php:242
+#: includes/tseoindexing-settings.php:243
 msgid ""
 "Important: Once the table is configured with the URLs to be published/"
 "updated or removed, go to the Console tab to send the batch requests. These "
@@ -426,123 +380,138 @@ msgstr ""
 "solicitudes en lote. Estas se procesarán hasta que se alcance el límite de "
 "la cuota. Aumenta la cuota en Google Cloud API Indexing si es necesario."
 
-#: includes/tseoindexing-settings.php:257
-#: tseoindexing-dist/includes/tseoindexing-settings.php:257
-msgid "URLs (one per line, up to 100 for Google and 10,000 for IndexNow):"
-msgstr "URL (una por línea, hasta 100 para Google y 10.000 para IndexNow):"
+#: includes/tseoindexing-settings.php:258
+msgid "URLs (one per line, up to 100 for Google Indexing):"
+msgstr "URL (una por línea, hasta 100 para Google Indexing):"
 
-#: includes/tseoindexing-settings.php:263
-#: tseoindexing-dist/includes/tseoindexing-settings.php:263
+#: includes/tseoindexing-settings.php:264
 msgid "Updated URLs"
 msgstr "Actualizar URLs"
 
-#: includes/tseoindexing-settings.php:266
-#: tseoindexing-dist/includes/tseoindexing-settings.php:266
+#: includes/tseoindexing-settings.php:267
 msgid "Deleted URLs"
 msgstr "Eliminar URLs"
 
-#: includes/tseoindexing-settings.php:269
-#: tseoindexing-dist/includes/tseoindexing-settings.php:269
+#: includes/tseoindexing-settings.php:270
 msgid "Clear URLs"
 msgstr "Limpiar URLs"
 
-#: includes/tseoindexing-settings.php:274
-#: tseoindexing-dist/includes/tseoindexing-settings.php:274
+#: includes/tseoindexing-settings.php:275
 msgid "Action:"
 msgstr "Acción:"
 
-#: includes/tseoindexing-settings.php:277
-#: tseoindexing-dist/includes/tseoindexing-settings.php:277
+#: includes/tseoindexing-settings.php:278
 msgid "Publish/update URL"
 msgstr "Publicar/Actualizar URL"
 
-#: includes/tseoindexing-settings.php:281
-#: tseoindexing-dist/includes/tseoindexing-settings.php:281
+#: includes/tseoindexing-settings.php:282
 msgid "Remove URL"
 msgstr "Eliminar URL"
 
-#: includes/tseoindexing-settings.php:285
-#: tseoindexing-dist/includes/tseoindexing-settings.php:285
+#: includes/tseoindexing-settings.php:286
 msgid "Get URL status"
 msgstr "Obtener estado URL"
 
-#: includes/tseoindexing-settings.php:291
-#: tseoindexing-dist/includes/tseoindexing-settings.php:291
+#: includes/tseoindexing-settings.php:292
 msgid "URLs to be sent to Google Console:"
 msgstr "URL que se enviarán a Google Console:"
 
-#: includes/tseoindexing-settings.php:294
-#: tseoindexing-dist/includes/tseoindexing-settings.php:294
+#: includes/tseoindexing-settings.php:295
 msgid "URLs to be removed from Google Console:"
 msgstr "URL que se eliminarán de Google Console:"
 
-#: includes/tseoindexing-settings.php:298
-#: tseoindexing-dist/includes/tseoindexing-settings.php:298
+#: includes/tseoindexing-settings.php:299
 msgid "Send to API"
 msgstr "Enviar a API"
 
-#: includes/tseoindexing-settings.php:315
-#: tseoindexing-dist/includes/tseoindexing-settings.php:315
+#: includes/tseoindexing-settings.php:316
 msgid "Response"
 msgstr "Respuesta"
 
-#: includes/tseoindexing-settings.php:324
-#: tseoindexing-dist/includes/tseoindexing-settings.php:324
+#: includes/tseoindexing-settings.php:325
 msgid "Show raw response:"
 msgstr "Mostrar respuesta cruda:"
 
-#: includes/tseoindexing-settings.php:402
-#: tseoindexing-dist/includes/tseoindexing-settings.php:398
+#: includes/tseoindexing-settings.php:403
 msgid "Do you want to remove these URLs from the list?"
 msgstr "¿Deseas eliminar estas URLs de la lista?"
 
-#: includes/tseoindexing-settings.php:409
-#: tseoindexing-dist/includes/tseoindexing-settings.php:405
+#: includes/tseoindexing-settings.php:410
 msgid "URLs successfully deleted!"
 msgstr "¡URLs eliminadas exitosamente!"
 
-#: includes/tseoindexing-settings.php:412
-#: tseoindexing-dist/includes/tseoindexing-settings.php:408
+#: includes/tseoindexing-settings.php:413
 msgid "Error deleting URLs: "
 msgstr "Error al eliminar URLs: "
 
-#: includes/tseoindexing-settings.php:417
-#: tseoindexing-dist/includes/tseoindexing-settings.php:413
+#: includes/tseoindexing-settings.php:418
 msgid "Please select at least one URL to delete."
 msgstr "Por favor, selecciona al menos una URL para eliminar."
 
-#: includes/tseoindexing-settings.php:440
-#: tseoindexing-dist/includes/tseoindexing-settings.php:436
+#: includes/tseoindexing-settings.php:441
 msgid "Google API Remaining Quota:"
 msgstr "Cuota restante de la API de Google:"
 
-#: tseoindexing-dist/includes/tseoindexing-class.php:225
-msgid "URL"
-msgstr "URL"
+#: includes/tseoindexing-tools.php:12
+msgid "Prepare a list of URLs to send to the Google Indexing API:"
+msgstr "Prepare una lista de URL para enviar a la API de indexación de Google:"
 
-#: tseoindexing-dist/includes/tseoindexing-class.php:230
-msgid "Delete"
-msgstr "Borrar"
-
-#: tseoindexing-dist/includes/tseoindexing-settings.php:211
+#: includes/tseoindexing-tools.php:14
 msgid ""
-"Warning: This is a development version of the plugin. Do not use it in a "
-"production environment."
+"Paste the text or listing obtained from a sitemap or a Google Search Console "
+"listing that contains URLs and click the \"Extract URLs\" button to obtain a "
+"list of URLs separated by lines. This tool removes any text that is not a "
+"URL. Next, press the \"Copy URLs\" button to copy the result and paste it "
+"into the Console."
 msgstr ""
-"Advertencia: Esta es una versión de desarrollo del plugin. No lo uses en un "
-"entorno de producción."
+"Pegue el texto o la lista obtenida de un mapa del sitio o una lista de "
+"Google Search Console que contenga URL y haga clic en el botón \"Extraer "
+"URL\" para obtener una lista de URL separadas por líneas. Esta herramienta "
+"elimina cualquier texto que no sea una URL. Luego, presione el botón "
+"\"Copiar URL\" para copiar el resultado y pegarlo en la Consola."
 
-#: tseoindexing-dist/includes/tseoindexing-settings.php:242
-msgid ""
-"Important: Once the table is configured with the URLs to be published/"
-"updated or removed, go to the Console tab to send the batch requests. These "
-"will be processed 20 at a time until the quota limit is reached. Increase "
-"the quota in Google Cloud API if necessary."
-msgstr ""
-"Importante: Una vez configurada la tabla con las URLs a publicar/actualizar "
-"o eliminar, diríjase a la pestaña Console para enviar las solicitudes en "
-"lote. Estas se procesarán de 20 en 20 hasta alcanzar el límite de la cuota. "
-"Aumente la cuota en Google Cloud API si es necesario."
+#: includes/tseoindexing-tools.php:16
+msgid "Paste the text here..."
+msgstr "Pega el texto aquí..."
+
+#: includes/tseoindexing-tools.php:19
+msgid "Extract URLs"
+msgstr "Extraer URLs"
+
+#: includes/tseoindexing-tools.php:23
+msgid "Copy URLs"
+msgstr "Copiar URLs"
+
+#: includes/tseoindexing-tools.php:43
+msgid "No URLs found."
+msgstr "No se encontraron URL."
+
+#~ msgid "No se encontraron URLs."
+#~ msgstr "No URLs found"
+
+#~ msgid "URL"
+#~ msgstr "URL"
+
+#~ msgid "Delete"
+#~ msgstr "Borrar"
+
+#~ msgid ""
+#~ "Warning: This is a development version of the plugin. Do not use it in a "
+#~ "production environment."
+#~ msgstr ""
+#~ "Advertencia: Esta es una versión de desarrollo del plugin. No lo uses en "
+#~ "un entorno de producción."
+
+#~ msgid ""
+#~ "Important: Once the table is configured with the URLs to be published/"
+#~ "updated or removed, go to the Console tab to send the batch requests. "
+#~ "These will be processed 20 at a time until the quota limit is reached. "
+#~ "Increase the quota in Google Cloud API if necessary."
+#~ msgstr ""
+#~ "Importante: Una vez configurada la tabla con las URLs a publicar/"
+#~ "actualizar o eliminar, diríjase a la pestaña Console para enviar las "
+#~ "solicitudes en lote. Estas se procesarán de 20 en 20 hasta alcanzar el "
+#~ "límite de la cuota. Aumente la cuota en Google Cloud API si es necesario."
 
 #~ msgid "URL_UPDATED"
 #~ msgstr "URL_ACTUALIZADA"

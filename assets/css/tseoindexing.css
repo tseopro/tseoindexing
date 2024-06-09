@@ -452,6 +452,19 @@
     width: 100%;
   }
 }
+.tseoindexing-admin-panel-all .wrap-tools p {
+  font-size: 1rem;
+}
+.tseoindexing-admin-panel-all .wrap-tools textarea {
+  width: 100%;
+  height: 200px;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 3px;
+}
+.tseoindexing-admin-panel-all .wrap-tools button {
+  margin-top: 0.5em;
+}
 .tseoindexing-admin-panel-all .wrap-console {
   display: flex;
   flex-wrap: wrap;

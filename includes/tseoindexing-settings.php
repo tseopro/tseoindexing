@@ -155,7 +155,8 @@ function tseoindexing_admin_styles($hook) {
         'toplevel_page_tseoindexing',
         'tseo-indexing_page_tseoindexing-settings',
         'tseo-indexing_page_tseoindexing-links',
-        'tseo-indexing_page_tseoindexing-console'
+        'tseo-indexing_page_tseoindexing-console',
+        'tseo-indexing_page_tseoindexing-tools'
     );
 
     if (!in_array($hook, $valid_hooks)) {
@@ -254,7 +255,7 @@ function tseoindexing_display_console() {
     ?>
     <form id="tseoindexing-console-form" method="post" action="">
         <?php wp_nonce_field('tseoindexing_console', 'tseoindexing_console_nonce'); ?>
-        <?php esc_html_e('URLs (one per line, up to 100 for Google and 10,000 for IndexNow):', 'tseoindexing'); ?>
+        <?php esc_html_e('URLs (one per line, up to 100 for Google Indexing):', 'tseoindexing'); ?>
         
         <textarea name="tseo_urls" id="tseo_urls" rows="10" cols="50" placeholder="https://..."></textarea>
         
@@ -436,7 +437,7 @@ function tseoindexing_remaining_quota() {
         'RequestsPerMinutePerProject' => '0 / 600'
     ];
     ?>
-    <a href="<?php echo esc_url('https://developers.google.com/search/apis/indexing-api/v3/quota-pricing'); ?>" target="_blank">
+    <a href="<?php echo esc_url('https://console.cloud.google.com/apis/api/indexing.googleapis.com/quotas'); ?>" target="_blank">
         <?php esc_html_e('Google API Remaining Quota:', 'tseoindexing'); ?>
     </a>
     <ul class="table_console_info">

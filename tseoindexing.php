@@ -56,6 +56,7 @@ add_action('plugins_loaded', 'tseoindexing_load_textdomain');
 require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-settings.php';
 require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-class.php';
 require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-dashboard.php';
+require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-tools.php';
 
 // Register Activation Hook
 register_activation_hook(__FILE__, 'tseoindexing_create_tables');
