@@ -98,6 +98,23 @@
   color: rgba(22, 101, 52, 0.8);
   font-size: 0.95rem;
 }
+.tseoindexing-admin-panel .main-content .connect-error,
+.tseoindexing-admin-panel .main-content .connect-success {
+  padding: 0.3em 0.8em;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.tseoindexing-admin-panel .main-content .connect-error {
+  border: 1px solid #fecaca;
+  background: #fee2e2;
+  color: rgba(153, 27, 27, 0.8);
+}
+.tseoindexing-admin-panel .main-content .connect-success {
+  border: 1px solid #bbf7d0;
+  background: #dcfce7;
+  color: rgba(22, 101, 52, 0.8);
+}
 .tseoindexing-admin-panel .main-content .checkbox input[type=checkbox] {
   position: absolute;
   display: none;
@@ -227,23 +244,44 @@
   margin: 0;
   width: 0%;
 }
-.tseoindexing-admin-panel-all .main-content .danger {
+.tseoindexing-admin-panel-all .main-content .danger,
+.tseoindexing-admin-panel-all .main-content .success {
   padding: 1em 0.8em;
-  margin: 1em;
   border-radius: 5px;
+  font-size: 0.95rem;
+}
+.tseoindexing-admin-panel-all .main-content .danger {
   border: 1px solid #fecaca;
   background: #fee2e2;
   color: rgba(153, 27, 27, 0.8);
-  font-size: 0.95rem;
 }
 .tseoindexing-admin-panel-all .main-content .success {
-  padding: 1em 0.8em;
-  margin: 1em;
-  border-radius: 5px;
   border: 1px solid #bbf7d0;
   background: #dcfce7;
   color: rgba(22, 101, 52, 0.8);
-  font-size: 0.95rem;
+}
+.tseoindexing-admin-panel-all .main-content .connect-error,
+.tseoindexing-admin-panel-all .main-content .connect-success {
+  padding: 0.3em 0.8em;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.tseoindexing-admin-panel-all .main-content .connect-error {
+  border: 1px solid #fecaca;
+  background: #fee2e2;
+  color: rgba(153, 27, 27, 0.8);
+}
+.tseoindexing-admin-panel-all .main-content .connect-success {
+  border: 1px solid #bbf7d0;
+  background: #dcfce7;
+  color: rgba(22, 101, 52, 0.8);
+}
+.tseoindexing-admin-panel-all .main-content .connect-send-error {
+  color: #991b1b;
+}
+.tseoindexing-admin-panel-all .main-content .connect-send-success {
+  color: #166534;
 }
 .tseoindexing-admin-panel-all .main-content .status-null,
 .tseoindexing-admin-panel-all .main-content .status-updated,
@@ -464,6 +502,20 @@
 }
 .tseoindexing-admin-panel-all .wrap-tools button {
   margin-top: 0.5em;
+}
+.tseoindexing-admin-panel-all .wrap-tools a.button-edit {
+  text-decoration: none;
+}
+.tseoindexing-admin-panel-all .wrap-tools .button-edit {
+  padding-top: 2px !important;
+  padding: 0em 1em;
+  margin: 0;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+}
+.tseoindexing-admin-panel-all .wrap-tools .button-edit:focus {
+  border: 1px solid #bbf7d0;
 }
 .tseoindexing-admin-panel-all .wrap-console {
   display: flex;

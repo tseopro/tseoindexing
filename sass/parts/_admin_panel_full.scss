@@ -25,23 +25,47 @@
             margin: 0;
             width: 0%;
         }
-        .danger {
+        .danger,
+        .success {
             padding: 1em 0.8em;
-            margin: 1em;
             border-radius: 5px;
+            font-size: 0.95rem;
+        }
+        .danger {
             border: 1px solid $red-200;
             background: $red-100;
             color: rgba($red-800, 0.8);
-            font-size: 0.95rem;
         }
         .success {
-            padding: 1em 0.8em;
-            margin: 1em;
-            border-radius: 5px;
             border: 1px solid $green-200;
             background: $green-100;
             color: rgba($green-800, 0.8);
-            font-size: 0.95rem;
+        }
+
+        .connect-error,
+        .connect-success {
+            padding: 0.3em 0.8em;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .connect-error {
+            border: 1px solid $red-200;
+            background: $red-100;
+            color: rgba($red-800, 0.8);
+        }
+        .connect-success {
+            border: 1px solid $green-200;
+            background: $green-100;
+            color: rgba($green-800, 0.8);
+        }
+
+        .connect-send-error {
+            color: $red-800;
+        }
+        .connect-send-success {
+            color: $green-800;
         }
 
         .status-null,
@@ -309,6 +333,22 @@
         }
         button {
             margin-top: 0.5em;
+        }
+        a.button-edit {
+            text-decoration: none;
+        }
+
+        .button-edit {
+            padding-top: 2px !important;
+            padding: 0em 1em;
+            margin: 0;
+            background: $slate-100;
+            border: 1px solid $slate-200;
+            border-radius: 3px;
+        }
+
+        .button-edit:focus {
+            border: 1px solid $green-200;
         }
     }
     

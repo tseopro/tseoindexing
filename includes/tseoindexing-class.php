@@ -50,24 +50,6 @@ class TSEOIndexing_Main {
 
         add_submenu_page(
             'tseoindexing',
-            __('Settings', 'tseoindexing'),
-            __('Settings', 'tseoindexing'),
-            'manage_options',
-            'tseoindexing-settings',
-            [$this, 'tseoindexing_settings_page_content']
-        );
-
-        add_submenu_page(
-            'tseoindexing',
-            __('Config URLs', 'tseoindexing'),
-            __('Config URLs', 'tseoindexing'),
-            'manage_options',
-            'tseoindexing-links',
-            [$this, 'tseoindexing_links_page_content']
-        );
-
-        add_submenu_page(
-            'tseoindexing',
             __('Console', 'tseoindexing'),
             __('Console', 'tseoindexing'),
             'manage_options',
@@ -83,6 +65,44 @@ class TSEOIndexing_Main {
             'tseoindexing-tools',
             [$this, 'tseoindexing_tools_page_content']
         );
+
+        add_submenu_page(
+            'tseoindexing',
+            __('Config URLs', 'tseoindexing'),
+            __('Config URLs', 'tseoindexing'),
+            'manage_options',
+            'tseoindexing-links',
+            [$this, 'tseoindexing_links_page_content']
+        );
+
+        add_submenu_page(
+            'tseoindexing',
+            __('Setting Indexing', 'tseoindexing'),
+            __('Setting Indexing', 'tseoindexing'),
+            'manage_options',
+            'tseoindexing-settings',
+            [$this, 'tseoindexing_settings_page_content']
+        );
+        
+        if ( class_exists( 'WooCommerce' ) ) {
+            add_submenu_page(
+                'tseoindexing',
+                __('Setting Merchant', 'tseoindexing'),
+                __('Setting Merchant', 'tseoindexing'),
+                'manage_options',
+                'tseoindexing-merchant-center',
+                [$this, 'tseoindexing_merchant_center_page_content']
+            );
+
+            add_submenu_page(
+                'tseoindexing',
+                __('Product List', 'tseoindexing'),
+                __('Product List', 'tseoindexing'),
+                'manage_options',
+                'tseoindexing-merchant-center_list',
+                [$this, 'tseoindexing_merchant_center_list_page_content']
+            );
+        }
     }
 
     /**
@@ -151,7 +171,7 @@ class TSEOIndexing_Main {
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
                 <h1><?php esc_html_e('TSEO Indexing Settings', 'tseoindexing'); ?></h1>
-                <?php tseoindexing_danger_info(); ?>
+                <?php tseoindexing_danger_info() ?>
                 <form method="post" enctype="multipart/form-data" action="">
                     <?php wp_nonce_field('tseoindexing_settings'); ?>
                     <h2><?php esc_html_e('Google Service Account JSON', 'tseoindexing'); ?></h2>
@@ -734,6 +754,55 @@ class TSEOIndexing_Main {
                 ]
             ];
         }
+    }
+
+    
+    /**
+     * Display Google Merchant Center page content
+     *
+     * @package TSEOIndexing
+     * @version 1.0.0
+     */
+    public function tseoindexing_merchant_center_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel-all">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content wrap-tools">
+                <h1><?php esc_html_e('Google Merchant Center', 'tseoindexing'); ?></h1>
+
+                <?php
+                    if ( class_exists( 'WooCommerce' ) ) {
+                        tseoindexing_display_merchant_center();
+                    }
+                ?>
+                
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Display Google Merchant Center Woocommerce page content
+     *
+     * @package TSEOIndexing
+     * @version 1.0.0
+     */
+    public function tseoindexing_merchant_center_list_page_content() {
+        ?>
+        <div class="tseoindexing-admin-panel-all">
+            <?php tseoindexing_loading_overlay(); ?>
+            <div class="main-content wrap-tools">
+                <h1><?php esc_html_e('List Products WooCommerce', 'tseoindexing'); ?></h1>
+
+                <?php
+                    if ( class_exists( 'WooCommerce' ) ) {
+                        tseoindexing_display_merchant_product_list();
+                    }
+                ?>
+                
+            </div>
+        </div>
+        <?php
     }
     
 }

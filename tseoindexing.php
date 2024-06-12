@@ -44,7 +44,8 @@ if (!defined('TSEOINDEXING_VERSION')) {
 // Autoload Google Client
 require 'vendor/autoload.php';
 use Google\Client;
-use Google\Service\Indexing;
+use Google\Service\Indexing; // API Google Indexing
+use Google\Service\ShoppingContent; // API Google Merchant Center
 
 // Load Text Domain
 function tseoindexing_load_textdomain() {
@@ -57,6 +58,8 @@ require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-settings.php';
 require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-class.php';
 require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-dashboard.php';
 require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-tools.php';
+require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-merchant.php';
+require_once plugin_dir_path(__FILE__) . 'includes/tseoindexing-merchant-list.php';
 
 // Register Activation Hook
 register_activation_hook(__FILE__, 'tseoindexing_create_tables');

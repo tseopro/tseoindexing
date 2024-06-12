@@ -156,7 +156,9 @@ function tseoindexing_admin_styles($hook) {
         'tseo-indexing_page_tseoindexing-settings',
         'tseo-indexing_page_tseoindexing-links',
         'tseo-indexing_page_tseoindexing-console',
-        'tseo-indexing_page_tseoindexing-tools'
+        'tseo-indexing_page_tseoindexing-tools',
+        'tseo-indexing_page_tseoindexing-merchant-center',
+        'tseo-indexing_page_tseoindexing-merchant-center_list'
     );
 
     if (!in_array($hook, $valid_hooks)) {
@@ -450,7 +452,6 @@ function tseoindexing_php_script_embedded_links_table() {
 <?php
 }
 
-
 /**
  * TSEO PRO TSEO Remaining Quota - Console
  *
@@ -474,3 +475,176 @@ function tseoindexing_remaining_quota() {
     </ul>
     <?php
 }
+
+
+/**
+ * TSEO PRO TSEO Merchant Center
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_php_script_embedded_merchant_table() {
+?>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#tseo_send_automatically').on('change', function() {
+                var isChecked = $(this).is(':checked') ? 1 : 0;
+
+                $.ajax({
+                    url: ajaxurl, // Variable global de WordPress para las solicitudes AJAX
+                    type: 'POST',
+                    data: {
+                        action: 'tseoindexing_update_send_automatically',
+                        send_automatically: isChecked,
+                        _wpnonce: '<?php echo wp_create_nonce("tseo_merchant_auto_send_nonce"); ?>' // Generar un nonce para seguridad
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#tseo_auto_send_status').text(response.data.message);
+
+                            // Cambiar la clase del estado de activado/desactivado
+                            if (isChecked) {
+                                $('#tseo_auto_send_status').removeClass('connect-send-error').addClass('connect-send-success');
+                                $('#tseo_merchant_product_submit').hide();
+                            } else {
+                                $('#tseo_auto_send_status').removeClass('connect-send-success').addClass('connect-send-error');
+                                $('#tseo_merchant_product_submit').show();
+                            }
+                        } else {
+                            alert(response.data.message);
+                        }
+                    }
+                });
+            });
+        });
+
+        jQuery(document).ready(function($) {
+            // Manejar el cambio de estado de la opción de envío automático
+            $('#tseo_send_automatically').on('change', function() {
+                var isChecked = $(this).is(':checked') ? 1 : 0;
+
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'tseoindexing_update_send_automatically',
+                        send_automatically: isChecked,
+                        _wpnonce: '<?php echo wp_create_nonce("tseo_merchant_auto_send_nonce"); ?>'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#tseo_auto_send_status').text(response.data.message);
+
+                            if (isChecked) {
+                                $('#tseo_auto_send_status').removeClass('connect-send-error').addClass('connect-send-success');
+                                $('#tseo_merchant_product_submit').hide();
+                            } else {
+                                $('#tseo_auto_send_status').removeClass('connect-send-success').addClass('connect-send-error');
+                                $('#tseo_merchant_product_submit').show();
+                            }
+                        } else {
+                            alert(response.data.message);
+                        }
+                    }
+                });
+            });
+
+            // Manejar la selección y deselección de productos
+            $('.check-column input[type="checkbox"]').on('change', function() {
+                var selectedProducts = [];
+                $('.check-column input[type="checkbox"]:checked').each(function() {
+                    selectedProducts.push($(this).val());
+                });
+
+                $.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'tseoindexing_save_selected_products',
+                        selected_products: selectedProducts,
+                        _wpnonce: '<?php echo wp_create_nonce("tseo_save_selected_products_nonce"); ?>'
+                    }
+                });
+            });
+        });
+
+    </script>
+<?php
+}
+
+/**
+ * TSEO PRO TSEO Merchant Center Add Fields WooCommerce
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_render_google_merchant_fields() {
+    echo '<div class="options_group">';
+    echo '<h2>' . __('Google Merchant Center Fields by TSEO Indexing', 'tseoindexing') . '</h2>';
+
+    woocommerce_wp_select( array(
+        'id' => '_condition',
+        'label' => __('Condition', 'tseoindexing'),
+        'description' => __('Condición del producto (nuevo, usado, reacondicionado).', 'tseoindexing'),
+        'desc_tip' => true,
+        'options' => array(
+            'new' => __('New', 'tseoindexing'),
+            'refurbished' => __('Refurbished', 'tseoindexing'),
+            'used' => __('Used', 'tseoindexing'),
+        ),
+        'value' => get_post_meta( get_the_ID(), '_condition', true ),
+    ));
+
+    woocommerce_wp_text_input( array(
+        'id' => '_gtin',
+        'label' => __('GTIN', 'tseoindexing'),
+        'description' => __('Introduce el número de identificación global (UPC, EAN, ISBN, etc.).', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta( get_the_ID(), '_gtin', true ),
+    ));
+
+    woocommerce_wp_text_input( array(
+        'id' => '_mpn',
+        'label' => __('MPN', 'tseoindexing'),
+        'description' => __('Número de parte del fabricante.', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta( get_the_ID(), '_mpn', true ),
+    ));
+
+    woocommerce_wp_text_input( array(
+        'id' => '_google_product_category',
+        'label' => __('Google Product Category', 'tseoindexing'),
+        'description' => __('Categoría oficial de Google para el producto. ', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta( get_the_ID(), '_google_product_category', true ),
+    ));
+
+    echo '</div>';
+}
+add_action( 'woocommerce_product_options_general_product_data', 'tseoindexing_render_google_merchant_fields' );
+
+/**
+ * Save custom fields when saving the product.
+ */
+function tseoindexing_save_google_merchant_fields( $product_id ) {
+    if ( isset( $_POST['_condition'] ) ) {
+        $condition = sanitize_text_field( $_POST['_condition'] );
+        update_post_meta( $product_id, '_condition', $condition );
+    }
+
+    if ( isset( $_POST['_gtin'] ) ) {
+        $gtin = sanitize_text_field( $_POST['_gtin'] );
+        update_post_meta( $product_id, '_gtin', $gtin );
+    }
+
+    if ( isset( $_POST['_mpn'] ) ) {
+        $mpn = sanitize_text_field( $_POST['_mpn'] );
+        update_post_meta( $product_id, '_mpn', $mpn );
+    }
+
+    if ( isset( $_POST['_google_product_category'] ) ) {
+        $google_product_category = sanitize_text_field( $_POST['_google_product_category'] );
+        update_post_meta( $product_id, '_google_product_category', $google_product_category );
+    }
+}
+add_action( 'woocommerce_process_product_meta', 'tseoindexing_save_google_merchant_fields' );

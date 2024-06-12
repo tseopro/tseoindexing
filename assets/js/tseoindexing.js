@@ -1,4 +1,9 @@
 jQuery(document).ready(function($) {
+
+    setTimeout(function() {
+        $('.updated, .error').fadeOut('slow');
+    }, 3000); // 5000 milliseconds = 3 seconds
+    
     $('#load-updated-urls').click(function() {
         loadUrls('URL_UPDATED');
     });
