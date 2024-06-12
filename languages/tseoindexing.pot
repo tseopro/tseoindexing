@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-09T20:12:55+00:00\n"
+"POT-Creation-Date: 2024-06-12T10:03:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: tseoindexing\n"
@@ -41,97 +41,114 @@ msgstr ""
 
 #: includes/tseoindexing-class.php:53
 #: includes/tseoindexing-class.php:54
-#: tseoindexing.php:66
-msgid "Settings"
+msgid "Console"
 msgstr ""
 
 #: includes/tseoindexing-class.php:62
 #: includes/tseoindexing-class.php:63
-msgid "Config URLs"
+msgid "Tools"
 msgstr ""
 
 #: includes/tseoindexing-class.php:71
 #: includes/tseoindexing-class.php:72
-msgid "Console"
+msgid "Config URLs"
 msgstr ""
 
 #: includes/tseoindexing-class.php:80
 #: includes/tseoindexing-class.php:81
-msgid "Tools"
+msgid "Setting Indexing"
+msgstr ""
+
+#: includes/tseoindexing-class.php:90
+#: includes/tseoindexing-class.php:91
+msgid "Setting Merchant"
 msgstr ""
 
 #: includes/tseoindexing-class.php:99
+#: includes/tseoindexing-class.php:100
+msgid "Product List"
+msgstr ""
+
+#: includes/tseoindexing-class.php:119
 msgid "Dashboard"
 msgstr ""
 
-#: includes/tseoindexing-class.php:127
+#: includes/tseoindexing-class.php:147
 msgid "API Key and settings saved successfully."
 msgstr ""
 
-#: includes/tseoindexing-class.php:129
+#: includes/tseoindexing-class.php:149
 msgid "Error uploading file. Please ensure it is a valid JSON file."
 msgstr ""
 
-#: includes/tseoindexing-class.php:153
+#: includes/tseoindexing-class.php:173
 msgid "TSEO Indexing Settings"
 msgstr ""
 
-#: includes/tseoindexing-class.php:157
+#: includes/tseoindexing-class.php:177
 msgid "Google Service Account JSON"
 msgstr ""
 
-#: includes/tseoindexing-class.php:159
+#: includes/tseoindexing-class.php:179
 msgid "Submit Posts to Google"
 msgstr ""
 
-#: includes/tseoindexing-class.php:160
+#: includes/tseoindexing-class.php:180
 msgid "Submit the following post types automatically to Google's Instant Indexing API when a post is published, edited, or deleted."
 msgstr ""
 
-#: includes/tseoindexing-class.php:168
+#: includes/tseoindexing-class.php:188
 msgid "Upload JSON and Save Settings"
 msgstr ""
 
-#: includes/tseoindexing-class.php:172
+#: includes/tseoindexing-class.php:192
 msgid "Current JSON"
 msgstr ""
 
-#: includes/tseoindexing-class.php:194
+#: includes/tseoindexing-class.php:214
 msgid "TSEO Indexing URLs"
 msgstr ""
 
-#: includes/tseoindexing-class.php:238
+#: includes/tseoindexing-class.php:258
 msgid "Action"
 msgstr ""
 
-#: includes/tseoindexing-class.php:239
+#: includes/tseoindexing-class.php:259
 msgid "Status"
 msgstr ""
 
-#: includes/tseoindexing-class.php:240
+#: includes/tseoindexing-class.php:260
 msgid "Type"
 msgstr ""
 
-#: includes/tseoindexing-class.php:263
+#: includes/tseoindexing-class.php:283
 msgid "View"
 msgstr ""
 
-#: includes/tseoindexing-class.php:270
-#: includes/tseoindexing-settings.php:381
+#: includes/tseoindexing-class.php:290
+#: includes/tseoindexing-settings.php:383
 msgid "Update"
 msgstr ""
 
-#: includes/tseoindexing-class.php:270
-#: includes/tseoindexing-settings.php:381
+#: includes/tseoindexing-class.php:290
+#: includes/tseoindexing-settings.php:383
 msgid "Add"
 msgstr ""
 
-#: includes/tseoindexing-class.php:417
+#: includes/tseoindexing-class.php:437
 msgid "TSEO Console"
 msgstr ""
 
-#: includes/tseoindexing-class.php:448
+#: includes/tseoindexing-class.php:468
 msgid "TSEO tools"
+msgstr ""
+
+#: includes/tseoindexing-class.php:771
+msgid "Google Merchant Center"
+msgstr ""
+
+#: includes/tseoindexing-class.php:795
+msgid "List Products WooCommerce"
 msgstr ""
 
 #: includes/tseoindexing-dashboard.php:13
@@ -246,134 +263,330 @@ msgstr ""
 msgid "Visit TSEO PRO"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:197
+#: includes/tseoindexing-merchant-list.php:13
+#: includes/tseoindexing-merchant-list.php:151
+#: includes/tseoindexing-merchant-list.php:170
+#: includes/tseoindexing-merchant.php:15
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:22
+msgid "Select Products to Send to Google Merchant Center"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:23
+msgid "Only products that meet the Google Merchant Center publication criteria can be selected for submission."
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:29
+msgid "Image"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:30
+msgid "Product"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:31
+msgid "Price"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:32
+msgid "Stock"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:33
+#: includes/tseoindexing-settings.php:587
+msgid "Condition"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:34
+msgid "Category"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:35
+msgid "Brand"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:36
+#: includes/tseoindexing-settings.php:600
+msgid "GTIN"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:37
+#: includes/tseoindexing-settings.php:608
+msgid "MPN"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:38
+msgid "Google Cat"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:64
+#: includes/tseoindexing-settings.php:591
+msgid "New"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:65
+#: includes/tseoindexing-settings.php:592
+msgid "Refurbished"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:66
+#: includes/tseoindexing-settings.php:593
+msgid "Used"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:69
+msgid "No Condition"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:96
+msgid "No Image"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:104
+msgid "Edit"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:121
+msgid "Send products automatically when selected"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:126
+#: includes/tseoindexing-merchant-list.php:158
+msgid "Activated"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:126
+#: includes/tseoindexing-merchant-list.php:158
+msgid "Deactivated"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:129
+msgid "If you select on, all selected products in the table will automatically sync with Google Merchant Center."
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:133
+msgid "Send to Merchant Center"
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:161
+#: includes/tseoindexing-merchant-list.php:179
+msgid "Invalid request."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:35
+msgid "Credentials successfully saved."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:37
+msgid "Invalid Google Merchant Center credentials. Please go to Google Cloud Service Accounts to obtain your Service account for Merchant Center."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:40
+msgid "The JSON file is not valid."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:43
+msgid "Please upload a valid JSON file."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:53
+msgid "Merchant Center ID successfully saved."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:55
+msgid "Please enter a valid numeric Google Merchant Center ID."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:66
+msgid "Connected"
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:66
+msgid "Disconnected"
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:75
+msgid "Connection Status: "
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:82
+msgid "Upload the JSON file containing your Google Merchant Center credentials."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:86
+msgid "Current JSON credentials:"
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:90
+msgid "Enter your Google Merchant Center ID."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:93
+msgid "Please enter a numeric Merchant Center ID."
+msgstr ""
+
+#: includes/tseoindexing-merchant.php:97
+msgid "Save Settings"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:199
 msgid "Running service..."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:212
+#: includes/tseoindexing-settings.php:214
 msgid "Warning: This is a version of TSEO Indexing in development. Use at your own risk."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:226
+#: includes/tseoindexing-settings.php:228
 msgid "Take advantage of the power of TSEO PRO and do your own SEO like a true professional with multiple optimized tools without depending on external plugins."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:240
+#: includes/tseoindexing-settings.php:242
 msgid "By default, all published URLs are retrieved and marked as NULL, which means they are not selected to be sent to Google Console."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:241
+#: includes/tseoindexing-settings.php:243
 msgid "They are the URLs marked to be published or updated in Google Console."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:242
+#: includes/tseoindexing-settings.php:244
 msgid "They are the URLs marked to be removed from Google Console."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:243
+#: includes/tseoindexing-settings.php:245
 msgid "Important: Once the table is configured with the URLs to be published/updated or removed, go to the Console tab to send the batch requests. These will be processed until the quota limit is reached. Increase the quota in Google Cloud API Indexing if necessary."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:258
+#: includes/tseoindexing-settings.php:260
 msgid "URLs (one per line, up to 100 for Google Indexing):"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:264
+#: includes/tseoindexing-settings.php:266
 msgid "Updated URLs"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:267
+#: includes/tseoindexing-settings.php:269
 msgid "Deleted URLs"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:270
+#: includes/tseoindexing-settings.php:272
 msgid "Clear URLs"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:275
+#: includes/tseoindexing-settings.php:277
 msgid "Action:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:278
+#: includes/tseoindexing-settings.php:280
 msgid "Publish/update URL"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:282
+#: includes/tseoindexing-settings.php:284
 msgid "Remove URL"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:286
+#: includes/tseoindexing-settings.php:288
 msgid "Get URL status"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:292
+#: includes/tseoindexing-settings.php:294
 msgid "URLs to be sent to Google Console:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:295
+#: includes/tseoindexing-settings.php:297
 msgid "URLs to be removed from Google Console:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:299
+#: includes/tseoindexing-settings.php:301
 msgid "Send to API"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:319
+#: includes/tseoindexing-settings.php:321
 msgid "First clear the list of URLs in the Tools tab and try again here."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:321
+#: includes/tseoindexing-settings.php:323
 msgid "Please enter a valid URL."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:343
+#: includes/tseoindexing-settings.php:345
 msgid "Response"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:352
+#: includes/tseoindexing-settings.php:354
 msgid "Show raw response:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:430
+#: includes/tseoindexing-settings.php:432
 msgid "Do you want to remove these URLs from the list?"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:437
+#: includes/tseoindexing-settings.php:439
 msgid "URLs successfully deleted!"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:440
+#: includes/tseoindexing-settings.php:442
 msgid "Error deleting URLs: "
 msgstr ""
 
-#: includes/tseoindexing-settings.php:445
+#: includes/tseoindexing-settings.php:447
 msgid "Please select at least one URL to delete."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:468
+#: includes/tseoindexing-settings.php:469
 msgid "Google API Remaining Quota:"
 msgstr ""
 
-#: includes/tseoindexing-tools.php:12
-msgid "Prepare a list of URLs to send to the Google Indexing API:"
+#: includes/tseoindexing-settings.php:583
+msgid "Google Merchant Center Fields by TSEO Indexing"
 msgstr ""
 
-#: includes/tseoindexing-tools.php:14
-msgid "Paste the text or listing obtained from a sitemap or a Google Search Console listing that contains URLs and click the \"Extract URLs\" button to obtain a list of URLs separated by lines. This tool removes any text that is not a URL. Next, press the \"Copy URLs\" button to copy the result and paste it into the Console."
+#: includes/tseoindexing-settings.php:588
+msgid "Product condition (new, used, refurbished)."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:601
+msgid "Enter the global identification number (UPC, EAN, ISBN, etc.)."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:609
+msgid "Manufacturer part number (MPN)."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:616
+msgid "Google Product Category"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:617
+msgid "Official Google category for the product."
 msgstr ""
 
 #: includes/tseoindexing-tools.php:16
+msgid "Prepare a list of URLs to send to the Google Indexing API:"
+msgstr ""
+
+#: includes/tseoindexing-tools.php:18
+msgid "Paste the text or listing obtained from a sitemap or a Google Search Console listing that contains URLs and click the \"Extract URLs\" button to obtain a list of URLs separated by lines. This tool removes any text that is not a URL. Next, press the \"Copy URLs\" button to copy the result and paste it into the Console."
+msgstr ""
+
+#: includes/tseoindexing-tools.php:20
 msgid "Paste the text here..."
 msgstr ""
 
-#: includes/tseoindexing-tools.php:19
+#: includes/tseoindexing-tools.php:23
 msgid "Extract URLs"
 msgstr ""
 
-#: includes/tseoindexing-tools.php:23
+#: includes/tseoindexing-tools.php:27
 msgid "Copy URLs"
 msgstr ""
 
-#: includes/tseoindexing-tools.php:43
+#: includes/tseoindexing-tools.php:47
 msgid "No URLs found."
+msgstr ""
+
+#: tseoindexing.php:69
+msgid "Settings"
 msgstr ""

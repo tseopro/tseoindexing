@@ -63,7 +63,7 @@ function tseoindexing_display_merchant_center() {
 
     // Verify connection status
     $is_connected = tseoindexing_merchant_verify_connection();
-    $connection_status = $is_connected ? 'Connected' : 'Disconnected';
+    $connection_status = $is_connected ? __('Connected', 'tseoindexing') : __('Disconnected', 'tseoindexing');
     $connection_class = $is_connected ? 'connect-success' : 'connect-error';
 
     ?>

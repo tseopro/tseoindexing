@@ -585,7 +585,7 @@ function tseoindexing_render_google_merchant_fields() {
     woocommerce_wp_select( array(
         'id' => '_condition',
         'label' => __('Condition', 'tseoindexing'),
-        'description' => __('Condición del producto (nuevo, usado, reacondicionado).', 'tseoindexing'),
+        'description' => __('Product condition (new, used, refurbished).', 'tseoindexing'),
         'desc_tip' => true,
         'options' => array(
             'new' => __('New', 'tseoindexing'),
@@ -598,7 +598,7 @@ function tseoindexing_render_google_merchant_fields() {
     woocommerce_wp_text_input( array(
         'id' => '_gtin',
         'label' => __('GTIN', 'tseoindexing'),
-        'description' => __('Introduce el número de identificación global (UPC, EAN, ISBN, etc.).', 'tseoindexing'),
+        'description' => __('Enter the global identification number (UPC, EAN, ISBN, etc.).', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta( get_the_ID(), '_gtin', true ),
     ));
@@ -606,7 +606,7 @@ function tseoindexing_render_google_merchant_fields() {
     woocommerce_wp_text_input( array(
         'id' => '_mpn',
         'label' => __('MPN', 'tseoindexing'),
-        'description' => __('Número de parte del fabricante.', 'tseoindexing'),
+        'description' => __('Manufacturer part number (MPN).', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta( get_the_ID(), '_mpn', true ),
     ));
@@ -614,7 +614,7 @@ function tseoindexing_render_google_merchant_fields() {
     woocommerce_wp_text_input( array(
         'id' => '_google_product_category',
         'label' => __('Google Product Category', 'tseoindexing'),
-        'description' => __('Categoría oficial de Google para el producto. ', 'tseoindexing'),
+        'description' => __('Official Google category for the product.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta( get_the_ID(), '_google_product_category', true ),
     ));

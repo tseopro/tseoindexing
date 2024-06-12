@@ -20,7 +20,7 @@ function tseoindexing_display_merchant_product_list() {
     <form method="post" action="">
         <?php wp_nonce_field('tseoindexing_merchant_product_nonce'); ?>
         <h2><?php esc_html_e('Select Products to Send to Google Merchant Center', 'tseoindexing'); ?></h2>
-        <p><?php esc_html_e('Solo los productos que cumplen con los criterios de publicación de Google Merchant Center pueden ser seleccionados para enviar.', 'tseoindexing'); ?></p>
+        <p><?php esc_html_e('Only products that meet the Google Merchant Center publication criteria can be selected for submission.', 'tseoindexing'); ?></p>
 
         <table class="widefat fixed" cellspacing="0">
             <thead>
