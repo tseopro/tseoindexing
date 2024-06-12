@@ -569,6 +569,53 @@ function tseoindexing_php_script_embedded_merchant_table() {
         });
 
     </script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            function updateSelectedProductsJson() {
+                var selectedProducts = [];
+                $('input.product-checkbox:checked').each(function() {
+                    var productId = $(this).val();
+
+                    $.ajax({
+                        url: ajaxurl,
+                        type: 'POST',
+                        data: {
+                            action: 'tseoindexing_get_product_data',
+                            product_id: productId,
+                            _wpnonce: '<?php echo wp_create_nonce("tseo_get_product_data_nonce"); ?>'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                selectedProducts.push(response.data.product);
+                            } else {
+                                console.error('Error:', response.data.message);
+                            }
+
+                            // Actualizar el textarea con el JSON formateado
+                            $('#selected_products_json').val(JSON.stringify(selectedProducts, null, 4));
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX Error:', status, error);
+                        }
+                    });
+                });
+
+                // Si no hay productos seleccionados, limpiar el textarea
+                if (selectedProducts.length === 0) {
+                    $('#selected_products_json').val('');
+                }
+            }
+
+            // Agregar la clase .product-checkbox a los checkboxes en la tabla de productos
+            $('input[name="selected_products[]"]').addClass('product-checkbox');
+
+            // Actualizar JSON al cambiar la selección de los productos
+            $('.product-checkbox').on('change', updateSelectedProductsJson);
+            
+            // Inicializar con el estado actual
+            updateSelectedProductsJson();
+        });
+    </script>
 <?php
 }
 
@@ -582,6 +629,7 @@ function tseoindexing_render_google_merchant_fields() {
     echo '<div class="options_group">';
     echo '<h2>' . __('Google Merchant Center Fields by TSEO Indexing', 'tseoindexing') . '</h2>';
 
+    // Campo para la condición del producto
     woocommerce_wp_select( array(
         'id' => '_condition',
         'label' => __('Condition', 'tseoindexing'),
@@ -595,6 +643,7 @@ function tseoindexing_render_google_merchant_fields() {
         'value' => get_post_meta( get_the_ID(), '_condition', true ),
     ));
 
+    // Campo para el GTIN
     woocommerce_wp_text_input( array(
         'id' => '_gtin',
         'label' => __('GTIN', 'tseoindexing'),
@@ -603,6 +652,7 @@ function tseoindexing_render_google_merchant_fields() {
         'value' => get_post_meta( get_the_ID(), '_gtin', true ),
     ));
 
+    // Campo para el MPN
     woocommerce_wp_text_input( array(
         'id' => '_mpn',
         'label' => __('MPN', 'tseoindexing'),
@@ -611,6 +661,7 @@ function tseoindexing_render_google_merchant_fields() {
         'value' => get_post_meta( get_the_ID(), '_mpn', true ),
     ));
 
+    // Campo para la categoría de producto de Google
     woocommerce_wp_text_input( array(
         'id' => '_google_product_category',
         'label' => __('Google Product Category', 'tseoindexing'),
@@ -619,32 +670,74 @@ function tseoindexing_render_google_merchant_fields() {
         'value' => get_post_meta( get_the_ID(), '_google_product_category', true ),
     ));
 
+    // Campo para los destinos del producto en Google Merchant Center
+    $selected_destinations = get_post_meta( get_the_ID(), '_google_merchant_destinations', true ) ?: array();
+    if (empty($selected_destinations)) {
+        $selected_destinations = array('free_listings');
+    }
+
+    $destinations = array(
+        'shopping_ads' => __('Shopping ads', 'tseoindexing'),
+        'display_ads' => __('Display ads', 'tseoindexing'),
+        'free_listings' => __('Free listings', 'tseoindexing'),
+    );
+
+    echo '<p>' . __('Select the destination(s) for this product:', 'tseoindexing') . '</p>';
+
+    foreach ($destinations as $key => $label) {
+        woocommerce_wp_checkbox( array(
+            'id' => '_google_merchant_destinations_' . $key,
+            'label' => $label,
+            'description' => '',
+            'value' => in_array($key, $selected_destinations) ? 'yes' : 'no',
+            'cbvalue' => 'yes',
+        ));
+    }
+
     echo '</div>';
 }
 add_action( 'woocommerce_product_options_general_product_data', 'tseoindexing_render_google_merchant_fields' );
+
+
 
 /**
  * Save custom fields when saving the product.
  */
 function tseoindexing_save_google_merchant_fields( $product_id ) {
+    // Guardar la condición del producto
     if ( isset( $_POST['_condition'] ) ) {
         $condition = sanitize_text_field( $_POST['_condition'] );
         update_post_meta( $product_id, '_condition', $condition );
     }
 
+    // Guardar el GTIN
     if ( isset( $_POST['_gtin'] ) ) {
         $gtin = sanitize_text_field( $_POST['_gtin'] );
         update_post_meta( $product_id, '_gtin', $gtin );
     }
 
+    // Guardar el MPN
     if ( isset( $_POST['_mpn'] ) ) {
         $mpn = sanitize_text_field( $_POST['_mpn'] );
         update_post_meta( $product_id, '_mpn', $mpn );
     }
 
+    // Guardar la categoría de producto de Google
     if ( isset( $_POST['_google_product_category'] ) ) {
         $google_product_category = sanitize_text_field( $_POST['_google_product_category'] );
         update_post_meta( $product_id, '_google_product_category', $google_product_category );
     }
+
+    // Guardar los destinos seleccionados para el producto
+    $destinations = array('shopping_ads', 'display_ads', 'free_listings');
+    $selected_destinations = array();
+
+    foreach ($destinations as $destination) {
+        if (isset($_POST['_google_merchant_destinations_' . $destination]) && $_POST['_google_merchant_destinations_' . $destination] === 'yes') {
+            $selected_destinations[] = $destination;
+        }
+    }
+
+    update_post_meta( $product_id, '_google_merchant_destinations', $selected_destinations );
 }
 add_action( 'woocommerce_process_product_meta', 'tseoindexing_save_google_merchant_fields' );
