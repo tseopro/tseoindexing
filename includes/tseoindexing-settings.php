@@ -625,12 +625,27 @@ function tseoindexing_php_script_embedded_merchant_table() {
  * @package TSEOIndexing
  * @version 1.0.0
  */
-function tseoindexing_render_google_merchant_fields() {
+
+// Añadir una nueva pestaña en la interfaz de producto
+function tseoindexing_add_merchant_center_tab($tabs) {
+    $tabs['merchant_center'] = array(
+        'label'    => __('TSEO Merchant', 'tseoindexing'),
+        'target'   => 'merchant_center_options',
+        'class'    => array('show_if_simple', 'show_if_variable'),
+        'priority' => 60,
+    );
+    return $tabs;
+}
+add_filter('woocommerce_product_data_tabs', 'tseoindexing_add_merchant_center_tab');
+
+// Mostrar los campos personalizados en la nueva pestaña
+function tseoindexing_add_merchant_center_fields() {
+    echo '<div id="merchant_center_options" class="panel woocommerce_options_panel">';
     echo '<div class="options_group">';
     echo '<h2>' . __('Google Merchant Center Fields by TSEO Indexing', 'tseoindexing') . '</h2>';
 
     // Campo para la condición del producto
-    woocommerce_wp_select( array(
+    woocommerce_wp_select(array(
         'id' => '_condition',
         'label' => __('Condition', 'tseoindexing'),
         'description' => __('Product condition (new, used, refurbished).', 'tseoindexing'),
@@ -640,38 +655,47 @@ function tseoindexing_render_google_merchant_fields() {
             'refurbished' => __('Refurbished', 'tseoindexing'),
             'used' => __('Used', 'tseoindexing'),
         ),
-        'value' => get_post_meta( get_the_ID(), '_condition', true ),
+        'value' => get_post_meta(get_the_ID(), '_condition', true),
     ));
 
     // Campo para el GTIN
-    woocommerce_wp_text_input( array(
+    woocommerce_wp_text_input(array(
         'id' => '_gtin',
         'label' => __('GTIN', 'tseoindexing'),
         'description' => __('Enter the global identification number (UPC, EAN, ISBN, etc.).', 'tseoindexing'),
         'desc_tip' => true,
-        'value' => get_post_meta( get_the_ID(), '_gtin', true ),
+        'value' => get_post_meta(get_the_ID(), '_gtin', true),
     ));
 
     // Campo para el MPN
-    woocommerce_wp_text_input( array(
+    woocommerce_wp_text_input(array(
         'id' => '_mpn',
         'label' => __('MPN', 'tseoindexing'),
         'description' => __('Manufacturer part number (MPN).', 'tseoindexing'),
         'desc_tip' => true,
-        'value' => get_post_meta( get_the_ID(), '_mpn', true ),
+        'value' => get_post_meta(get_the_ID(), '_mpn', true),
     ));
 
     // Campo para la categoría de producto de Google
-    woocommerce_wp_text_input( array(
+    woocommerce_wp_text_input(array(
         'id' => '_google_product_category',
         'label' => __('Google Product Category', 'tseoindexing'),
         'description' => __('Official Google category for the product.', 'tseoindexing'),
         'desc_tip' => true,
-        'value' => get_post_meta( get_the_ID(), '_google_product_category', true ),
+        'value' => get_post_meta(get_the_ID(), '_google_product_category', true),
+    ));
+
+    // Campo para la descripción específica de Google Merchant Center
+    woocommerce_wp_textarea_input(array(
+        'id' => '_google_merchant_description',
+        'label' => __('Google Merchant Center Description', 'tseoindexing'),
+        'description' => __('Enter a specific description for Google Merchant Center. HTML tags will be stripped.', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta(get_the_ID(), '_google_merchant_description', true),
     ));
 
     // Campo para los destinos del producto en Google Merchant Center
-    $selected_destinations = get_post_meta( get_the_ID(), '_google_merchant_destinations', true ) ?: array();
+    $selected_destinations = get_post_meta(get_the_ID(), '_google_merchant_destinations', true) ?: array();
     if (empty($selected_destinations)) {
         $selected_destinations = array('free_listings');
     }
@@ -685,7 +709,7 @@ function tseoindexing_render_google_merchant_fields() {
     echo '<p>' . __('Select the destination(s) for this product:', 'tseoindexing') . '</p>';
 
     foreach ($destinations as $key => $label) {
-        woocommerce_wp_checkbox( array(
+        woocommerce_wp_checkbox(array(
             'id' => '_google_merchant_destinations_' . $key,
             'label' => $label,
             'description' => '',
@@ -695,37 +719,40 @@ function tseoindexing_render_google_merchant_fields() {
     }
 
     echo '</div>';
+    echo '</div>'; // Cerrar div panel
 }
-add_action( 'woocommerce_product_options_general_product_data', 'tseoindexing_render_google_merchant_fields' );
+add_action('woocommerce_product_data_panels', 'tseoindexing_add_merchant_center_fields');
 
-
-
-/**
- * Save custom fields when saving the product.
- */
-function tseoindexing_save_google_merchant_fields( $product_id ) {
+// Guardar los campos personalizados al guardar el producto
+function tseoindexing_save_google_merchant_fields($product_id) {
     // Guardar la condición del producto
-    if ( isset( $_POST['_condition'] ) ) {
-        $condition = sanitize_text_field( $_POST['_condition'] );
-        update_post_meta( $product_id, '_condition', $condition );
+    if (isset($_POST['_condition'])) {
+        $condition = sanitize_text_field($_POST['_condition']);
+        update_post_meta($product_id, '_condition', $condition);
     }
 
     // Guardar el GTIN
-    if ( isset( $_POST['_gtin'] ) ) {
-        $gtin = sanitize_text_field( $_POST['_gtin'] );
-        update_post_meta( $product_id, '_gtin', $gtin );
+    if (isset($_POST['_gtin'])) {
+        $gtin = sanitize_text_field($_POST['_gtin']);
+        update_post_meta($product_id, '_gtin', $gtin);
     }
 
     // Guardar el MPN
-    if ( isset( $_POST['_mpn'] ) ) {
-        $mpn = sanitize_text_field( $_POST['_mpn'] );
-        update_post_meta( $product_id, '_mpn', $mpn );
+    if (isset($_POST['_mpn'])) {
+        $mpn = sanitize_text_field($_POST['_mpn']);
+        update_post_meta($product_id, '_mpn', $mpn);
     }
 
     // Guardar la categoría de producto de Google
-    if ( isset( $_POST['_google_product_category'] ) ) {
-        $google_product_category = sanitize_text_field( $_POST['_google_product_category'] );
-        update_post_meta( $product_id, '_google_product_category', $google_product_category );
+    if (isset($_POST['_google_product_category'])) {
+        $google_product_category = sanitize_text_field($_POST['_google_product_category']);
+        update_post_meta($product_id, '_google_product_category', $google_product_category);
+    }
+
+    // Guardar la descripción específica de Google Merchant Center
+    if (isset($_POST['_google_merchant_description'])) {
+        $google_merchant_description = sanitize_text_field($_POST['_google_merchant_description']);
+        update_post_meta($product_id, '_google_merchant_description', $google_merchant_description);
     }
 
     // Guardar los destinos seleccionados para el producto
@@ -738,6 +765,6 @@ function tseoindexing_save_google_merchant_fields( $product_id ) {
         }
     }
 
-    update_post_meta( $product_id, '_google_merchant_destinations', $selected_destinations );
+    update_post_meta($product_id, '_google_merchant_destinations', $selected_destinations);
 }
-add_action( 'woocommerce_process_product_meta', 'tseoindexing_save_google_merchant_fields' );
+add_action('woocommerce_process_product_meta', 'tseoindexing_save_google_merchant_fields');

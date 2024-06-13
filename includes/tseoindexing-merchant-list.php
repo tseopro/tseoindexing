@@ -53,7 +53,7 @@ function tseoindexing_display_merchant_product_list() {
                     $is_valid_product = 
                         !empty(wp_get_attachment_url($product->get_image_id())) &&
                         !empty($product->get_name()) &&
-                        !empty($product->get_description()) &&
+                        !empty(get_post_meta($product->get_id(), '_google_merchant_description', true)) &&
                         is_numeric($product->get_price()) && $product->get_price() > 0 &&
                         !empty(get_post_meta($product->get_id(), '_condition', true));
                 
@@ -169,14 +169,12 @@ function tseoindexing_get_product_data() {
             wp_send_json_error(array('message' => __('Invalid product ID.', 'tseoindexing')));
         }
 
-        // Limpiar HTML de la descripción y acortarla si es necesario
-        $description = strip_shortcodes($product->get_description());
-        $description = wp_strip_all_tags($description, true);
-        $description = html_entity_decode($description, ENT_QUOTES, 'UTF-8');
-        $description = preg_replace('/\s+/', ' ', $description);
-        $description = trim($description);
-        if (strlen($description) > 500) {
-            $description = substr($description, 0, 500) . '...';
+        // Obtener la descripción específica para Google Merchant Center desde el meta del producto
+        $description = get_post_meta($product->get_id(), '_google_merchant_description', true);
+
+        // Si la descripción específica no está definida, dejarla vacía o manejar el caso según lo requieras
+        if (empty($description)) {
+            $description = '';
         }
 
         // Obtener la primera etiqueta del producto como marca
@@ -190,6 +188,11 @@ function tseoindexing_get_product_data() {
 
         // Obtener los destinos seleccionados para el producto
         $destinations = get_post_meta($product->get_id(), '_google_merchant_destinations', true) ?: array('free_listings');
+
+        // Obtener el idioma configurado en WordPress
+        $content_language = substr(get_locale(), 0, 2);
+        // Obtener el país objetivo de WooCommerce
+        $target_country = WC()->countries->get_base_country();
 
         // Construir el JSON del producto
         $product_data = array(
@@ -209,9 +212,8 @@ function tseoindexing_get_product_data() {
             'mpn' => $mpn,
             'googleProductCategory' => $googleProductCategory,
             'destinations' => $destinations,
-            // Añadimos los campos obligatorios
-            'contentLanguage' => get_locale(), // Asumimos que el idioma de la tienda es el de WP
-            'targetCountry' => 'ES', // Cambiar a la configuración real de la tienda, o extraerla de WooCommerce
+            'contentLanguage' => $content_language, // Ajustado a ISO 639-1
+            'targetCountry' => $target_country // Añadido campo targetCountry
         );
 
         wp_send_json_success(array('product' => $product_data));
@@ -221,81 +223,7 @@ function tseoindexing_get_product_data() {
 }
 
 /**
- * Updates the option for sending merchant data automatically.
- *
- * This function is hooked to the 'wp_ajax_tseoindexing_update_send_automatically' action.
- * It checks the AJAX referer and user capabilities before updating the option.
- * If the 'send_automatically' parameter is set in the POST request, it updates the option value accordingly.
- * Returns a JSON response with success or error message.
- *
- * @since 1.0.0
- */
-add_action('wp_ajax_tseoindexing_update_send_automatically', 'tseoindexing_update_send_automatically');
-function tseoindexing_update_send_automatically() {
-    check_ajax_referer('tseo_merchant_auto_send_nonce', '_wpnonce');
-
-    if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
-    }
-
-    if (isset($_POST['send_automatically'])) {
-        $send_automatically = intval($_POST['send_automatically']);
-        update_option('tseo_merchant_send_automatically', $send_automatically);
-
-        $message = $send_automatically ? __('Activated', 'tseoindexing') : __('Deactivated', 'tseoindexing');
-        wp_send_json_success(array('message' => $message));
-    } else {
-        wp_send_json_error(array('message' => __('Invalid request.', 'tseoindexing')));
-    }
-}
-
-/**
- * Save selected products via AJAX request.
- *
- * This function is hooked to the 'wp_ajax_tseoindexing_save_selected_products' action,
- * and it saves the selected products to the WordPress options table.
- *
- * @since 1.0.0
- */
-add_action('wp_ajax_tseoindexing_save_selected_products', 'tseoindexing_save_selected_products');
-function tseoindexing_save_selected_products() {
-    check_ajax_referer('tseo_save_selected_products_nonce', '_wpnonce');
-
-    if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
-    }
-
-    if (isset($_POST['selected_products'])) {
-        $selected_products = array_map('intval', $_POST['selected_products']);
-        update_option('tseo_selected_products', $selected_products);
-
-        wp_send_json_success();
-    } else {
-        wp_send_json_error(array('message' => __('Invalid request.', 'tseoindexing')));
-    }
-}
-
-/**
  * Sends products to Google Merchant Center.
- *
- * This function sends an array of products to Google Merchant Center using the Google_Service_ShoppingContent API.
- * It performs necessary data cleaning and validation before sending the products.
- *
- * @param array $products An array of products to be sent to Google Merchant Center.
- *                        Each product should be an associative array with the following keys:
- *                        - offerId: The unique identifier for the product.
- *                        - title: The title of the product.
- *                        - description: The description of the product.
- *                        - link: The URL link to the product.
- *                        - imageLink: The URL link to the product image.
- *                        - price: An associative array with 'value' and 'currency' keys representing the price of the product.
- *                        - availability: The availability status of the product.
- *                        - condition: The condition of the product.
- *                        - brand: The brand of the product.
- *                        - gtin: The GTIN (Global Trade Item Number) of the product.
- *                        - mpn: The MPN (Manufacturer Part Number) of the product.
- *                        - googleProductCategory: The Google product category of the product.
- *                        - destinations: An array of destination names for the product.
  *
  * @return void
  */
@@ -309,22 +237,19 @@ function send_products_to_merchant_center($products) {
     $service = new Google_Service_ShoppingContent($client);
     $merchant_center_id = get_option('tseo_merchant_center_id', '');
 
+    // Obtener el idioma configurado en WordPress (ISO 639-1)
+    $content_language = substr(get_locale(), 0, 2);
+    // Obtener el país objetivo de WooCommerce
+    $target_country = WC()->countries->get_base_country();
+
     foreach ($products as $product) {
-        // Limpiar y ajustar la descripción
-        $description = $product['description'];
+        // Obtener la descripción desde el campo personalizado de Google Merchant Center
+        $description = get_post_meta($product['offerId'], '_google_merchant_description', true);
         
-        // Aplicar la misma lógica de limpieza que antes
-        $description = strip_shortcodes($description);
-        $description = wp_strip_all_tags($description, true);
-        $description = html_entity_decode($description, ENT_QUOTES, 'UTF-8');
-        $description = preg_replace('/\s+/', ' ', $description);
-        $description = trim($description);
-        if (strlen($description) > 500) {
-            $description = substr($description, 0, 500) . '...';
+        // Si la descripción personalizada está vacía, puedes manejarlo de acuerdo a tus necesidades
+        if (empty($description)) {
+            $description = '';
         }
-        
-        // Asignar la descripción limpia de vuelta al producto
-        $product['description'] = $description;
 
         // Asegurarse de que los campos obligatorios no contengan valores inválidos
         $product['gtin'] = $product['gtin'] ?: '';
@@ -352,6 +277,8 @@ function send_products_to_merchant_center($products) {
             $api_product->setDestinations(array_map(function($destination) {
                 return array('destinationName' => $destination, 'destinationStatus' => 'active');
             }, $product['destinations']));
+            $api_product->setContentLanguage($content_language);
+            $api_product->setTargetCountry($target_country);
 
             // Enviar el producto a Google Merchant Center
             $service->products->insert($merchant_center_id, $api_product);
@@ -387,19 +314,18 @@ function tseoindexing_merchant_product_submit() {
         foreach ($selected_product_ids as $product_id) {
             $product = wc_get_product($product_id);
             if ($product) {
-                $description = strip_shortcodes($product->get_description());
-                $description = wp_strip_all_tags($description, true);
-                $description = html_entity_decode($description, ENT_QUOTES, 'UTF-8');
-                $description = preg_replace('/\s+/', ' ', $description);
-                $description = trim($description);
-                if (strlen($description) > 500) {
-                    $description = substr($description, 0, 500) . '...';
+                // Obtener la descripción específica para Google Merchant Center
+                $description = get_post_meta($product->get_id(), '_google_merchant_description', true);
+
+                // Si la descripción específica no está definida, dejarla vacía o manejar el caso según lo requieras
+                if (empty($description)) {
+                    $description = '';
                 }
 
                 $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
                 $brand = !empty($tags) ? $tags[0] : '';
 
-                // Obtener el idioma de la instalación de WordPress
+                // Obtener el idioma configurado en WordPress (ISO 639-1)
                 $contentLanguage = substr(get_locale(), 0, 2);
 
                 // Obtener el país de destino desde la configuración de WooCommerce
@@ -441,3 +367,50 @@ function tseoindexing_merchant_product_submit() {
     }
 }
 
+
+/**
+ * Updates the option for sending merchant data automatically.
+ *
+ * @since 1.0.0
+ */
+add_action('wp_ajax_tseoindexing_update_send_automatically', 'tseoindexing_update_send_automatically');
+function tseoindexing_update_send_automatically() {
+    check_ajax_referer('tseo_merchant_auto_send_nonce', '_wpnonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+    }
+
+    if (isset($_POST['send_automatically'])) {
+        $send_automatically = intval($_POST['send_automatically']);
+        update_option('tseo_merchant_send_automatically', $send_automatically);
+
+        $message = $send_automatically ? __('Activated', 'tseoindexing') : __('Deactivated', 'tseoindexing');
+        wp_send_json_success(array('message' => $message));
+    } else {
+        wp_send_json_error(array('message' => __('Invalid request.', 'tseoindexing')));
+    }
+}
+
+/**
+ * Save selected products via AJAX request.
+ *
+ * @since 1.0.0
+ */
+add_action('wp_ajax_tseoindexing_save_selected_products', 'tseoindexing_save_selected_products');
+function tseoindexing_save_selected_products() {
+    check_ajax_referer('tseo_save_selected_products_nonce', '_wpnonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+    }
+
+    if (isset($_POST['selected_products'])) {
+        $selected_products = array_map('intval', $_POST['selected_products']);
+        update_option('tseo_selected_products', $selected_products);
+
+        wp_send_json_success();
+    } else {
+        wp_send_json_error(array('message' => __('Invalid request.', 'tseoindexing')));
+    }
+}
