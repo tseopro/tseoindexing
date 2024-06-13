@@ -625,7 +625,6 @@ function tseoindexing_php_script_embedded_merchant_table() {
  * @package TSEOIndexing
  * @version 1.0.0
  */
-
 // Añadir una nueva pestaña en la interfaz de producto
 function tseoindexing_add_merchant_center_tab($tabs) {
     $tabs['merchant_center'] = array(

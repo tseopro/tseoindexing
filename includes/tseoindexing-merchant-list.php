@@ -16,6 +16,9 @@ function tseoindexing_display_merchant_product_list() {
     // Obtener la preferencia de envío del usuario
     $send_automatically = get_option('tseo_merchant_send_automatically', false);
 
+    // Definir la variable $paged antes de su uso
+    $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1; // Línea 23 - Definimos $paged
+
     ?>
     <form method="post" action="">
         <?php wp_nonce_field('tseoindexing_merchant_product_nonce'); ?>
@@ -42,12 +45,13 @@ function tseoindexing_display_merchant_product_list() {
                 <?php
                 $args = array(
                     'post_type' => 'product',
-                    'posts_per_page' => -1
+                    'posts_per_page' => 10,
+                    'paged' => $paged,
                 );
 
-                $products = get_posts($args);
+                $product_query = new WP_Query($args);
 
-                foreach ($products as $product_post):
+                foreach ($product_query->posts as $product_post):
                     $product = wc_get_product($product_post->ID);
                 
                     $is_valid_product = 
@@ -128,8 +132,28 @@ function tseoindexing_display_merchant_product_list() {
             </tbody>
         </table>
 
+        <!-- Paginador -->
+        <div class="tseoindexing-pagination">
+            <?php
+            // Obtener el total de páginas de la consulta
+            $total_pages = $product_query->max_num_pages;
+            if ($total_pages > 1) {
+                $current_page = max(1, $paged);
+                echo paginate_links(array(
+                    'base' => add_query_arg('paged', '%#%'),
+                    'format' => '',
+                    'current' => $current_page,
+                    'total' => $total_pages,
+                    'prev_text' => __('«', 'tseoindexing'),
+                    'next_text' => __('»', 'tseoindexing'),
+                ));
+            }
+            ?>
+        </div>
+
         <!-- Textarea para mostrar los datos JSON que se van a enviar -->
         <h2><?php esc_html_e('JSON Preview', 'tseoindexing'); ?></h2>
+        <?php esc_html_e('Advanced users: Verify that the data to be sent is technically correct. This JSON mirrors the Google Merchant Center Content API.', 'tseoindexing'); ?>
         <textarea id="selected_products_json" rows="10" cols="100" readonly></textarea>
 
         <!-- Opción para seleccionar el envío automático -->
