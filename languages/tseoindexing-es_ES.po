@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TSEO Indexing 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/tseoindexing\n"
-"POT-Creation-Date: 2024-06-12T10:03:46+00:00\n"
-"PO-Revision-Date: 2024-06-12 12:05+0200\n"
+"POT-Creation-Date: 2024-06-13T08:19:46+00:00\n"
+"PO-Revision-Date: 2024-06-13 10:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -345,8 +345,10 @@ msgid "Visit TSEO PRO"
 msgstr "Visita TSEO PRO"
 
 #: includes/tseoindexing-merchant-list.php:13
-#: includes/tseoindexing-merchant-list.php:151
-#: includes/tseoindexing-merchant-list.php:170
+#: includes/tseoindexing-merchant-list.php:161
+#: includes/tseoindexing-merchant-list.php:305
+#: includes/tseoindexing-merchant-list.php:381
+#: includes/tseoindexing-merchant-list.php:405
 #: includes/tseoindexing-merchant.php:15
 msgid "You do not have permission to perform this action."
 msgstr "No tienes permiso para ejecutar esta acción."
@@ -380,74 +382,93 @@ msgid "Stock"
 msgstr "Stock"
 
 #: includes/tseoindexing-merchant-list.php:33
-#: includes/tseoindexing-settings.php:587
+#: includes/tseoindexing-settings.php:650
 msgid "Condition"
 msgstr "Condición"
 
 #: includes/tseoindexing-merchant-list.php:34
-msgid "Category"
-msgstr "Categoría"
-
-#: includes/tseoindexing-merchant-list.php:35
 msgid "Brand"
 msgstr "Marca"
 
-#: includes/tseoindexing-merchant-list.php:36
-#: includes/tseoindexing-settings.php:600
+#: includes/tseoindexing-merchant-list.php:35
+#: includes/tseoindexing-settings.php:664
 msgid "GTIN"
 msgstr "GTIN"
 
-#: includes/tseoindexing-merchant-list.php:37
-#: includes/tseoindexing-settings.php:608
+#: includes/tseoindexing-merchant-list.php:36
+#: includes/tseoindexing-settings.php:673
 msgid "MPN"
 msgstr "MPN"
 
-#: includes/tseoindexing-merchant-list.php:38
+#: includes/tseoindexing-merchant-list.php:37
 msgid "Google Cat"
 msgstr "Categoría Google"
 
-#: includes/tseoindexing-merchant-list.php:64
-#: includes/tseoindexing-settings.php:591
+#: includes/tseoindexing-merchant-list.php:38
+msgid "Destinations"
+msgstr "Destinos"
+
+#: includes/tseoindexing-merchant-list.php:61
+#: includes/tseoindexing-settings.php:654
 msgid "New"
 msgstr "Nuevo"
 
-#: includes/tseoindexing-merchant-list.php:65
-#: includes/tseoindexing-settings.php:592
+#: includes/tseoindexing-merchant-list.php:62
+#: includes/tseoindexing-settings.php:655
 msgid "Refurbished"
 msgstr "Reacondicionado"
 
-#: includes/tseoindexing-merchant-list.php:66
-#: includes/tseoindexing-settings.php:593
+#: includes/tseoindexing-merchant-list.php:63
+#: includes/tseoindexing-settings.php:656
 msgid "Used"
 msgstr "Usado"
 
-#: includes/tseoindexing-merchant-list.php:69
+#: includes/tseoindexing-merchant-list.php:66
 msgid "No Condition"
 msgstr "No Condición"
 
-#: includes/tseoindexing-merchant-list.php:96
+#: includes/tseoindexing-merchant-list.php:85
+#: includes/tseoindexing-settings.php:704
+msgid "Shopping ads"
+msgstr "Shopping ads (Anuncios de compras)"
+
+#: includes/tseoindexing-merchant-list.php:86
+#: includes/tseoindexing-settings.php:705
+msgid "Display ads"
+msgstr "Display ads (Mostrar en anuncios)"
+
+#: includes/tseoindexing-merchant-list.php:87
+#: includes/tseoindexing-settings.php:706
+msgid "Free listings"
+msgstr "Free listings (Listados gratuitos)"
+
+#: includes/tseoindexing-merchant-list.php:107
 msgid "No Image"
 msgstr "Sin imagen"
 
-#: includes/tseoindexing-merchant-list.php:104
+#: includes/tseoindexing-merchant-list.php:115
 msgid "Edit"
 msgstr "Editar"
 
-#: includes/tseoindexing-merchant-list.php:121
+#: includes/tseoindexing-merchant-list.php:132
+msgid "JSON Preview"
+msgstr "Vista previa JSON"
+
+#: includes/tseoindexing-merchant-list.php:136
 msgid "Send products automatically when selected"
 msgstr "Enviar productos automáticamente cuando se seleccionan"
 
-#: includes/tseoindexing-merchant-list.php:126
-#: includes/tseoindexing-merchant-list.php:158
+#: includes/tseoindexing-merchant-list.php:141
+#: includes/tseoindexing-merchant-list.php:388
 msgid "Activated"
 msgstr "Activado"
 
-#: includes/tseoindexing-merchant-list.php:126
-#: includes/tseoindexing-merchant-list.php:158
+#: includes/tseoindexing-merchant-list.php:141
+#: includes/tseoindexing-merchant-list.php:388
 msgid "Deactivated"
 msgstr "Desactivado"
 
-#: includes/tseoindexing-merchant-list.php:129
+#: includes/tseoindexing-merchant-list.php:144
 msgid ""
 "If you select on, all selected products in the table will automatically sync "
 "with Google Merchant Center."
@@ -455,12 +476,36 @@ msgstr ""
 "Si selecciona Activado, todos los productos seleccionados en la tabla se "
 "sincronizarán automáticamente con Google Merchant Center."
 
-#: includes/tseoindexing-merchant-list.php:133
+#: includes/tseoindexing-merchant-list.php:148
 msgid "Send to Merchant Center"
 msgstr "Enviar a Google Merchant Center"
 
-#: includes/tseoindexing-merchant-list.php:161
-#: includes/tseoindexing-merchant-list.php:179
+#: includes/tseoindexing-merchant-list.php:169
+msgid "Invalid product ID."
+msgstr "ID de producto no válido."
+
+#: includes/tseoindexing-merchant-list.php:221
+msgid "Product ID not provided."
+msgstr "ID del producto no proporcionado."
+
+#: includes/tseoindexing-merchant-list.php:233
+msgid "Unable to connect to Google Merchant Center."
+msgstr "No se puede conectar con Google Merchant Center."
+
+#: includes/tseoindexing-merchant-list.php:286
+msgid "Error sending product to Google Merchant Center: "
+msgstr "Error al enviar el producto a Google Merchant Center:"
+
+#: includes/tseoindexing-merchant-list.php:364
+msgid "Products successfully sent to Google Merchant Center."
+msgstr "Productos enviados correctamente a Google Merchant Center."
+
+#: includes/tseoindexing-merchant-list.php:366
+msgid "No products selected."
+msgstr "No hay productos seleccionados."
+
+#: includes/tseoindexing-merchant-list.php:391
+#: includes/tseoindexing-merchant-list.php:414
 msgid "Invalid request."
 msgstr "Petición incorrecta."
 
@@ -660,29 +705,49 @@ msgstr "Por favor, selecciona al menos una URL para eliminar."
 msgid "Google API Remaining Quota:"
 msgstr "Cuota restante de la API de Google:"
 
-#: includes/tseoindexing-settings.php:583
+#: includes/tseoindexing-settings.php:632
+msgid "TSEO Merchant"
+msgstr "TSEO Merchant"
+
+#: includes/tseoindexing-settings.php:645
 msgid "Google Merchant Center Fields by TSEO Indexing"
 msgstr "Campos de Google Merchant Center por TSEO Indexing"
 
-#: includes/tseoindexing-settings.php:588
+#: includes/tseoindexing-settings.php:651
 msgid "Product condition (new, used, refurbished)."
 msgstr "Condición del producto (nuevo, usado, reacondicionado)."
 
-#: includes/tseoindexing-settings.php:601
+#: includes/tseoindexing-settings.php:665
 msgid "Enter the global identification number (UPC, EAN, ISBN, etc.)."
 msgstr "Introduce el número de identificación global (UPC, EAN, ISBN, etc.)."
 
-#: includes/tseoindexing-settings.php:609
+#: includes/tseoindexing-settings.php:674
 msgid "Manufacturer part number (MPN)."
 msgstr "Número de parte del fabricante (MPN)."
 
-#: includes/tseoindexing-settings.php:616
+#: includes/tseoindexing-settings.php:682
 msgid "Google Product Category"
 msgstr "Categoría de Producto de Google"
 
-#: includes/tseoindexing-settings.php:617
+#: includes/tseoindexing-settings.php:683
 msgid "Official Google category for the product."
 msgstr "Categoría oficial de Google para el producto."
+
+#: includes/tseoindexing-settings.php:691
+msgid "Google Merchant Center Description"
+msgstr "Descripción del producto para Google Merchant Center"
+
+#: includes/tseoindexing-settings.php:692
+msgid ""
+"Enter a specific description for Google Merchant Center. HTML tags will be "
+"stripped."
+msgstr ""
+"Enter a specific description for Google Merchant Center. HTML tags will be "
+"stripped."
+
+#: includes/tseoindexing-settings.php:709
+msgid "Select the destination(s) for this product:"
+msgstr "Seleccione el(los) destino(s) de este producto:"
 
 #: includes/tseoindexing-tools.php:16
 msgid "Prepare a list of URLs to send to the Google Indexing API:"
@@ -721,6 +786,9 @@ msgstr "No se encontraron URL."
 #: tseoindexing.php:69
 msgid "Settings"
 msgstr "Ajustes"
+
+#~ msgid "Category"
+#~ msgstr "Categoría"
 
 #~ msgid "No se encontraron URLs."
 #~ msgstr "No URLs found"
