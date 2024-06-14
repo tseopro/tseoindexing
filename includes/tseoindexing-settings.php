@@ -478,7 +478,7 @@ function tseoindexing_remaining_quota() {
 
 
 /**
- * TSEO PRO TSEO Merchant Center
+ * TSEO PRO TSEO Merchant Center - Scripts
  *
  * @package TSEOIndexing
  * @version 1.0.0
@@ -497,7 +497,7 @@ function tseoindexing_php_script_embedded_merchant_table() {
                     data: {
                         action: 'tseoindexing_update_send_automatically',
                         send_automatically: isChecked,
-                        _wpnonce: '<?php echo wp_create_nonce("tseo_merchant_auto_send_nonce"); ?>' // Generar un nonce para seguridad
+                        _wpnonce: '<?php echo wp_create_nonce("tseoindexing_merchant_product_nonce"); ?>' // Generar un nonce para seguridad
                     },
                     success: function(response) {
                         if (response.success) {
@@ -587,6 +587,81 @@ function tseoindexing_php_script_embedded_merchant_table() {
 }
 
 /**
+ * TSEO PRO TSEO Merchant Center - Retrieves product data via AJAX request.
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+add_action('wp_ajax_tseoindexing_get_product_data', 'tseoindexing_get_product_data');
+function tseoindexing_get_product_data() {
+    check_ajax_referer('tseo_get_product_data_nonce', '_wpnonce');
+
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+    }
+
+    if (isset($_POST['product_id'])) {
+        $product_id = intval($_POST['product_id']);
+        $product = wc_get_product($product_id);
+
+        if (!$product) {
+            wp_send_json_error(array('message' => __('Invalid product ID.', 'tseoindexing')));
+        }
+
+        // Obtener la descripción específica para Google Merchant Center desde el meta del producto
+        $description = get_post_meta($product->get_id(), '_google_merchant_description', true);
+
+        // Si la descripción específica no está definida, dejarla vacía o manejar el caso según lo requieras
+        if (empty($description)) {
+            $description = '';
+        }
+
+        // Obtener la primera etiqueta del producto como marca
+        $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
+        $brand = !empty($tags) ? $tags[0] : '';
+
+        // Obtener el GTIN, MPN y la categoría de producto de Google
+        $gtin = get_post_meta($product->get_id(), '_gtin', true) ?: '';
+        $mpn = get_post_meta($product->get_id(), '_mpn', true) ?: '';
+        $googleProductCategory = get_post_meta($product->get_id(), '_google_product_category', true) ?: '';
+
+        // Obtener los destinos seleccionados para el producto
+        $destinations = get_post_meta($product->get_id(), '_google_merchant_destinations', true) ?: array('free_listings');
+
+        // Obtener el idioma configurado en WordPress
+        $content_language = substr(get_locale(), 0, 2);
+        // Obtener el país objetivo de WooCommerce
+        $target_country = WC()->countries->get_base_country();
+
+        // Construir el JSON del producto
+        $product_data = array(
+            'offerId' => $product->get_id(),
+            'title' => $product->get_name(),
+            'description' => $description,
+            'link' => get_permalink($product->get_id()),
+            'imageLink' => wp_get_attachment_url($product->get_image_id()),
+            'price' => array(
+                'value' => $product->get_price(),
+                'currency' => get_woocommerce_currency()
+            ),
+            'availability' => $product->is_in_stock() ? 'in stock' : 'out of stock',
+            'condition' => get_post_meta($product->get_id(), '_condition', true) ?: 'new',
+            'brand' => $brand,
+            'gtin' => $gtin,
+            'mpn' => $mpn,
+            'googleProductCategory' => $googleProductCategory,
+            'destinations' => $destinations,
+            'contentLanguage' => $content_language, // Ajustado a ISO 639-1
+            'targetCountry' => $target_country // Añadido campo targetCountry
+        );
+
+        wp_send_json_success(array('product' => $product_data));
+    } else {
+        wp_send_json_error(array('message' => __('Product ID not provided.', 'tseoindexing')));
+    }
+}
+
+/**
  * TSEO PRO TSEO Merchant Center Add Fields WooCommerce
  *
  * @package TSEOIndexing
@@ -672,7 +747,7 @@ function tseoindexing_add_merchant_center_fields() {
         'free_listings' => __('Free listings', 'tseoindexing'),
     );
 
-    echo '<p>' . __('Select the destination(s) for this product:', 'tseoindexing') . '</p>';
+    echo '<p><strong>' . __('Select the destination(s) for this product:', 'tseoindexing') . '</strong></p>';
 
     foreach ($destinations as $key => $label) {
         woocommerce_wp_checkbox(array(
@@ -683,6 +758,60 @@ function tseoindexing_add_merchant_center_fields() {
             'cbvalue' => 'yes',
         ));
     }
+
+    // Añadir campos para Ropa
+    echo '<p><strong>' . __('Attributes for Clothing', 'tseoindexing') . '</strong></p>';
+
+    // Campo para el Color
+    woocommerce_wp_text_input(array(
+        'id' => '_google_color',
+        'label' => __('Color', 'tseoindexing'),
+        'description' => __('The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, "red" or "apple cinnamon red"). If the product has more than one main color, each must be separated by a slash (for example, "red/brown"). The color should be the same as what appears on your landing page.<br><br>If this product has different color variants, enter the specific color of this variant and the same item_group_id [item_group_id] in all of them. If it is made of precious metals, include it in material [material]. In some countries, it is mandatory to send color [color] on clothing and accessories.', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta(get_the_ID(), '_google_color', true),
+    ));
+
+    // Campo para el Tamaño
+    woocommerce_wp_text_input(array(
+        'id' => '_google_size',
+        'label' => __('Size', 'tseoindexing'),
+        'description' => __('Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL)', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta(get_the_ID(), '_google_size', true),
+    ));
+
+    // Campo para el Género
+    woocommerce_wp_select(array(
+        'id' => '_google_gender',
+        'label' => __('Gender', 'tseoindexing'),
+        'description' => __('Select the gender for which the product is designed.', 'tseoindexing'),
+        'desc_tip' => true,
+        'options' => array(
+            '' => __('Select option', 'tseoindexing'),
+            'male' => __('Male', 'tseoindexing'),
+            'female' => __('Female', 'tseoindexing'),
+            'unisex' => __('Unisex', 'tseoindexing'),
+        ),
+        'value' => get_post_meta(get_the_ID(), '_google_gender', true),
+    ));
+
+    // Campo para la Edad
+    woocommerce_wp_select(array(
+        'id' => '_google_age_group',
+        'label' => __('Age Group', 'tseoindexing'),
+        'description' => __('Select the age group for the product.', 'tseoindexing'),
+        'desc_tip' => true,
+        'options' => array(
+            '' => __('Select option', 'tseoindexing'),
+            'newborn' => __('Newborn', 'tseoindexing'),
+            'infant' => __('Infant', 'tseoindexing'),
+            'toddler' => __('Toddler', 'tseoindexing'),
+            'kids' => __('Kids', 'tseoindexing'),
+            'junior' => __('Junior', 'tseoindexing'),
+            'adult' => __('Adult', 'tseoindexing'),
+        ),
+        'value' => get_post_meta(get_the_ID(), '_google_age_group', true),
+    ));
 
     echo '</div>';
     echo '</div>'; // Cerrar div panel
@@ -732,5 +861,29 @@ function tseoindexing_save_google_merchant_fields($product_id) {
     }
 
     update_post_meta($product_id, '_google_merchant_destinations', $selected_destinations);
+
+    // Guardar el Color
+    if (isset($_POST['_google_color'])) {
+        $color = sanitize_text_field($_POST['_google_color']);
+        update_post_meta($product_id, '_google_color', $color);
+    }
+
+    // Guardar el Tamaño
+    if (isset($_POST['_google_size'])) {
+        $size = sanitize_text_field($_POST['_google_size']);
+        update_post_meta($product_id, '_google_size', $size);
+    }
+
+    // Guardar el Género
+    if (isset($_POST['_google_gender'])) {
+        $gender = sanitize_text_field($_POST['_google_gender']);
+        update_post_meta($product_id, '_google_gender', $gender);
+    }
+
+    // Guardar la Edad
+    if (isset($_POST['_google_age_group'])) {
+        $age_group = sanitize_text_field($_POST['_google_age_group']);
+        update_post_meta($product_id, '_google_age_group', $age_group);
+    }
 }
 add_action('woocommerce_process_product_meta', 'tseoindexing_save_google_merchant_fields');

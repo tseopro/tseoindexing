@@ -12,6 +12,12 @@ function tseoindexing_display_merchant_product_list() {
         wp_die(__('You do not have permission to perform this action.', 'tseoindexing'));
     }
 
+    // Asegurar que $paged esté definido
+    $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
+
+    // Obtener el valor de send_automatically de las opciones de WordPress
+    $send_automatically = get_option('tseo_merchant_send_automatically', false);
+
     // Verificar el estado de la conexión
     $is_connected = tseoindexing_merchant_verify_connection();
     $connection_status = $is_connected ? __('Connected', 'tseoindexing') : __('Disconnected', 'tseoindexing');
@@ -158,6 +164,9 @@ function tseoindexing_display_merchant_product_list() {
         <?php esc_html_e('Advanced users: Verify that the data to be sent is technically correct. This JSON mirrors the Google Merchant Center Content API.', 'tseoindexing'); ?>
         <textarea id="selected_products_json" rows="10" cols="100" readonly></textarea>
 
+        <h2><?php esc_html_e('API Response. Advanced users.', 'tseoindexing'); ?></h2>
+        <textarea id="api_response_display" readonly style="width: 100%; height: 80px;"></textarea>
+
         <!-- Opción para seleccionar el envío automático -->
         <h2><?php esc_html_e('Send products automatically when selected', 'tseoindexing'); ?></h2>
         <p>
@@ -174,87 +183,61 @@ function tseoindexing_display_merchant_product_list() {
             <input type="submit" id="tseo_merchant_product_submit" name="tseo_merchant_product_submit" class="button button-primary submit" value="<?php esc_attr_e('Send to Merchant Center', 'tseoindexing'); ?>" <?php echo $send_automatically ? 'style="display:none;"' : ''; ?>>
         </div>
     </form>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+
+                var form = $(this);
+                var data = form.serialize();
+                data += '&action=tseoindexing_merchant_product_submit';
+
+                $.post(ajaxurl, data, function(response) {
+                    if (response.success) {
+                        if (response.data && response.data.api_response) {
+                            $('#api_response_display').text(JSON.stringify(response.data.api_response, null, 2));
+                        } else {
+                            $('#api_response_display').text('Products successfully sent to Google Merchant Center.');
+                        }
+                    } else {
+                        if (response.data && response.data.message) {
+                            alert(response.data.message);
+                        } else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    alert('An error occurred during the request. Please check your network connection and try again.');
+                });
+            });
+        });
+    </script>
     <?php
     // Ajax para actualizar la preferencia de envío automático
     tseoindexing_php_script_embedded_merchant_table();
 }
 
+function tseoindexing_send_selected_products_to_merchant_center($products) {
+    $product_count = count($products);
 
-add_action('wp_ajax_tseoindexing_get_product_data', 'tseoindexing_get_product_data');
-function tseoindexing_get_product_data() {
-    check_ajax_referer('tseo_get_product_data_nonce', '_wpnonce');
-
-    if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+    if ($product_count == 0) {
+        echo '<div class="error"><p>' . esc_html__('No products to send.', 'tseoindexing') . '</p></div>';
+        return;
     }
 
-    if (isset($_POST['product_id'])) {
-        $product_id = intval($_POST['product_id']);
-        $product = wc_get_product($product_id);
-
-        if (!$product) {
-            wp_send_json_error(array('message' => __('Invalid product ID.', 'tseoindexing')));
-        }
-
-        // Obtener la descripción específica para Google Merchant Center desde el meta del producto
-        $description = get_post_meta($product->get_id(), '_google_merchant_description', true);
-
-        // Si la descripción específica no está definida, dejarla vacía o manejar el caso según lo requieras
-        if (empty($description)) {
-            $description = '';
-        }
-
-        // Obtener la primera etiqueta del producto como marca
-        $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
-        $brand = !empty($tags) ? $tags[0] : '';
-
-        // Obtener el GTIN, MPN y la categoría de producto de Google
-        $gtin = get_post_meta($product->get_id(), '_gtin', true) ?: '';
-        $mpn = get_post_meta($product->get_id(), '_mpn', true) ?: '';
-        $googleProductCategory = get_post_meta($product->get_id(), '_google_product_category', true) ?: '';
-
-        // Obtener los destinos seleccionados para el producto
-        $destinations = get_post_meta($product->get_id(), '_google_merchant_destinations', true) ?: array('free_listings');
-
-        // Obtener el idioma configurado en WordPress
-        $content_language = substr(get_locale(), 0, 2);
-        // Obtener el país objetivo de WooCommerce
-        $target_country = WC()->countries->get_base_country();
-
-        // Construir el JSON del producto
-        $product_data = array(
-            'offerId' => $product->get_id(),
-            'title' => $product->get_name(),
-            'description' => $description,
-            'link' => get_permalink($product->get_id()),
-            'imageLink' => wp_get_attachment_url($product->get_image_id()),
-            'price' => array(
-                'value' => $product->get_price(),
-                'currency' => get_woocommerce_currency()
-            ),
-            'availability' => $product->is_in_stock() ? 'in stock' : 'out of stock',
-            'condition' => get_post_meta($product->get_id(), '_condition', true) ?: 'new',
-            'brand' => $brand,
-            'gtin' => $gtin,
-            'mpn' => $mpn,
-            'googleProductCategory' => $googleProductCategory,
-            'destinations' => $destinations,
-            'contentLanguage' => $content_language, // Ajustado a ISO 639-1
-            'targetCountry' => $target_country // Añadido campo targetCountry
-        );
-
-        wp_send_json_success(array('product' => $product_data));
+    if ($product_count == 1) {
+        return tseoindexing_send_products_to_merchant_center($products);
     } else {
-        wp_send_json_error(array('message' => __('Product ID not provided.', 'tseoindexing')));
+        return tseoindexing_send_products_to_merchant_center_in_batch($products);
     }
 }
 
 /**
- * Sends products to Google Merchant Center.
+ * Sends products uno a uno to Google Merchant Center.
  *
  * @return void
  */
-function send_products_to_merchant_center($products) {
+function tseoindexing_send_products_to_merchant_center($products) {
     $client = tseoindexing_merchant_get_google_client();
     if (!$client) {
         echo '<div class="error"><p>' . esc_html__('Unable to connect to Google Merchant Center.', 'tseoindexing') . '</p></div>';
@@ -263,28 +246,13 @@ function send_products_to_merchant_center($products) {
 
     $service = new Google_Service_ShoppingContent($client);
     $merchant_center_id = get_option('tseo_merchant_center_id', '');
+    $response_data = array();
 
-    // Obtener el idioma configurado en WordPress (ISO 639-1)
     $content_language = substr(get_locale(), 0, 2);
-    // Obtener el país objetivo de WooCommerce
     $target_country = WC()->countries->get_base_country();
 
     foreach ($products as $product) {
-        // Obtener la descripción desde el campo personalizado de Google Merchant Center
-        $description = get_post_meta($product['offerId'], '_google_merchant_description', true);
-        
-        // Si la descripción personalizada está vacía, puedes manejarlo de acuerdo a tus necesidades
-        if (empty($description)) {
-            $description = '';
-        }
-
-        // Asegurarse de que los campos obligatorios no contengan valores inválidos
-        $product['gtin'] = $product['gtin'] ?: '';
-        $product['mpn'] = $product['mpn'] ?: '';
-        $product['googleProductCategory'] = $product['googleProductCategory'] ?: '';
-
         try {
-            // Crear el objeto de producto para la API
             $api_product = new Google_Service_ShoppingContent_Product();
             $api_product->setOfferId($product['offerId']);
             $api_product->setTitle($product['title']);
@@ -301,61 +269,154 @@ function send_products_to_merchant_center($products) {
             $api_product->setGtin($product['gtin']);
             $api_product->setMpn($product['mpn']);
             $api_product->setGoogleProductCategory($product['googleProductCategory']);
-            $api_product->setDestinations(array_map(function($destination) {
-                return array('destinationName' => $destination, 'destinationStatus' => 'active');
-            }, $product['destinations']));
             $api_product->setContentLanguage($content_language);
             $api_product->setTargetCountry($target_country);
+            $api_product->setChannel('online');
+            $api_product->includedDestinations = $product['destinations'];
 
-            // Enviar el producto a Google Merchant Center
-            $service->products->insert($merchant_center_id, $api_product);
+            // Asignar los campos adicionales directamente a las propiedades del objeto
+            if (!empty($product['color'])) {
+                $api_product->setColor($product['color']);
+            }
+            if (!empty($product['size'])) {
+                // Para tamaños, se espera un array de strings
+                $api_product->setSizes([$product['size']]);
+            }
+            if (!empty($product['gender'])) {
+                $api_product->setGender($product['gender']);
+            }
+            if (!empty($product['ageGroup'])) {
+                $api_product->setAgeGroup($product['ageGroup']);
+            }
+
+            $response = $service->products->insert($merchant_center_id, $api_product);
+            $response_data[] = $response;
         } catch (Exception $e) {
             echo '<div class="error"><p>' . esc_html__('Error sending product to Google Merchant Center: ', 'tseoindexing') . esc_html($e->getMessage()) . '</p></div>';
+            error_log('Error sending product to Google Merchant Center: ' . $e->getMessage());
         }
     }
+
+    return $response_data;
 }
 
+/**
+ * Sends products multiples to Google Merchant Center.
+ *
+ * @return void
+ */
+function tseoindexing_send_products_to_merchant_center_in_batch($products) {
+    $client = tseoindexing_merchant_get_google_client();
+    if (!$client) {
+        return array('error' => 'Unable to connect to Google Merchant Center.');
+    }
+
+    $service = new Google_Service_ShoppingContent($client);
+    $merchant_center_id = get_option('tseo_merchant_center_id', '');
+    $response_data = array();
+
+    $content_language = substr(get_locale(), 0, 2);
+    $target_country = WC()->countries->get_base_country();
+
+    $batch_request_entries = [];
+    $batch_id = 0;
+
+    foreach ($products as $product) {
+        try {
+            $api_product = new Google_Service_ShoppingContent_Product();
+            $api_product->setOfferId($product['offerId']);
+            $api_product->setTitle($product['title']);
+            $api_product->setDescription($product['description']);
+            $api_product->setLink($product['link']);
+            $api_product->setImageLink($product['imageLink']);
+            $api_product->setPrice(new Google_Service_ShoppingContent_Price(array(
+                'value' => $product['price']['value'],
+                'currency' => $product['price']['currency']
+            )));
+            $api_product->setAvailability($product['availability']);
+            $api_product->setCondition($product['condition']);
+            $api_product->setBrand($product['brand']);
+            $api_product->setGtin($product['gtin']);
+            $api_product->setMpn($product['mpn']);
+            $api_product->setGoogleProductCategory($product['googleProductCategory']);
+            $api_product->setContentLanguage($content_language);
+            $api_product->setTargetCountry($target_country);
+            $api_product->setChannel('online');
+            $api_product->includedDestinations = $product['destinations'];
+
+            if (!empty($product['color'])) {
+                $api_product->setColor($product['color']);
+            }
+            if (!empty($product['size'])) {
+                $api_product->setSizes([$product['size']]);
+            }
+            if (!empty($product['gender'])) {
+                $api_product->setGender($product['gender']);
+            }
+            if (!empty($product['ageGroup'])) {
+                $api_product->setAgeGroup($product['ageGroup']);
+            }
+
+            $batch_request_entry = new Google_Service_ShoppingContent_ProductsCustomBatchRequestEntry();
+            $batch_request_entry->setBatchId($batch_id++);
+            $batch_request_entry->setMerchantId($merchant_center_id);
+            $batch_request_entry->setMethod('insert');
+            $batch_request_entry->setProduct($api_product);
+
+            $batch_request_entries[] = $batch_request_entry;
+        } catch (Exception $e) {
+            $response_data[] = array('error' => 'Error preparing product for batch request: ' . $e->getMessage());
+        }
+    }
+
+    if (!empty($batch_request_entries)) {
+        $batch_request = new Google_Service_ShoppingContent_ProductsCustomBatchRequest();
+        $batch_request->setEntries($batch_request_entries);
+
+        try {
+            $batch_response = $service->products->custombatch($batch_request);
+            foreach ($batch_response->getEntries() as $response) {
+                $response_data[] = $response;
+            }
+            return $response_data;
+        } catch (Exception $e) {
+            return array('error' => 'Error sending batch request to Google Merchant Center: ' . $e->getMessage());
+        }
+    }
+
+    return $response_data;
+}
 
 /**
  * Embeds the PHP script for updating the send automatically option via AJAX.
- *
- * This function embeds the PHP script for updating the send automatically option via AJAX.
- * It outputs the script directly to the page footer.
  *
  * @since 1.0.0
  */
 add_action('wp_ajax_tseoindexing_merchant_product_submit', 'tseoindexing_merchant_product_submit');
 function tseoindexing_merchant_product_submit() {
-    check_ajax_referer('tseo_merchant_auto_send_nonce', '_wpnonce');
+    // Eliminar o comentar los logs innecesarios
+    // error_log('Function tseoindexing_merchant_product_submit started.');
+
+    if (!check_ajax_referer('tseoindexing_merchant_product_nonce', '_wpnonce', false)) {
+        wp_send_json_error(array('message' => __('Nonce verification failed.', 'tseoindexing')));
+    }
 
     if (!current_user_can('manage_options')) {
         wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
     }
 
-    // Recuperar los IDs de los productos seleccionados
-    if (isset($_POST['selected_products'])) {
+    if (isset($_POST['selected_products']) && is_array($_POST['selected_products'])) {
         $selected_product_ids = array_map('intval', $_POST['selected_products']);
-        
-        // Obtener los datos de cada producto seleccionado
+
         $products = array();
         foreach ($selected_product_ids as $product_id) {
             $product = wc_get_product($product_id);
             if ($product) {
-                // Obtener la descripción específica para Google Merchant Center
-                $description = get_post_meta($product->get_id(), '_google_merchant_description', true);
-
-                // Si la descripción específica no está definida, dejarla vacía o manejar el caso según lo requieras
-                if (empty($description)) {
-                    $description = '';
-                }
-
+                $description = get_post_meta($product->get_id(), '_google_merchant_description', true) ?: '';
                 $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
                 $brand = !empty($tags) ? $tags[0] : '';
 
-                // Obtener el idioma configurado en WordPress (ISO 639-1)
                 $contentLanguage = substr(get_locale(), 0, 2);
-
-                // Obtener el país de destino desde la configuración de WooCommerce
                 $targetCountry = get_option('woocommerce_default_country');
                 if (strpos($targetCountry, ':') !== false) {
                     $targetCountry = explode(':', $targetCountry)[0];
@@ -377,23 +438,31 @@ function tseoindexing_merchant_product_submit() {
                     'gtin' => get_post_meta($product->get_id(), '_gtin', true) ?: '',
                     'mpn' => get_post_meta($product->get_id(), '_mpn', true) ?: '',
                     'googleProductCategory' => get_post_meta($product->get_id(), '_google_product_category', true) ?: '',
-                    'contentLanguage' => $contentLanguage, // Añadir contentLanguage
-                    'targetCountry' => $targetCountry, // Añadir targetCountry
-                    'channel' => 'online', // Añadir channel, asumiendo 'online'
-                    'destinations' => get_post_meta($product->get_id(), '_google_merchant_destinations', true) ?: array('free_listings')
+                    'contentLanguage' => $contentLanguage,
+                    'targetCountry' => $targetCountry,
+                    'channel' => 'online',
+                    'destinations' => get_post_meta($product->get_id(), '_google_merchant_destinations', true) ?: array('free_listings'),
+                    'color' => get_post_meta($product->get_id(), '_google_color', true) ?: '',
+                    'size' => get_post_meta($product->get_id(), '_google_size', true) ?: '',
+                    'gender' => get_post_meta($product->get_id(), '_google_gender', true) ?: '',
+                    'ageGroup' => get_post_meta($product->get_id(), '_google_age_group', true) ?: ''
                 );
             }
         }
 
-        // Llamar a la función que envía los productos a Google Merchant Center
-        send_products_to_merchant_center($products);
+        // Eliminar o comentar el log de los productos
+        // error_log('Products array: ' . print_r($products, true));
 
-        wp_send_json_success(array('message' => __('Products successfully sent to Google Merchant Center.', 'tseoindexing')));
+        $api_response = tseoindexing_send_selected_products_to_merchant_center($products);
+
+        // Eliminar o comentar el log de la respuesta de la API
+        // error_log('API response: ' . print_r($api_response, true));
+
+        wp_send_json_success(array('message' => __('Products successfully sent to Google Merchant Center.', 'tseoindexing'), 'api_response' => $api_response));
     } else {
-        wp_send_json_error(array('message' => __('No products selected.', 'tseoindexing')));
+        wp_send_json_error(array('message' => __('No products selected or invalid format.', 'tseoindexing')));
     }
 }
-
 
 /**
  * Updates the option for sending merchant data automatically.
