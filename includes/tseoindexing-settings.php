@@ -484,9 +484,10 @@ function tseoindexing_remaining_quota() {
  * @version 1.0.0
  */
 function tseoindexing_php_script_embedded_merchant_table() {
-?>
+    ?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
+            // Manejar el cambio de estado de la opción de envío automático
             $('#tseo_send_automatically').on('change', function() {
                 var isChecked = $(this).is(':checked') ? 1 : 0;
 
@@ -516,41 +517,10 @@ function tseoindexing_php_script_embedded_merchant_table() {
                     }
                 });
             });
-        });
-
-        jQuery(document).ready(function($) {
-            // Manejar el cambio de estado de la opción de envío automático
-            $('#tseo_send_automatically').on('change', function() {
-                var isChecked = $(this).is(':checked') ? 1 : 0;
-
-                $.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'tseoindexing_update_send_automatically',
-                        send_automatically: isChecked,
-                        _wpnonce: '<?php echo wp_create_nonce("tseo_merchant_auto_send_nonce"); ?>'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#tseo_auto_send_status').text(response.data.message);
-
-                            if (isChecked) {
-                                $('#tseo_auto_send_status').removeClass('connect-send-error').addClass('connect-send-success');
-                                $('#tseo_merchant_product_submit').hide();
-                            } else {
-                                $('#tseo_auto_send_status').removeClass('connect-send-success').addClass('connect-send-error');
-                                $('#tseo_merchant_product_submit').show();
-                            }
-                        } else {
-                            alert(response.data.message);
-                        }
-                    }
-                });
-            });
 
             // Manejar la selección y deselección de productos
             $('.check-column input[type="checkbox"]').on('change', function() {
+                updateSelectedProductsJson();
                 var selectedProducts = [];
                 $('.check-column input[type="checkbox"]:checked').each(function() {
                     selectedProducts.push($(this).val());
@@ -566,11 +536,8 @@ function tseoindexing_php_script_embedded_merchant_table() {
                     }
                 });
             });
-        });
 
-    </script>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
+            // Función para actualizar la vista previa en JSON
             function updateSelectedProductsJson() {
                 var selectedProducts = [];
                 $('input.product-checkbox:checked').each(function() {
@@ -616,7 +583,7 @@ function tseoindexing_php_script_embedded_merchant_table() {
             updateSelectedProductsJson();
         });
     </script>
-<?php
+    <?php
 }
 
 /**

@@ -8,19 +8,23 @@ defined('ABSPATH') or die('No script kiddies please!');
  * @version 1.0.0
  */
 function tseoindexing_display_merchant_product_list() {
-    // Verificar permisos del usuario
     if (!current_user_can('manage_options')) {
         wp_die(__('You do not have permission to perform this action.', 'tseoindexing'));
     }
 
-    // Obtener la preferencia de envío del usuario
-    $send_automatically = get_option('tseo_merchant_send_automatically', false);
-
-    // Definir la variable $paged antes de su uso
-    $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1; // Línea 23 - Definimos $paged
+    // Verificar el estado de la conexión
+    $is_connected = tseoindexing_merchant_verify_connection();
+    $connection_status = $is_connected ? __('Connected', 'tseoindexing') : __('Disconnected', 'tseoindexing');
+    $connection_class = $is_connected ? 'connect-success' : 'connect-error';
 
     ?>
     <form method="post" action="">
+        <!-- Mostrar el estado de la conexión -->
+        <p>
+            <?php esc_html_e('Connection Status: ', 'tseoindexing'); ?>
+            <span class="<?php echo $connection_class; ?>"><?php echo $connection_status; ?></span> 
+        </p>
+
         <?php wp_nonce_field('tseoindexing_merchant_product_nonce'); ?>
         <h2><?php esc_html_e('Select Products to Send to Google Merchant Center', 'tseoindexing'); ?></h2>
         <p><?php esc_html_e('Only products that meet the Google Merchant Center publication criteria can be selected for submission.', 'tseoindexing'); ?></p>
@@ -28,7 +32,7 @@ function tseoindexing_display_merchant_product_list() {
         <table class="widefat fixed" cellspacing="0">
             <thead>
                 <tr>
-                    <th class="check-column"><input type="checkbox" /></th>
+                    <th class="check-column"><input type="checkbox" class="submit" /></th>
                     <th><?php esc_html_e('Image', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Product', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Price', 'tseoindexing'); ?></th>
@@ -100,7 +104,7 @@ function tseoindexing_display_merchant_product_list() {
                 ?>
                     <tr class="<?php echo $is_valid_product ? 'valid-product' : 'invalid-product'; ?>">
                         <th class="check-column">
-                            <input type="checkbox" name="selected_products[]" value="<?php echo esc_attr($product->get_id()); ?>" <?php echo $checked; ?> <?php disabled(!$is_valid_product); ?> />
+                            <input type="checkbox" class="submit" name="selected_products[]" value="<?php echo esc_attr($product->get_id()); ?>" <?php echo $checked; ?> <?php disabled(!$is_valid_product); ?> />
                         </th>
                         <td>
                             <?php 
@@ -132,10 +136,8 @@ function tseoindexing_display_merchant_product_list() {
             </tbody>
         </table>
 
-        <!-- Paginador -->
         <div class="tseoindexing-pagination">
             <?php
-            // Obtener el total de páginas de la consulta
             $total_pages = $product_query->max_num_pages;
             if ($total_pages > 1) {
                 $current_page = max(1, $paged);
@@ -160,7 +162,7 @@ function tseoindexing_display_merchant_product_list() {
         <h2><?php esc_html_e('Send products automatically when selected', 'tseoindexing'); ?></h2>
         <p>
             <label>
-                <input type="checkbox" id="tseo_send_automatically" name="tseo_send_automatically" value="1" <?php checked($send_automatically, 1); ?> />
+                <input type="checkbox" class="submit" id="tseo_send_automatically" name="tseo_send_automatically" value="1" <?php checked($send_automatically, 1); ?> />
                 <span id="tseo_auto_send_status" class="<?php echo $send_automatically ? 'connect-send-success' : 'connect-send-error'; ?>">
                     <?php echo $send_automatically ? esc_html__('Activated', 'tseoindexing') : esc_html__('Deactivated', 'tseoindexing'); ?>
                 </span>
@@ -169,13 +171,14 @@ function tseoindexing_display_merchant_product_list() {
         </p>
 
         <div class="button-panel">
-            <input type="submit" id="tseo_merchant_product_submit" name="tseo_merchant_product_submit" class="button button-primary" value="<?php esc_attr_e('Send to Merchant Center', 'tseoindexing'); ?>" <?php echo $send_automatically ? 'style="display:none;"' : ''; ?>>
+            <input type="submit" id="tseo_merchant_product_submit" name="tseo_merchant_product_submit" class="button button-primary submit" value="<?php esc_attr_e('Send to Merchant Center', 'tseoindexing'); ?>" <?php echo $send_automatically ? 'style="display:none;"' : ''; ?>>
         </div>
     </form>
     <?php
     // Ajax para actualizar la preferencia de envío automático
     tseoindexing_php_script_embedded_merchant_table();
 }
+
 
 add_action('wp_ajax_tseoindexing_get_product_data', 'tseoindexing_get_product_data');
 function tseoindexing_get_product_data() {
