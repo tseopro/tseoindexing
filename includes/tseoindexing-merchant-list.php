@@ -78,9 +78,8 @@ function tseoindexing_display_merchant_product_list() {
                     );
                     $condition = get_post_meta($product->get_id(), '_condition', true);
                     $condition_label = isset($condition_labels[$condition]) ? $condition_labels[$condition] : __('No Condition', 'tseoindexing');
-                
-                    $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
-                    $brand = !empty($tags) ? $tags[0] : 'No Brand';
+
+                    $brand = get_post_meta($product->get_id(), '_google_product_brand', true) ?: 'No Brand';
                 
                     $gtin = get_post_meta($product->get_id(), '_gtin', true) ?: 'No GTIN';
                     
@@ -164,9 +163,6 @@ function tseoindexing_display_merchant_product_list() {
         <?php esc_html_e('Advanced users: Verify that the data to be sent is technically correct. This JSON mirrors the Google Merchant Center Content API.', 'tseoindexing'); ?>
         <textarea id="selected_products_json" rows="10" cols="100" readonly></textarea>
 
-        <h2><?php esc_html_e('API Response. Advanced users.', 'tseoindexing'); ?></h2>
-        <textarea id="api_response_display" readonly style="width: 100%; height: 80px;"></textarea>
-
         <!-- Opción para seleccionar el envío automático -->
         <h2><?php esc_html_e('Send products automatically when selected', 'tseoindexing'); ?></h2>
         <p>
@@ -182,6 +178,9 @@ function tseoindexing_display_merchant_product_list() {
         <div class="button-panel">
             <input type="submit" id="tseo_merchant_product_submit" name="tseo_merchant_product_submit" class="button button-primary submit" value="<?php esc_attr_e('Send to Merchant Center', 'tseoindexing'); ?>" <?php echo $send_automatically ? 'style="display:none;"' : ''; ?>>
         </div>
+
+        <h2><?php esc_html_e('API Response. Advanced users.', 'tseoindexing'); ?></h2>
+        <textarea id="api_response_display" readonly style="width: 100%; height: 80px;"></textarea>
     </form>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -413,8 +412,8 @@ function tseoindexing_merchant_product_submit() {
             $product = wc_get_product($product_id);
             if ($product) {
                 $description = get_post_meta($product->get_id(), '_google_merchant_description', true) ?: '';
-                $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
-                $brand = !empty($tags) ? $tags[0] : '';
+                //$tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
+                //$brand = !empty($tags) ? $tags[0] : '';
 
                 $contentLanguage = substr(get_locale(), 0, 2);
                 $targetCountry = get_option('woocommerce_default_country');
@@ -434,7 +433,7 @@ function tseoindexing_merchant_product_submit() {
                     ),
                     'availability' => $product->is_in_stock() ? 'in stock' : 'out of stock',
                     'condition' => get_post_meta($product->get_id(), '_condition', true) ?: 'new',
-                    'brand' => $brand,
+                    'brand' => get_post_meta($product->get_id(), '_google_product_brand', true) ?: '',
                     'gtin' => get_post_meta($product->get_id(), '_gtin', true) ?: '',
                     'mpn' => get_post_meta($product->get_id(), '_mpn', true) ?: '',
                     'googleProductCategory' => get_post_meta($product->get_id(), '_google_product_category', true) ?: '',
@@ -471,7 +470,7 @@ function tseoindexing_merchant_product_submit() {
  */
 add_action('wp_ajax_tseoindexing_update_send_automatically', 'tseoindexing_update_send_automatically');
 function tseoindexing_update_send_automatically() {
-    check_ajax_referer('tseo_merchant_auto_send_nonce', '_wpnonce');
+    check_ajax_referer('tseoindexing_merchant_product_nonce', '_wpnonce');
 
     if (!current_user_can('manage_options')) {
         wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));

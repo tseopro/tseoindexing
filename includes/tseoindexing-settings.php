@@ -617,12 +617,13 @@ function tseoindexing_get_product_data() {
         }
 
         // Obtener la primera etiqueta del producto como marca
-        $tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
-        $brand = !empty($tags) ? $tags[0] : '';
+        //$tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
+        //$brand = !empty($tags) ? $tags[0] : '';
 
         // Obtener el GTIN, MPN y la categoría de producto de Google
         $gtin = get_post_meta($product->get_id(), '_gtin', true) ?: '';
         $mpn = get_post_meta($product->get_id(), '_mpn', true) ?: '';
+        $brand = get_post_meta($product->get_id(), '_google_product_brand', true) ?: '';
         $googleProductCategory = get_post_meta($product->get_id(), '_google_product_category', true) ?: '';
 
         // Obtener los destinos seleccionados para el producto
@@ -720,7 +721,7 @@ function tseoindexing_add_merchant_center_fields() {
     // Campo para la categoría de producto de Google
     woocommerce_wp_text_input(array(
         'id' => '_google_product_category',
-        'label' => __('Google Product Category', 'tseoindexing'),
+        'label' => __('Category', 'tseoindexing'),
         'description' => __('Official Google category for the product.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_product_category', true),
@@ -729,10 +730,19 @@ function tseoindexing_add_merchant_center_fields() {
     // Campo para la descripción específica de Google Merchant Center
     woocommerce_wp_textarea_input(array(
         'id' => '_google_merchant_description',
-        'label' => __('Google Merchant Center Description', 'tseoindexing'),
-        'description' => __('Enter a specific description for Google Merchant Center. HTML tags will be stripped.', 'tseoindexing'),
+        'label' => __('Description', 'tseoindexing'),
+        'description' => __('Enter a specific description for Google Merchant Center.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_merchant_description', true),
+    ));
+
+    // Campo para la marca del producto
+    woocommerce_wp_text_input(array(
+        'id' => '_google_product_brand',
+        'label' => __('Brand', 'tseoindexing'),
+        'description' => __('Brand for the product.', 'tseoindexing'),
+        'desc_tip' => true,
+        'value' => get_post_meta(get_the_ID(), '_google_product_brand', true),
     ));
 
     // Campo para los destinos del producto en Google Merchant Center
@@ -766,7 +776,7 @@ function tseoindexing_add_merchant_center_fields() {
     woocommerce_wp_text_input(array(
         'id' => '_google_color',
         'label' => __('Color', 'tseoindexing'),
-        'description' => __('The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, "red" or "apple cinnamon red"). If the product has more than one main color, each must be separated by a slash (for example, "red/brown"). The color should be the same as what appears on your landing page.<br><br>If this product has different color variants, enter the specific color of this variant and the same item_group_id [item_group_id] in all of them. If it is made of precious metals, include it in material [material]. In some countries, it is mandatory to send color [color] on clothing and accessories.', 'tseoindexing'),
+        'description' => __('The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, "red" or "apple cinnamon red"). If the product has more than one main color, each must be separated by a slash (for example, "red/brown"). The color should be the same as what appears on your landing page.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_color', true),
     ));
@@ -842,6 +852,12 @@ function tseoindexing_save_google_merchant_fields($product_id) {
     if (isset($_POST['_google_product_category'])) {
         $google_product_category = sanitize_text_field($_POST['_google_product_category']);
         update_post_meta($product_id, '_google_product_category', $google_product_category);
+    }
+
+    // Guardar la marca del producto
+    if (isset($_POST['_google_product_brand'])) {
+        $google_product_brand = sanitize_text_field($_POST['_google_product_brand']);
+        update_post_meta($product_id, '_google_product_brand', $google_product_brand);
     }
 
     // Guardar la descripción específica de Google Merchant Center
