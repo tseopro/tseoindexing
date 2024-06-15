@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-14T21:40:09+00:00\n"
+"POT-Creation-Date: 2024-06-15T11:15:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: tseoindexing\n"
@@ -264,9 +264,9 @@ msgid "Visit TSEO PRO"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:12
-#: includes/tseoindexing-merchant-list.php:405
-#: includes/tseoindexing-merchant-list.php:477
-#: includes/tseoindexing-merchant-list.php:501
+#: includes/tseoindexing-merchant-list.php:404
+#: includes/tseoindexing-merchant-list.php:476
+#: includes/tseoindexing-merchant-list.php:500
 #: includes/tseoindexing-merchant.php:15
 #: includes/tseoindexing-settings.php:600
 msgid "You do not have permission to perform this action."
@@ -312,21 +312,22 @@ msgid "Stock"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:46
-#: includes/tseoindexing-settings.php:691
+#: includes/tseoindexing-settings.php:692
 msgid "Condition"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:47
+#: includes/tseoindexing-settings.php:742
 msgid "Brand"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:48
-#: includes/tseoindexing-settings.php:705
+#: includes/tseoindexing-settings.php:706
 msgid "GTIN"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:49
-#: includes/tseoindexing-settings.php:714
+#: includes/tseoindexing-settings.php:715
 msgid "MPN"
 msgstr ""
 
@@ -339,17 +340,17 @@ msgid "Destinations"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:75
-#: includes/tseoindexing-settings.php:695
+#: includes/tseoindexing-settings.php:696
 msgid "New"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:76
-#: includes/tseoindexing-settings.php:696
+#: includes/tseoindexing-settings.php:697
 msgid "Refurbished"
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:77
-#: includes/tseoindexing-settings.php:697
+#: includes/tseoindexing-settings.php:698
 msgid "Used"
 msgstr ""
 
@@ -357,97 +358,97 @@ msgstr ""
 msgid "No Condition"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:99
-#: includes/tseoindexing-settings.php:745
+#: includes/tseoindexing-merchant-list.php:98
+#: includes/tseoindexing-settings.php:755
 msgid "Shopping ads"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:100
-#: includes/tseoindexing-settings.php:746
+#: includes/tseoindexing-merchant-list.php:99
+#: includes/tseoindexing-settings.php:756
 msgid "Display ads"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:101
-#: includes/tseoindexing-settings.php:747
+#: includes/tseoindexing-merchant-list.php:100
+#: includes/tseoindexing-settings.php:757
 msgid "Free listings"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:121
+#: includes/tseoindexing-merchant-list.php:120
 msgid "No Image"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:129
+#: includes/tseoindexing-merchant-list.php:128
 msgid "Edit"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:155
+#: includes/tseoindexing-merchant-list.php:154
 msgid "«"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:156
+#: includes/tseoindexing-merchant-list.php:155
 msgid "»"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:163
+#: includes/tseoindexing-merchant-list.php:162
 msgid "JSON Preview"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:164
+#: includes/tseoindexing-merchant-list.php:163
 msgid "Advanced users: Verify that the data to be sent is technically correct. This JSON mirrors the Google Merchant Center Content API."
 msgstr ""
 
 #: includes/tseoindexing-merchant-list.php:167
-msgid "API Response. Advanced users."
-msgstr ""
-
-#: includes/tseoindexing-merchant-list.php:171
 msgid "Send products automatically when selected"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:176
-#: includes/tseoindexing-merchant-list.php:484
+#: includes/tseoindexing-merchant-list.php:172
+#: includes/tseoindexing-merchant-list.php:483
 msgid "Activated"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:176
-#: includes/tseoindexing-merchant-list.php:484
+#: includes/tseoindexing-merchant-list.php:172
+#: includes/tseoindexing-merchant-list.php:483
 msgid "Deactivated"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:179
+#: includes/tseoindexing-merchant-list.php:175
 msgid "If you select on, all selected products in the table will automatically sync with Google Merchant Center."
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:183
+#: includes/tseoindexing-merchant-list.php:179
 msgid "Send to Merchant Center"
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:224
+#: includes/tseoindexing-merchant-list.php:182
+msgid "API Response. Advanced users."
+msgstr ""
+
+#: includes/tseoindexing-merchant-list.php:223
 msgid "No products to send."
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:243
+#: includes/tseoindexing-merchant-list.php:242
 msgid "Unable to connect to Google Merchant Center."
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:295
+#: includes/tseoindexing-merchant-list.php:294
 msgid "Error sending product to Google Merchant Center: "
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:401
+#: includes/tseoindexing-merchant-list.php:400
 msgid "Nonce verification failed."
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:461
+#: includes/tseoindexing-merchant-list.php:460
 msgid "Products successfully sent to Google Merchant Center."
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:463
+#: includes/tseoindexing-merchant-list.php:462
 msgid "No products selected or invalid format."
 msgstr ""
 
-#: includes/tseoindexing-merchant-list.php:487
-#: includes/tseoindexing-merchant-list.php:510
+#: includes/tseoindexing-merchant-list.php:486
+#: includes/tseoindexing-merchant-list.php:509
 msgid "Invalid request."
 msgstr ""
 
@@ -607,124 +608,128 @@ msgstr ""
 msgid "Invalid product ID."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:660
+#: includes/tseoindexing-settings.php:661
 msgid "Product ID not provided."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:673
+#: includes/tseoindexing-settings.php:674
 msgid "TSEO Merchant"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:686
+#: includes/tseoindexing-settings.php:687
 msgid "Google Merchant Center Fields by TSEO Indexing"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:692
+#: includes/tseoindexing-settings.php:693
 msgid "Product condition (new, used, refurbished)."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:706
+#: includes/tseoindexing-settings.php:707
 msgid "Enter the global identification number (UPC, EAN, ISBN, etc.)."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:715
+#: includes/tseoindexing-settings.php:716
 msgid "Manufacturer part number (MPN)."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:723
-msgid "Google Product Category"
+#: includes/tseoindexing-settings.php:724
+msgid "Category"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:724
+#: includes/tseoindexing-settings.php:725
 msgid "Official Google category for the product."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:732
-msgid "Google Merchant Center Description"
-msgstr ""
-
 #: includes/tseoindexing-settings.php:733
-msgid "Enter a specific description for Google Merchant Center. HTML tags will be stripped."
+msgid "Description"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:750
+#: includes/tseoindexing-settings.php:734
+msgid "Enter a specific description for Google Merchant Center."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:743
+msgid "Brand for the product."
+msgstr ""
+
+#: includes/tseoindexing-settings.php:760
 msgid "Select the destination(s) for this product:"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:763
+#: includes/tseoindexing-settings.php:773
 msgid "Attributes for Clothing"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:768
+#: includes/tseoindexing-settings.php:778
 msgid "Color"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:769
-msgid "The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, \"red\" or \"apple cinnamon red\"). If the product has more than one main color, each must be separated by a slash (for example, \"red/brown\"). The color should be the same as what appears on your landing page.<br><br>If this product has different color variants, enter the specific color of this variant and the same item_group_id [item_group_id] in all of them. If it is made of precious metals, include it in material [material]. In some countries, it is mandatory to send color [color] on clothing and accessories."
-msgstr ""
-
-#: includes/tseoindexing-settings.php:777
-msgid "Size"
-msgstr ""
-
-#: includes/tseoindexing-settings.php:778
-msgid "Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL)"
-msgstr ""
-
-#: includes/tseoindexing-settings.php:786
-msgid "Gender"
+#: includes/tseoindexing-settings.php:779
+msgid "The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, \"red\" or \"apple cinnamon red\"). If the product has more than one main color, each must be separated by a slash (for example, \"red/brown\"). The color should be the same as what appears on your landing page."
 msgstr ""
 
 #: includes/tseoindexing-settings.php:787
+msgid "Size"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:788
+msgid "Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL)"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:796
+msgid "Gender"
+msgstr ""
+
+#: includes/tseoindexing-settings.php:797
 msgid "Select the gender for which the product is designed."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:790
-#: includes/tseoindexing-settings.php:805
+#: includes/tseoindexing-settings.php:800
+#: includes/tseoindexing-settings.php:815
 msgid "Select option"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:791
+#: includes/tseoindexing-settings.php:801
 msgid "Male"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:792
+#: includes/tseoindexing-settings.php:802
 msgid "Female"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:793
+#: includes/tseoindexing-settings.php:803
 msgid "Unisex"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:801
+#: includes/tseoindexing-settings.php:811
 msgid "Age Group"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:802
+#: includes/tseoindexing-settings.php:812
 msgid "Select the age group for the product."
 msgstr ""
 
-#: includes/tseoindexing-settings.php:806
+#: includes/tseoindexing-settings.php:816
 msgid "Newborn"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:807
+#: includes/tseoindexing-settings.php:817
 msgid "Infant"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:808
+#: includes/tseoindexing-settings.php:818
 msgid "Toddler"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:809
+#: includes/tseoindexing-settings.php:819
 msgid "Kids"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:810
+#: includes/tseoindexing-settings.php:820
 msgid "Junior"
 msgstr ""
 
-#: includes/tseoindexing-settings.php:811
+#: includes/tseoindexing-settings.php:821
 msgid "Adult"
 msgstr ""
 
