@@ -179,8 +179,8 @@ function tseoindexing_display_merchant_product_list() {
             <input type="submit" id="tseo_merchant_product_submit" name="tseo_merchant_product_submit" class="button button-primary submit" value="<?php esc_attr_e('Send to Merchant Center', 'tseoindexing'); ?>" <?php echo $send_automatically ? 'style="display:none;"' : ''; ?>>
         </div>
 
-        <h2><?php esc_html_e('API Response. Advanced users.', 'tseoindexing'); ?></h2>
-        <textarea id="api_response_display" readonly style="width: 100%; height: 80px;"></textarea>
+        <h2><?php esc_html_e('API Response:', 'tseoindexing'); ?></h2>
+        <pre id="api_response_display" style="width: 100%;"></pre>
     </form>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
@@ -193,20 +193,13 @@ function tseoindexing_display_merchant_product_list() {
 
                 $.post(ajaxurl, data, function(response) {
                     if (response.success) {
-                        if (response.data && response.data.api_response) {
-                            $('#api_response_display').text(JSON.stringify(response.data.api_response, null, 2));
-                        } else {
-                            $('#api_response_display').text('Products successfully sent to Google Merchant Center.');
-                        }
+                        $('#api_response_display').html('<span class="success"><?php echo esc_html__('Products successfully sent to Google Merchant Center.', 'tseoindexing'); ?></span>');
                     } else {
-                        if (response.data && response.data.message) {
-                            alert(response.data.message);
-                        } else {
-                            alert('An error occurred. Please try again.');
-                        }
+                        var errorMessage = response.data && response.data.message ? response.data.message : '<?php echo esc_html__('An error occurred. Please try again.', 'tseoindexing'); ?>';
+                        $('#api_response_display').html('<span class="error">' + errorMessage + '</span>');
                     }
                 }).fail(function(jqXHR, textStatus, errorThrown) {
-                    alert('An error occurred during the request. Please check your network connection and try again.');
+                    $('#api_response_display').html('<span class="error"><?php echo esc_html__('An error occurred during the request. Please check your network connection and try again.', 'tseoindexing'); ?></span>');
                 });
             });
         });
@@ -258,6 +251,9 @@ function tseoindexing_send_products_to_merchant_center($products) {
             $api_product->setDescription($product['description']);
             $api_product->setLink($product['link']);
             $api_product->setImageLink($product['imageLink']);
+            if (!empty($product['additionalImageLinks'])) {
+                $api_product->setAdditionalImageLinks($product['additionalImageLinks']);
+            }
             $api_product->setPrice(new Google_Service_ShoppingContent_Price(array(
                 'value' => $product['price']['value'],
                 'currency' => $product['price']['currency']
@@ -328,6 +324,9 @@ function tseoindexing_send_products_to_merchant_center_in_batch($products) {
             $api_product->setDescription($product['description']);
             $api_product->setLink($product['link']);
             $api_product->setImageLink($product['imageLink']);
+            if (!empty($product['additionalImageLinks'])) {
+                $api_product->setAdditionalImageLinks($product['additionalImageLinks']);
+            }
             $api_product->setPrice(new Google_Service_ShoppingContent_Price(array(
                 'value' => $product['price']['value'],
                 'currency' => $product['price']['currency']
@@ -412,8 +411,6 @@ function tseoindexing_merchant_product_submit() {
             $product = wc_get_product($product_id);
             if ($product) {
                 $description = get_post_meta($product->get_id(), '_google_merchant_description', true) ?: '';
-                //$tags = wp_get_post_terms($product->get_id(), 'product_tag', array('fields' => 'names'));
-                //$brand = !empty($tags) ? $tags[0] : '';
 
                 $contentLanguage = substr(get_locale(), 0, 2);
                 $targetCountry = get_option('woocommerce_default_country');
@@ -421,12 +418,18 @@ function tseoindexing_merchant_product_submit() {
                     $targetCountry = explode(':', $targetCountry)[0];
                 }
 
+                // Obtener los IDs de las imágenes de la galería
+                $gallery_image_ids = $product->get_gallery_image_ids();
+                // Limitar a 10 imágenes y convertir IDs a URLs
+                $additional_image_links = array_map('wp_get_attachment_url', array_slice($gallery_image_ids, 0, 10));
+
                 $products[] = array(
                     'offerId' => $product->get_id(),
                     'title' => $product->get_name(),
                     'description' => $description,
                     'link' => get_permalink($product->get_id()),
                     'imageLink' => wp_get_attachment_url($product->get_image_id()),
+                    'additionalImageLinks' => $additional_image_links,
                     'price' => array(
                         'value' => $product->get_price(),
                         'currency' => get_woocommerce_currency()

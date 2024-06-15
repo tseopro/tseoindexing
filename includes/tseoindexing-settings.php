@@ -785,7 +785,7 @@ function tseoindexing_add_merchant_center_fields() {
     woocommerce_wp_text_input(array(
         'id' => '_google_size',
         'label' => __('Size', 'tseoindexing'),
-        'description' => __('Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL)', 'tseoindexing'),
+        'description' => __('Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, or 6XL). For one size fits all: OSFA, OS, or one size. For footwear: numeric ranges 000-100 (Example: 35-39).', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_size', true),
     ));
