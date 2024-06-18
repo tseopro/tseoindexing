@@ -41,11 +41,12 @@ if (!defined('TSEOINDEXING_VERSION')) {
     define('TSEOINDEXING_VERSION', '1.0.0');
 }
 
-// Autoload Google Client
+// Autoload Google Client and OpenAI-PHP
 require 'vendor/autoload.php';
 use Google\Client;
 use Google\Service\Indexing; // API Google Indexing
 use Google\Service\ShoppingContent; // API Google Merchant Center
+use OpenAI\Client as OpenAIClient; // API OpenAI-PHP
 
 // Load Text Domain
 function tseoindexing_load_textdomain() {

@@ -94,7 +94,7 @@ function tseoindexing_display_merchant_center() {
         </p>
 
         <div class="button-panel">
-            <input type="submit" name="tseo_merchant_submit" class="button button-primary" id="submit" value="<?php esc_attr_e('Save Settings', 'tseoindexing'); ?>">
+            <input type="submit" name="tseo_merchant_submit" class="button button-primary" id="submit" value="<?php esc_attr_e('Save Merchant Center ID', 'tseoindexing'); ?>">
         </div>
     </form>
     <?php
@@ -132,4 +132,43 @@ function tseoindexing_merchant_verify_connection() {
     } catch (Exception $e) {
         return false;
     }
+}
+
+function tseoindexing_openai_api_client() {
+    // Procesar el formulario para guardar la clave de API de OpenAI
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tseo_openai_submit'])) {
+        // Verificar permisos del usuario
+        if (!current_user_can('manage_options')) {
+            wp_die(__('You do not have permission to perform this action.', 'tseoindexing'));
+        }
+
+        // Verificar nonce para seguridad
+        check_admin_referer('tseoindexing_openai_nonce', '_wpnonce_openai');
+
+        // Procesar la clave de API de OpenAI
+        if (!empty($_POST['openai_api_key'])) {
+            $openai_api_key = sanitize_text_field($_POST['openai_api_key']);
+            update_option('tseo_openai_api_key', $openai_api_key);
+            echo '<div class="updated"><p>' . esc_html__('OpenAI API key successfully saved.', 'tseoindexing') . '</p></div>';
+        }
+    }
+
+    // Recuperar la clave de API de OpenAI almacenada
+    $openai_api_key = get_option('tseo_openai_api_key', '');
+
+    ?>
+    <!-- Formulario para ingresar la clave de API de OpenAI -->
+    <form method="post" action="">
+        <?php wp_nonce_field('tseoindexing_openai_nonce', '_wpnonce_openai'); ?>
+
+        <p><?php esc_html_e('Enter your OpenAI API Key.', 'tseoindexing'); ?></p>
+        <p>
+            <input type="text" name="openai_api_key" value="<?php echo esc_attr($openai_api_key); ?>" size="55" />
+        </p>
+
+        <div class="button-panel">
+            <input type="submit" name="tseo_openai_submit" class="button button-primary submit" value="<?php esc_attr_e('Save OpenAI API Key', 'tseoindexing'); ?>">
+        </div>
+    </form>
+    <?php
 }

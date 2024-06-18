@@ -27,8 +27,8 @@ class TSEOIndexing_Main {
         register_deactivation_hook(__FILE__, [$this, 'tseo_notify_google_about_removed_urls']);
 
         // AJAX actions
-        add_action('wp_ajax_load_urls_by_type', [$this, 'load_urls_by_type']);
-        add_action('wp_ajax_send_urls_to_google', [$this, 'send_urls_to_google']);
+        add_action('wp_ajax_tseoindexing_load_urls_by_type', [$this, 'tseoindexing_load_urls_by_type']);
+        add_action('wp_ajax_tseoindexing_send_urls_to_google', [$this, 'tseoindexing_send_urls_to_google']);
     }
 
     /**
@@ -152,7 +152,7 @@ class TSEOIndexing_Main {
     }
 
     // Get the saved options from the database.
-    public function get_saved_options() {
+    public function tseoindexing_get_saved_options() {
         return tseoindexing_get_api_key();
     }
 
@@ -160,7 +160,7 @@ class TSEOIndexing_Main {
     public function tseoindexing_settings_page_content() {
         $this->tseoindexing_handle_file_upload();
 
-        $options = $this->get_saved_options();
+        $options = $this->tseoindexing_get_saved_options();
         $json_content = isset($options['json_key']) ? $options['json_key'] : '';
         $post_types = isset($options['post_types']) ? $options['post_types'] : [];
 
@@ -394,7 +394,7 @@ class TSEOIndexing_Main {
      * @param string $status The status of the URL.
      * @return void
      */
-    public function insert_url($url, $status) {
+    public function tseoindexing_insert_url($url, $status) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
 
@@ -416,7 +416,7 @@ class TSEOIndexing_Main {
      *
      * @return array The array of URLs retrieved from the database.
      */
-    public function get_urls() {
+    public function tseoindexing_get_urls() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
         $result = $wpdb->get_results("SELECT * FROM $table_name", OBJECT);
@@ -607,16 +607,16 @@ class TSEOIndexing_Main {
         register_setting('tseoindexing', 'tseoindexing_remove_urls');
     }
 
-    public function load_urls_by_type() {
+    public function tseoindexing_load_urls_by_type() {
         check_ajax_referer('tseoindexing_console', '_ajax_nonce');
 
         $type = sanitize_text_field($_POST['type']);
-        $urls = $this->get_urls_by_type($type);
+        $urls = $this->tseoindexing_get_urls_by_type($type);
 
         wp_send_json_success($urls);
     }
 
-    public function send_urls_to_google() {
+    public function tseoindexing_send_urls_to_google() {
         check_ajax_referer('tseoindexing_console', '_ajax_nonce');
     
         $urls = array_map('esc_url_raw', $_POST['urls']);
@@ -643,7 +643,7 @@ class TSEOIndexing_Main {
                     break;
                 case 'getstatus':
                     error_log('Getting status for URL: ' . $url);
-                    $response = $this->get_google_indexing_status($url);
+                    $response = $this->get_google_tseoindexing_status($url);
                     $action_type = 'getstatus';
                     break;
                 default:
@@ -653,7 +653,7 @@ class TSEOIndexing_Main {
             }
     
             // Format the response to be more readable on the frontend
-            $formatted_response = $this->format_api_response($response);
+            $formatted_response = $this->tseoindexing_format_api_response($response);
     
             // Register the response
             error_log('API Response: ' . print_r($response, true));
@@ -672,7 +672,7 @@ class TSEOIndexing_Main {
         wp_send_json_success($results);
     }
     
-    private function format_api_response($response) {
+    private function tseoindexing_format_api_response($response) {
         if (isset($response['error'])) {
             return [
                 'status' => 'error',
@@ -709,7 +709,7 @@ class TSEOIndexing_Main {
         return $response;  // Return as is if there is no specific format.
     }
     
-    public function get_urls_by_type($type) {
+    public function tseoindexing_get_urls_by_type($type) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
 
@@ -717,13 +717,13 @@ class TSEOIndexing_Main {
         return wp_list_pluck($urls, 'url');
     }
 
-    public function get_url_type($url) {
+    public function tseoindexing_get_url_type($url) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'tseo_indexing_links';
         return $wpdb->get_var($wpdb->prepare("SELECT type FROM {$table_name} WHERE url = %s", $url));
     }
 
-    public function get_google_indexing_status($url) {
+    public function get_google_tseoindexing_status($url) {
         $options = get_option('tseo_indexing_options_key');
         if (!$options) {
             return ['error' => ['code' => 500, 'message' => 'Service account file is not set']];
@@ -773,6 +773,7 @@ class TSEOIndexing_Main {
                 <?php
                     if ( class_exists( 'WooCommerce' ) ) {
                         tseoindexing_display_merchant_center();
+                        tseoindexing_openai_api_client();
                     }
                 ?>
                 

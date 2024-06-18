@@ -66,7 +66,7 @@ function tseoindexing_display_merchant_product_list() {
                 
                     $is_valid_product = 
                         !empty(wp_get_attachment_url($product->get_image_id())) &&
-                        !empty($product->get_name()) &&
+                        !empty(get_post_meta($product->get_id(), '_google_merchant_title', true)) &&
                         !empty(get_post_meta($product->get_id(), '_google_merchant_description', true)) &&
                         is_numeric($product->get_price()) && $product->get_price() > 0 &&
                         !empty(get_post_meta($product->get_id(), '_condition', true));
@@ -122,7 +122,7 @@ function tseoindexing_display_merchant_product_list() {
                             ?>
                         </td>
                         <td>
-                            <?php echo esc_html($product->get_name()); ?><br>
+                            <?php echo esc_html(get_post_meta($product->get_id(), '_google_merchant_title', true)); ?><br>
                             ID: <?php echo esc_html($product->get_id()); ?> | 
                             <a href="<?php echo esc_url(get_edit_post_link($product->get_id())); ?>" target="_blank">
                                 <?php esc_html_e('Edit', 'tseoindexing'); ?>
@@ -425,7 +425,7 @@ function tseoindexing_merchant_product_submit() {
 
                 $products[] = array(
                     'offerId' => $product->get_id(),
-                    'title' => $product->get_name(),
+                    'title' => get_post_meta($product->get_id(), '_google_merchant_title', true) ?: '',
                     'description' => $description,
                     'link' => get_permalink($product->get_id()),
                     'imageLink' => wp_get_attachment_url($product->get_image_id()),
