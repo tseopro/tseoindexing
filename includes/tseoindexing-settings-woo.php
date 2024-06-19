@@ -7,8 +7,6 @@ defined('ABSPATH') or die('No script kiddies please!');
  * @package TSEOIndexing
  * @version 1.0.0
  */
-// Añadir una nueva pestaña en la interfaz de producto
-
 add_filter('woocommerce_product_data_tabs', 'tseoindexing_add_merchant_center_tab');
 function tseoindexing_add_merchant_center_tab($tabs) {
     $tabs['merchant_center'] = array(
@@ -20,14 +18,18 @@ function tseoindexing_add_merchant_center_tab($tabs) {
     return $tabs;
 }
 
-// Mostrar los campos personalizados en la nueva pestaña
+/**
+ * Display custom fields in the new tab
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
 add_action('woocommerce_product_data_panels', 'tseoindexing_add_merchant_center_fields');
 function tseoindexing_add_merchant_center_fields() {
     echo '<div id="merchant_center_options" class="panel woocommerce_options_panel">';
     echo '<div class="options_group">';
     echo '<h2>' . __('Google Merchant Center Fields by TSEO Indexing', 'tseoindexing') . '</h2>';
 
-     // Campo para el Titulo con botón
      woocommerce_wp_text_input(array(
         'id' => '_google_merchant_title',
         'label' => __('Title', 'tseoindexing'),
@@ -37,9 +39,9 @@ function tseoindexing_add_merchant_center_fields() {
     ));
     echo '<p class="form-field form-field-wide">';
     echo '<button type="button" class="button generate-google-merchant-title" data-field="title">' . __('AI: Generate Title', 'tseoindexing') . '</button>';
+    echo '<span class="loader_button_woo" style="display: none;">' . __('Generating...', 'tseoindexing') . '</span>';
     echo '</p>';
 
-    // Campo para la descripción específica de Google Merchant Center con botón
     woocommerce_wp_textarea_input(array(
         'id' => '_google_merchant_description',
         'label' => __('Description', 'tseoindexing'),
@@ -50,10 +52,9 @@ function tseoindexing_add_merchant_center_fields() {
     ));
     echo '<p class="form-field form-field-wide">';
     echo '<button type="button" class="button generate-google-merchant-description" data-field="description">' . __('AI: Generate Description', 'tseoindexing') . '</button>';
+    echo '<span class="loader_button_woo" style="display: none;">' . __('Generating...', 'tseoindexing') . '</span>';
     echo '</p>';
-    
 
-    // Campo para la condición del producto
     woocommerce_wp_select(array(
         'id' => '_condition',
         'label' => __('Condition', 'tseoindexing'),
@@ -67,7 +68,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_condition', true),
     ));
 
-    // Campo para la categoría de producto de Google
     woocommerce_wp_text_input(array(
         'id' => '_google_product_category',
         'label' => __('Category', 'tseoindexing'),
@@ -76,7 +76,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_google_product_category', true),
     ));
 
-    // Campo para la marca del producto
     woocommerce_wp_text_input(array(
         'id' => '_google_product_brand',
         'label' => __('Brand', 'tseoindexing'),
@@ -85,7 +84,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_google_product_brand', true),
     ));
 
-    // Campo para el GTIN
     woocommerce_wp_text_input(array(
         'id' => '_gtin',
         'label' => __('GTIN', 'tseoindexing'),
@@ -94,7 +92,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_gtin', true),
     ));
 
-    // Campo para el MPN
     woocommerce_wp_text_input(array(
         'id' => '_mpn',
         'label' => __('MPN', 'tseoindexing'),
@@ -103,7 +100,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_mpn', true),
     ));
 
-    // Campo para los destinos del producto en Google Merchant Center
     $selected_destinations = get_post_meta(get_the_ID(), '_google_merchant_destinations', true) ?: array();
     if (empty($selected_destinations)) {
         $selected_destinations = array('free_listings');
@@ -127,10 +123,8 @@ function tseoindexing_add_merchant_center_fields() {
         ));
     }
 
-    // Añadir campos para Ropa
     echo '<p><strong>' . __('Attributes for Clothing', 'tseoindexing') . '</strong></p>';
 
-    // Campo para el Color
     woocommerce_wp_text_input(array(
         'id' => '_google_color',
         'label' => __('Color', 'tseoindexing'),
@@ -139,7 +133,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_google_color', true),
     ));
 
-    // Campo para el Tamaño
     woocommerce_wp_text_input(array(
         'id' => '_google_size',
         'label' => __('Size', 'tseoindexing'),
@@ -148,7 +141,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_google_size', true),
     ));
 
-    // Campo para el Género
     woocommerce_wp_select(array(
         'id' => '_google_gender',
         'label' => __('Gender', 'tseoindexing'),
@@ -163,7 +155,6 @@ function tseoindexing_add_merchant_center_fields() {
         'value' => get_post_meta(get_the_ID(), '_google_gender', true),
     ));
 
-    // Campo para la Edad
     woocommerce_wp_select(array(
         'id' => '_google_age_group',
         'label' => __('Age Group', 'tseoindexing'),
@@ -182,55 +173,52 @@ function tseoindexing_add_merchant_center_fields() {
     ));
 
     echo '</div>';
-    echo '</div>'; // Cerrar div panel
+    echo '</div>';
 }
 
-// Guardar los campos personalizados al guardar el producto
+/**
+ * Save custom fields when saving the product
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
 add_action('woocommerce_process_product_meta', 'tseoindexing_save_google_merchant_fields');
 function tseoindexing_save_google_merchant_fields($product_id) {
-    // Guardar el Título personalizado si está presente
     if (isset($_POST['_google_merchant_title'])) {
         $title = sanitize_text_field($_POST['_google_merchant_title']);
         update_post_meta($product_id, '_google_merchant_title', $title);
     }
 
-    // Guardar la Descripción personalizada si está presente
     if (isset($_POST['_google_merchant_description'])) {
         $description = sanitize_textarea_field($_POST['_google_merchant_description']);
         update_post_meta($product_id, '_google_merchant_description', $description);
     }
 
-    // Guardar la condición del producto
     if (isset($_POST['_condition'])) {
         $condition = sanitize_text_field($_POST['_condition']);
         update_post_meta($product_id, '_condition', $condition);
     }
 
-    // Guardar la categoría de producto de Google
     if (isset($_POST['_google_product_category'])) {
         $google_product_category = sanitize_text_field($_POST['_google_product_category']);
         update_post_meta($product_id, '_google_product_category', $google_product_category);
     }
 
-    // Guardar la marca del producto
     if (isset($_POST['_google_product_brand'])) {
         $google_product_brand = sanitize_text_field($_POST['_google_product_brand']);
         update_post_meta($product_id, '_google_product_brand', $google_product_brand);
     }
 
-    // Guardar el GTIN
     if (isset($_POST['_gtin'])) {
         $gtin = sanitize_text_field($_POST['_gtin']);
         update_post_meta($product_id, '_gtin', $gtin);
     }
 
-    // Guardar el MPN
     if (isset($_POST['_mpn'])) {
         $mpn = sanitize_text_field($_POST['_mpn']);
         update_post_meta($product_id, '_mpn', $mpn);
     }
 
-    // Guardar los destinos seleccionados para el producto
     $destinations = array('shopping_ads', 'display_ads', 'free_listings');
     $selected_destinations = array();
 
@@ -242,31 +230,33 @@ function tseoindexing_save_google_merchant_fields($product_id) {
 
     update_post_meta($product_id, '_google_merchant_destinations', $selected_destinations);
 
-    // Guardar el Color
     if (isset($_POST['_google_color'])) {
         $color = sanitize_text_field($_POST['_google_color']);
         update_post_meta($product_id, '_google_color', $color);
     }
 
-    // Guardar el Tamaño
     if (isset($_POST['_google_size'])) {
         $size = sanitize_text_field($_POST['_google_size']);
         update_post_meta($product_id, '_google_size', $size);
     }
 
-    // Guardar el Género
     if (isset($_POST['_google_gender'])) {
         $gender = sanitize_text_field($_POST['_google_gender']);
         update_post_meta($product_id, '_google_gender', $gender);
     }
 
-    // Guardar la Edad
     if (isset($_POST['_google_age_group'])) {
         $age_group = sanitize_text_field($_POST['_google_age_group']);
         update_post_meta($product_id, '_google_age_group', $age_group);
     }
 }
 
+/**
+ * Generates product titles and descriptions for Google Merchant Center.
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
 add_action('wp_ajax_tseoindexing_generate_content', 'tseoindexing_generate_content');
 function tseoindexing_generate_content() {
     check_ajax_referer('tseoindexing_nonce', '_ajax_nonce');
@@ -280,19 +270,17 @@ function tseoindexing_generate_content() {
     $product_id = intval($_POST['product_id']);
 
     try {
-        // Obtener el cliente de OpenAI
+        // Get the OpenAI client
         $openai = get_openai_client();
     } catch (Exception $e) {
-        // Manejar el caso en que la clave API no esté configurada y devolver un error en la respuesta AJAX
         wp_send_json_error($e->getMessage());
         return;
     }
 
-    // Obtener el título y la descripción originales del producto
+    // Get the original title and description of the product
     $original_title = get_the_title($product_id);
     $original_description = get_post_meta($product_id, '_google_merchant_description', true);
 
-    // Crear el prompt para OpenAI basado en el campo solicitado
     $messages = [
         [
             'role' => 'system',
@@ -316,26 +304,22 @@ function tseoindexing_generate_content() {
         return;
     }
 
-    // Llamar a la API de OpenAI usando el endpoint de chat
     $response = $openai->chat()->create([
-        'model' => 'gpt-3.5-turbo', // Usar el modelo de chat
+        'model' => 'gpt-3.5-turbo',
         'messages' => $messages,
         'max_tokens' => 100,
         'temperature' => 0.7
     ]);
 
-    // Procesar la respuesta
+    // Process the response
     if (isset($response['choices'][0]['message']['content'])) {
         $generated_text = trim($response['choices'][0]['message']['content'], ' "');
 
         if ($field === 'title') {
-            // Eliminar cualquier prefijo no deseado y limpiar el título
             $cleaned_title = preg_replace('/^(New )?Title: /i', '', $generated_text);
             wp_send_json_success(trim($cleaned_title));
         } elseif ($field === 'description') {
-            // Remover cualquier prefijo no deseado y limpiar la descripción
             $cleaned_description = preg_replace('/^(New )?(Description:|New Description:)? /i', '', $generated_text);
-            // Asegurar que el título no esté en la descripción
             $cleaned_description = str_ireplace($original_title, '', $cleaned_description);
             wp_send_json_success(trim($cleaned_description));
         }
@@ -344,28 +328,35 @@ function tseoindexing_generate_content() {
     }
 }
 
+/**
+ * Enqueues admin scripts and styles for the TSEO Indexing plugin on WooCommerce product editing page.
+ *
+ * @package TSEOIndexing
+ * @version 1.0.0
+ */
+function tseoindexing_enqueue_admin_scripts($hook) {
+    global $post_type;
 
-add_action('admin_enqueue_scripts', 'tseoindexing_enqueue_admin_scripts');
-function tseoindexing_enqueue_admin_scripts() {
-    wp_enqueue_script('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing.js', array('jquery'), TSEOINDEXING_VERSION, true);
-    wp_enqueue_script('tseoindexing-woo-load', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-loader.js', array('jquery'), TSEOINDEXING_VERSION, true);
-    wp_localize_script('tseoindexing-woo', 'tseoindexing_ajax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('tseoindexing_nonce')
-    ));
+    // Load only on WooCommerce product editing page
+    if ($hook == 'post.php' || $hook == 'post-new.php') {
+        if ('product' === $post_type) {
+            // Load your specific CSS and JS here
+            wp_enqueue_style('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/css/tseoindexing-woo.min.css', array(), TSEOINDEXING_VERSION, 'all');
+            wp_enqueue_script('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-woo.js', array('jquery'), TSEOINDEXING_VERSION, true);
+            
+            wp_localize_script('tseoindexing-woo', 'tseoindexing_ajax', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('tseoindexing_nonce')
+            ));
+        }
+    }
 }
 
 // Function to initialize OpenAI Client
 function get_openai_client() {
-    // Recuperar la clave de API de OpenAI almacenada en wp_options
     $openai_api_key = get_option('tseo_openai_api_key', '');
-
-    // Comprobar si la clave API está configurada
     if (empty($openai_api_key)) {
-        // Lanzar una excepción si la clave API no está configurada
         throw new Exception(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'tseoindexing'));
     }
-
-    // Devolver el cliente de OpenAI inicializado con la clave API
     return OpenAI::client($openai_api_key);
 }

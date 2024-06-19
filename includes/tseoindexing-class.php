@@ -755,7 +755,6 @@ class TSEOIndexing_Main {
             ];
         }
     }
-
     
     /**
      * Display Google Merchant Center page content

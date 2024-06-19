@@ -12,7 +12,7 @@
  * Description:       Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages.
  * Version:           1.0.0
  * Requires at least: 5.5
- * Requires PHP:      8.0
+ * Requires PHP:      8.1.0
  * Author:            TSEO team
  * Author URI:        https://tseo.pro/
  * Text Domain:       tseoindexing

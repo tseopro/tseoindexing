@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
     });
 
     $('#clear-urls').click(function() {
-        $('#tseo_urls').val('');  // Limpia el contenido del textarea
+        $('#tseo_urls').val('');  // Clears the content of the textarea
     });
 
     function loadUrls(type) {
@@ -96,29 +96,4 @@ jQuery(document).ready(function($) {
         $('#raw-response').val(formattedResponse);
         $('.wrap-console-response').show();
     }
-});
-
-jQuery(document).ready(function($) {
-    $('.generate-google-merchant-title, .generate-google-merchant-description').on('click', function() {
-        var field = $(this).data('field');
-        var productId = $('#post_ID').val();
-        var data = {
-            action: 'tseoindexing_generate_content',
-            field: field,
-            product_id: productId,
-            _ajax_nonce: tseoindexing_ajax.nonce
-        };
-
-        $.post(tseoindexing_ajax.ajax_url, data, function(response) {
-            if (response.success) {
-                if (field === 'title') {
-                    $('#_google_merchant_title').val(response.data);
-                } else if (field === 'description') {
-                    $('#_google_merchant_description').val(response.data);
-                }
-            } else {
-                alert('Error al generar contenido: ' + response.data);
-            }
-        });
-    });
 });
