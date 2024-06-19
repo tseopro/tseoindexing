@@ -334,21 +334,21 @@ function tseoindexing_generate_content() {
  * @package TSEOIndexing
  * @version 1.0.0
  */
+add_action('admin_enqueue_scripts', 'tseoindexing_enqueue_admin_scripts');
+
 function tseoindexing_enqueue_admin_scripts($hook) {
-    global $post_type;
+    $screen = get_current_screen();
 
     // Load only on WooCommerce product editing page
-    if ($hook == 'post.php' || $hook == 'post-new.php') {
-        if ('product' === $post_type) {
-            // Load your specific CSS and JS here
-            wp_enqueue_style('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/css/tseoindexing-woo.min.css', array(), TSEOINDEXING_VERSION, 'all');
-            wp_enqueue_script('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-woo.js', array('jquery'), TSEOINDEXING_VERSION, true);
-            
-            wp_localize_script('tseoindexing-woo', 'tseoindexing_ajax', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('tseoindexing_nonce')
-            ));
-        }
+    if (($hook == 'post.php' || $hook == 'post-new.php') && $screen->post_type === 'product') {
+        // Load your specific CSS and JS here
+        wp_enqueue_style('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/css/tseoindexing-woo.min.css', array(), TSEOINDEXING_VERSION, 'all');
+        wp_enqueue_script('tseoindexing-woo', plugin_dir_url(dirname(__FILE__)) . 'assets/js/tseoindexing-woo.js', array('jquery'), TSEOINDEXING_VERSION, true);
+        
+        wp_localize_script('tseoindexing-woo', 'tseoindexing_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('tseoindexing_nonce')
+        ));
     }
 }
 

@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
                     $('#_google_merchant_description').val(response.data);
                 }
             } else {
-                alert('Error al generar contenido: ' + response.data);
+                alert('Error generating content: ' + response.data);
             }
         });
     });
