@@ -9,7 +9,7 @@ defined('ABSPATH') or die('No script kiddies please!');
  */
 function tseoindexing_display_merchant_product_list() {
     if (!current_user_can('manage_options')) {
-        wp_die(__('You do not have permission to perform this action.', 'tseoindexing'));
+        wp_die(esc_html__('You do not have permission to perform this action.', 'tseoindexing'));
     }
 
     // Asegurar que $paged esté definido
@@ -20,7 +20,7 @@ function tseoindexing_display_merchant_product_list() {
 
     // Verificar el estado de la conexión
     $is_connected = tseoindexing_merchant_verify_connection();
-    $connection_status = $is_connected ? __('Connected', 'tseoindexing') : __('Disconnected', 'tseoindexing');
+    $connection_status = $is_connected ? esc_html__('Connected', 'tseoindexing') : esc_html__('Disconnected', 'tseoindexing');
     $connection_class = $is_connected ? 'connect-success' : 'connect-error';
 
     ?>
@@ -72,12 +72,12 @@ function tseoindexing_display_merchant_product_list() {
                         !empty(get_post_meta($product->get_id(), '_condition', true));
                 
                     $condition_labels = array(
-                        'new' => __('New', 'tseoindexing'),
-                        'refurbished' => __('Refurbished', 'tseoindexing'),
-                        'used' => __('Used', 'tseoindexing'),
+                        'new' => esc_html__('New', 'tseoindexing'),
+                        'refurbished' => esc_html__('Refurbished', 'tseoindexing'),
+                        'used' => esc_html__('Used', 'tseoindexing'),
                     );
                     $condition = get_post_meta($product->get_id(), '_condition', true);
-                    $condition_label = isset($condition_labels[$condition]) ? $condition_labels[$condition] : __('No Condition', 'tseoindexing');
+                    $condition_label = isset($condition_labels[$condition]) ? $condition_labels[$condition] : esc_html__('No Condition', 'tseoindexing');
 
                     $brand = get_post_meta($product->get_id(), '_google_product_brand', true) ?: 'No Brand';
                 
@@ -95,9 +95,9 @@ function tseoindexing_display_merchant_product_list() {
                     
                     // Convertir los destinos seleccionados en una lista legible
                     $destination_labels = array(
-                        'shopping_ads' => __('Shopping ads', 'tseoindexing'),
-                        'display_ads' => __('Display ads', 'tseoindexing'),
-                        'free_listings' => __('Free listings', 'tseoindexing'),
+                        'shopping_ads' => esc_html__('Shopping ads', 'tseoindexing'),
+                        'display_ads' => esc_html__('Display ads', 'tseoindexing'),
+                        'free_listings' => esc_html__('Free listings', 'tseoindexing'),
                     );
                     $selected_destinations_labels = array_map(function($key) use ($destination_labels) {
                         return $destination_labels[$key] ?? $key;
@@ -151,8 +151,8 @@ function tseoindexing_display_merchant_product_list() {
                     'format' => '',
                     'current' => $current_page,
                     'total' => $total_pages,
-                    'prev_text' => __('«', 'tseoindexing'),
-                    'next_text' => __('»', 'tseoindexing'),
+                    'prev_text' => '«',
+                    'next_text' => '»',
                 ));
             }
             ?>
@@ -396,11 +396,11 @@ function tseoindexing_merchant_product_submit() {
     // error_log('Function tseoindexing_merchant_product_submit started.');
 
     if (!check_ajax_referer('tseoindexing_merchant_product_nonce', '_wpnonce', false)) {
-        wp_send_json_error(array('message' => __('Nonce verification failed.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('Nonce verification failed.', 'tseoindexing')));
     }
 
     if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('You do not have permission to perform this action.', 'tseoindexing')));
     }
 
     if (isset($_POST['selected_products']) && is_array($_POST['selected_products'])) {
@@ -460,9 +460,9 @@ function tseoindexing_merchant_product_submit() {
         // Eliminar o comentar el log de la respuesta de la API
         // error_log('API response: ' . print_r($api_response, true));
 
-        wp_send_json_success(array('message' => __('Products successfully sent to Google Merchant Center.', 'tseoindexing'), 'api_response' => $api_response));
+        wp_send_json_success(array('message' => esc_html__('Products successfully sent to Google Merchant Center.', 'tseoindexing'), 'api_response' => $api_response));
     } else {
-        wp_send_json_error(array('message' => __('No products selected or invalid format.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('No products selected or invalid format.', 'tseoindexing')));
     }
 }
 
@@ -476,17 +476,17 @@ function tseoindexing_update_send_automatically() {
     check_ajax_referer('tseoindexing_merchant_product_nonce', '_wpnonce');
 
     if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('You do not have permission to perform this action.', 'tseoindexing')));
     }
 
     if (isset($_POST['send_automatically'])) {
         $send_automatically = intval($_POST['send_automatically']);
         update_option('tseoindexing_merchant_send_automatically', $send_automatically);
 
-        $message = $send_automatically ? __('Activated', 'tseoindexing') : __('Deactivated', 'tseoindexing');
+        $message = $send_automatically ? esc_html__('Activated', 'tseoindexing') : esc_html__('Deactivated', 'tseoindexing');
         wp_send_json_success(array('message' => $message));
     } else {
-        wp_send_json_error(array('message' => __('Invalid request.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('Invalid request.', 'tseoindexing')));
     }
 }
 
@@ -500,7 +500,7 @@ function tseoindexing_save_selected_products() {
     check_ajax_referer('tseo_save_selected_products_nonce', '_wpnonce');
 
     if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('You do not have permission to perform this action.', 'tseoindexing')));
     }
 
     if (isset($_POST['selected_products'])) {
@@ -509,6 +509,6 @@ function tseoindexing_save_selected_products() {
 
         wp_send_json_success();
     } else {
-        wp_send_json_error(array('message' => __('Invalid request.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('Invalid request.', 'tseoindexing')));
     }
 }

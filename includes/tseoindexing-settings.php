@@ -295,7 +295,7 @@ function tseoindexing_display_console() {
             </p>
         </div>
         <div class="button-panel">
-            <?php submit_button(__('Send to API', 'tseoindexing')); ?>
+            <?php submit_button(esc_html__('Send to API', 'tseoindexing')); ?>
         </div>
     </form>
     <script>
@@ -593,7 +593,7 @@ function tseoindexing_get_product_data() {
     check_ajax_referer('tseo_get_product_data_nonce', '_wpnonce');
 
     if (!current_user_can('manage_options')) {
-        wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('You do not have permission to perform this action.', 'tseoindexing')));
     }
 
     if (isset($_POST['product_id'])) {
@@ -601,7 +601,7 @@ function tseoindexing_get_product_data() {
         $product = wc_get_product($product_id);
 
         if (!$product) {
-            wp_send_json_error(array('message' => __('Invalid product ID.', 'tseoindexing')));
+            wp_send_json_error(array('message' => esc_html__('Invalid product ID.', 'tseoindexing')));
         }
 
         // Obtener el titulo y la descripción específica para Google Merchant Center desde el meta del producto
@@ -646,7 +646,7 @@ function tseoindexing_get_product_data() {
 
         wp_send_json_success(array('product' => $product_data));
     } else {
-        wp_send_json_error(array('message' => __('Product ID not provided.', 'tseoindexing')));
+        wp_send_json_error(array('message' => esc_html__('Product ID not provided.', 'tseoindexing')));
     }
 }
 

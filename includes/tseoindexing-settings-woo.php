@@ -12,7 +12,7 @@ use OpenAI\Client as OpenAIClient;
 add_filter('woocommerce_product_data_tabs', 'tseoindexing_add_merchant_center_tab');
 function tseoindexing_add_merchant_center_tab($tabs) {
     $tabs['merchant_center'] = array(
-        'label'    => __('TSEO Merchant', 'tseoindexing'),
+        'label'    => esc_html__('TSEO Merchant', 'tseoindexing'),
         'target'   => 'merchant_center_options',
         'class'    => array('show_if_simple', 'show_if_variable'),
         'priority' => 60,
@@ -30,74 +30,74 @@ add_action('woocommerce_product_data_panels', 'tseoindexing_add_merchant_center_
 function tseoindexing_add_merchant_center_fields() {
     echo '<div id="merchant_center_options" class="panel woocommerce_options_panel">';
     echo '<div class="options_group">';
-    echo '<h2>' . __('Google Merchant Center Fields by TSEO Indexing', 'tseoindexing') . '</h2>';
+    echo '<h2><strong>' . esc_html__('Google Merchant Center Fields by TSEO Indexing', 'tseoindexing') . '</strong></h2>';
 
-     woocommerce_wp_text_input(array(
+    woocommerce_wp_text_input(array(
         'id' => '_google_merchant_title',
-        'label' => __('Title', 'tseoindexing'),
-        'description' => __('Enter a title. Recommendation: 50-70 characters.', 'tseoindexing'),
+        'label' => esc_html__('Title', 'tseoindexing'),
+        'description' => esc_html__('Enter a title. Recommendation: 50-70 characters.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_merchant_title', true),
     ));
     echo '<p class="form-field form-field-wide">';
-    echo '<button type="button" class="button generate-google-merchant-title" data-field="title">' . __('AI: Generate Title', 'tseoindexing') . '</button>';
-    echo '<span class="loader_button_woo" style="display: none;">' . __('Generating...', 'tseoindexing') . '</span>';
+    echo '<button type="button" class="button generate-google-merchant-title" data-field="title">' . esc_html__('AI: Generate Title', 'tseoindexing') . '</button>';
+    echo '<span class="loader_button_woo" style="display: none;">' . esc_html__('Generating...', 'tseoindexing') . '</span>';
     echo '</p>';
 
     woocommerce_wp_textarea_input(array(
         'id' => '_google_merchant_description',
-        'label' => __('Description', 'tseoindexing'),
-        'description' => __('Enter a specific description. Recommendation: 250-400 characters.', 'tseoindexing'),
+        'label' => esc_html__('Description', 'tseoindexing'),
+        'description' => esc_html__('Enter a specific description. Recommendation: 250-400 characters.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_merchant_description', true),
         'style' => 'height: 150px;',
     ));
     echo '<p class="form-field form-field-wide">';
-    echo '<button type="button" class="button generate-google-merchant-description" data-field="description">' . __('AI: Generate Description', 'tseoindexing') . '</button>';
-    echo '<span class="loader_button_woo" style="display: none;">' . __('Generating...', 'tseoindexing') . '</span>';
+    echo '<button type="button" class="button generate-google-merchant-description" data-field="description">' . esc_html__('AI: Generate Description', 'tseoindexing') . '</button>';
+    echo '<span class="loader_button_woo" style="display: none;">' . esc_html__('Generating...', 'tseoindexing') . '</span>';
     echo '</p>';
 
     woocommerce_wp_select(array(
         'id' => '_condition',
-        'label' => __('Condition', 'tseoindexing'),
-        'description' => __('Product condition (new, used, refurbished).', 'tseoindexing'),
+        'label' => esc_html__('Condition', 'tseoindexing'),
+        'description' => esc_html__('Product condition (new, used, refurbished).', 'tseoindexing'),
         'desc_tip' => true,
         'options' => array(
             'new' => __('New', 'tseoindexing'),
-            'refurbished' => __('Refurbished', 'tseoindexing'),
-            'used' => __('Used', 'tseoindexing'),
+            'refurbisesc_html__d' => esc_html__('Refurbished', 'tseoindexing'),
+            'used' => esc_html__('Used', 'tseoindexing'),
         ),
         'value' => get_post_meta(get_the_ID(), '_condition', true),
     ));
 
     woocommerce_wp_text_input(array(
         'id' => '_google_product_category',
-        'label' => __('Category', 'tseoindexing'),
-        'description' => __('Official Google category for the product.', 'tseoindexing'),
+        'label' => esc_html__('Category', 'tseoindexing'),
+        'description' => esc_html__('Official Google category for the product.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_product_category', true),
     ));
 
     woocommerce_wp_text_input(array(
         'id' => '_google_product_brand',
-        'label' => __('Brand', 'tseoindexing'),
-        'description' => __('Brand for the product.', 'tseoindexing'),
+        'label' => esc_html__('Brand', 'tseoindexing'),
+        'description' => esc_html__('Brand for the product.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_product_brand', true),
     ));
 
     woocommerce_wp_text_input(array(
         'id' => '_gtin',
-        'label' => __('GTIN', 'tseoindexing'),
-        'description' => __('Enter the global identification number (UPC, EAN, ISBN, etc.).', 'tseoindexing'),
+        'label' => esc_html__('GTIN', 'tseoindexing'),
+        'description' => esc_html__('Enter the global identification number (UPC, EAN, ISBN, etc.).', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_gtin', true),
     ));
 
     woocommerce_wp_text_input(array(
         'id' => '_mpn',
-        'label' => __('MPN', 'tseoindexing'),
-        'description' => __('Manufacturer part number (MPN).', 'tseoindexing'),
+        'label' => esc_html__('MPN', 'tseoindexing'),
+        'description' => esc_html__('Manufacturer part number (MPN).', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_mpn', true),
     ));
@@ -108,12 +108,12 @@ function tseoindexing_add_merchant_center_fields() {
     }
 
     $destinations = array(
-        'shopping_ads' => __('Shopping ads', 'tseoindexing'),
-        'display_ads' => __('Display ads', 'tseoindexing'),
-        'free_listings' => __('Free listings', 'tseoindexing'),
+        'shopping_ads' => esc_html__('Shopping ads', 'tseoindexing'),
+        'display_ads' => esc_html__('Display ads', 'tseoindexing'),
+        'free_listings' => esc_html__('Free listings', 'tseoindexing'),
     );
 
-    echo '<p><strong>' . __('Select the destination(s) for this product:', 'tseoindexing') . '</strong></p>';
+    echo '<h2><strong>' . esc_html__('Select the destination(s) for this product:', 'tseoindexing') . '</strong></h2>';
 
     foreach ($destinations as $key => $label) {
         woocommerce_wp_checkbox(array(
@@ -125,51 +125,51 @@ function tseoindexing_add_merchant_center_fields() {
         ));
     }
 
-    echo '<p><strong>' . __('Attributes for Clothing', 'tseoindexing') . '</strong></p>';
+    echo '<h2><strong>' . esc_html__('Attributes for Clothing', 'tseoindexing') . '</strong></h2>';
 
     woocommerce_wp_text_input(array(
         'id' => '_google_color',
-        'label' => __('Color', 'tseoindexing'),
-        'description' => __('The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, "red" or "apple cinnamon red"). If the product has more than one main color, each must be separated by a slash (for example, "red/brown"). The color should be the same as what appears on your landing page.', 'tseoindexing'),
+        'label' => esc_html__('Color', 'tseoindexing'),
+        'description' => esc_html__('The color [color] attribute indicates the primary color of this product and is written as a name of up to 100 characters (for example, "red" or "apple cinnamon red"). If the product has more than one main color, each must be separated by a slash (for example, "red/brown"). The color should be the same as what appears on your landing page.', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_color', true),
     ));
 
     woocommerce_wp_text_input(array(
         'id' => '_google_size',
-        'label' => __('Size', 'tseoindexing'),
-        'description' => __('Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, or 6XL). For one size fits all: OSFA, OS, or one size. For footwear: numeric ranges 000-100 (Example: 35-39).', 'tseoindexing'),
+        'label' => esc_html__('Size', 'tseoindexing'),
+        'description' => esc_html__('Enter the size of the product (XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, or 6XL). For one size fits all: OSFA, OS, or one size. For footwear: numeric ranges 000-100 (Example: 35-39).', 'tseoindexing'),
         'desc_tip' => true,
         'value' => get_post_meta(get_the_ID(), '_google_size', true),
     ));
 
     woocommerce_wp_select(array(
         'id' => '_google_gender',
-        'label' => __('Gender', 'tseoindexing'),
-        'description' => __('Select the gender for which the product is designed.', 'tseoindexing'),
+        'label' => esc_html__('Gender', 'tseoindexing'),
+        'description' => esc_html__('Select the gender for which the product is designed.', 'tseoindexing'),
         'desc_tip' => true,
         'options' => array(
-            '' => __('Select option', 'tseoindexing'),
-            'male' => __('Male', 'tseoindexing'),
-            'female' => __('Female', 'tseoindexing'),
-            'unisex' => __('Unisex', 'tseoindexing'),
+            '' => esc_html__('Select option', 'tseoindexing'),
+            'male' => esc_html__('Male', 'tseoindexing'),
+            'female' => esc_html__('Female', 'tseoindexing'),
+            'unisex' => esc_html__('Unisex', 'tseoindexing'),
         ),
         'value' => get_post_meta(get_the_ID(), '_google_gender', true),
     ));
 
     woocommerce_wp_select(array(
         'id' => '_google_age_group',
-        'label' => __('Age Group', 'tseoindexing'),
-        'description' => __('Select the age group for the product.', 'tseoindexing'),
+        'label' => esc_html__('Age Group', 'tseoindexing'),
+        'description' => esc_html__('Select the age group for the product.', 'tseoindexing'),
         'desc_tip' => true,
         'options' => array(
-            '' => __('Select option', 'tseoindexing'),
-            'newborn' => __('Newborn', 'tseoindexing'),
-            'infant' => __('Infant', 'tseoindexing'),
-            'toddler' => __('Toddler', 'tseoindexing'),
-            'kids' => __('Kids', 'tseoindexing'),
-            'junior' => __('Junior', 'tseoindexing'),
-            'adult' => __('Adult', 'tseoindexing'),
+            '' => esc_html__('Select option', 'tseoindexing'),
+            'newborn' => esc_html__('Newborn', 'tseoindexing'),
+            'infant' => esc_html__('Infant', 'tseoindexing'),
+            'toddler' => esc_html__('Toddler', 'tseoindexing'),
+            'kids' => esc_html__('Kids', 'tseoindexing'),
+            'junior' => esc_html__('Junior', 'tseoindexing'),
+            'adult' => esc_html__('Adult', 'tseoindexing'),
         ),
         'value' => get_post_meta(get_the_ID(), '_google_age_group', true),
     ));

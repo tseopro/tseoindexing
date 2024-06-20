@@ -12,7 +12,7 @@ function tseoindexing_display_merchant_center() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tseo_merchant_submit'])) {
         // Check user permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to perform this action.', 'tseoindexing'));
+            wp_die(esc_html__('You do not have permission to perform this action.', 'tseoindexing'));
         }
 
         // Verify nonce for security
@@ -63,7 +63,7 @@ function tseoindexing_display_merchant_center() {
 
     // Verify connection status
     $is_connected = tseoindexing_merchant_verify_connection();
-    $connection_status = $is_connected ? __('Connected', 'tseoindexing') : __('Disconnected', 'tseoindexing');
+    $connection_status = $is_connected ? esc_html__('Connected', 'tseoindexing') : esc_html__('Disconnected', 'tseoindexing');
     $connection_class = $is_connected ? 'connect-success' : 'connect-error';
 
     ?>
@@ -139,7 +139,7 @@ function tseoindexing_openai_api_client() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tseo_openai_submit'])) {
         // Verificar permisos del usuario
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to perform this action.', 'tseoindexing'));
+            wp_die(esc_html__('You do not have permission to perform this action.', 'tseoindexing'));
         }
 
         // Verificar nonce para seguridad

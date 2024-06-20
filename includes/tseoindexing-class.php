@@ -185,7 +185,7 @@ class TSEOIndexing_Main {
                         </label><br/>
                     <?php endforeach; ?>
                     <div class="button-panel">
-                        <?php submit_button(__('Upload JSON and Save Settings', 'tseoindexing')); ?>
+                        <?php submit_button(esc_html__('Upload JSON and Save Settings', 'tseoindexing')); ?>
                     </div>
                 </form>
                 <div>
@@ -314,8 +314,8 @@ class TSEOIndexing_Main {
             $page_links = paginate_links([
                 'base' => add_query_arg('paged', '%#%'),
                 'format' => '',
-                'prev_text' => __('&laquo;'),
-                'next_text' => __('&raquo;'),
+                'prev_text' => '&laquo;',
+                'next_text' => '&raquo;',
                 'total' => $total_pages,
                 'current' => $paged,
             ]);
