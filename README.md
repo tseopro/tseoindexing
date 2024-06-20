@@ -1,9 +1,9 @@
 # TSEO Indexing
 
-## *Notifies Google Indexing API, manages page removals, and integrates with Google Merchant Center. Uses AI for titles and descriptions. Requires WooCommerce.*
+## Management for indexing URLs in Google Console Search and management of product listings (Woo) for Google Merchant Center with integrated AI.
 
 * Contributors: devtseo
-* Tags: wordpress, google, seo, indexing, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, tseopro
+* Tags: wordpress, google, seo, indexing, openai, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, google-merchant-center
 * Requires at least: 6.0
 * Tested up to: 6.4.2
 * Stable tag: 1.0.0
