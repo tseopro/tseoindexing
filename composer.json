@@ -1,6 +1,6 @@
 {
     "name": "tseo/tseoindexing",
-    "description": "Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages.",
+    "description": "This plugin notifies the Google Indexing API about new or updated posts and can request page removals. It integrates with Google Merchant Center to easily set up and submit product listings, featuring AI to generate optimized titles and descriptions. WooCommerce is required for Merchant Center features.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
     "authors": [

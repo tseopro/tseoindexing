@@ -1,6 +1,8 @@
 <?php
 defined('ABSPATH') or die('No script kiddies please!');
 
+use OpenAI\Client as OpenAIClient;
+
 /**
  * TSEO PRO TSEO Merchant Center Add Fields WooCommerce
  *
@@ -271,7 +273,7 @@ function tseoindexing_generate_content() {
 
     try {
         // Get the OpenAI client
-        $openai = get_openai_client();
+        $openai = tseoindexing_get_openai_client();
     } catch (Exception $e) {
         wp_send_json_error($e->getMessage());
         return;
@@ -353,8 +355,8 @@ function tseoindexing_enqueue_admin_scripts($hook) {
 }
 
 // Function to initialize OpenAI Client
-function get_openai_client() {
-    $openai_api_key = get_option('tseo_openai_api_key', '');
+function tseoindexing_get_openai_client() {
+    $openai_api_key = get_option('tseoindexing_openai_api_key', '');
     if (empty($openai_api_key)) {
         throw new Exception(esc_html__('OpenAI API key is not set. Please configure it in the settings.', 'tseoindexing'));
     }

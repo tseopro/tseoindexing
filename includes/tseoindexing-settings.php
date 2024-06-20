@@ -128,7 +128,7 @@ function tseoindexing_save_api_key($api_key, $post_types) {
         'bing_post_types' => [],
         'indexnow_api_key' => ''
     ];
-    update_option('tseo_indexing_options_key', maybe_serialize($options));
+    update_option('tseoindexing_options_key', maybe_serialize($options));
 }
 
 /**
@@ -137,7 +137,7 @@ function tseoindexing_save_api_key($api_key, $post_types) {
  * @return array Options array from the database.
  */
 function tseoindexing_get_api_key() {
-    $options = get_option('tseo_indexing_options_key');
+    $options = get_option('tseoindexing_options_key');
     return maybe_unserialize($options);
 }
 

@@ -484,7 +484,7 @@ class TSEOIndexing_Main {
      * @version 1.0.0
      */
     public function google_tseoindexing_api_publish_url($url, $type = 'URL_UPDATED') {
-        $options = get_option('tseo_indexing_options_key');
+        $options = get_option('tseoindexing_options_key');
         if (!$options) {
             error_log('Service account file is not set in TSEO Indexing plugin settings.');
             return false;
@@ -724,7 +724,7 @@ class TSEOIndexing_Main {
     }
 
     public function get_google_tseoindexing_status($url) {
-        $options = get_option('tseo_indexing_options_key');
+        $options = get_option('tseoindexing_options_key');
         if (!$options) {
             return ['error' => ['code' => 500, 'message' => 'Service account file is not set']];
         }

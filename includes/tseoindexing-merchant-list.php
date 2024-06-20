@@ -16,7 +16,7 @@ function tseoindexing_display_merchant_product_list() {
     $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
 
     // Obtener el valor de send_automatically de las opciones de WordPress
-    $send_automatically = get_option('tseo_merchant_send_automatically', false);
+    $send_automatically = get_option('tseoindexing_merchant_send_automatically', false);
 
     // Verificar el estado de la conexión
     $is_connected = tseoindexing_merchant_verify_connection();
@@ -105,7 +105,7 @@ function tseoindexing_display_merchant_product_list() {
                     $selected_destinations_text = implode(', ', $selected_destinations_labels);
 
                     // Verificar si el producto está en la lista de seleccionados
-                    $checked = in_array($product->get_id(), get_option('tseo_selected_products', array())) ? 'checked' : '';
+                    $checked = in_array($product->get_id(), get_option('tseoindexing_selected_products', array())) ? 'checked' : '';
                 ?>
                     <tr class="<?php echo $is_valid_product ? 'valid-product' : 'invalid-product'; ?>">
                         <th class="check-column">
@@ -237,7 +237,7 @@ function tseoindexing_send_products_to_merchant_center($products) {
     }
 
     $service = new Google_Service_ShoppingContent($client);
-    $merchant_center_id = get_option('tseo_merchant_center_id', '');
+    $merchant_center_id = get_option('tseoindexing_merchant_center_id', '');
     $response_data = array();
 
     $content_language = substr(get_locale(), 0, 2);
@@ -307,7 +307,7 @@ function tseoindexing_send_products_to_merchant_center_in_batch($products) {
     }
 
     $service = new Google_Service_ShoppingContent($client);
-    $merchant_center_id = get_option('tseo_merchant_center_id', '');
+    $merchant_center_id = get_option('tseoindexing_merchant_center_id', '');
     $response_data = array();
 
     $content_language = substr(get_locale(), 0, 2);
@@ -481,7 +481,7 @@ function tseoindexing_update_send_automatically() {
 
     if (isset($_POST['send_automatically'])) {
         $send_automatically = intval($_POST['send_automatically']);
-        update_option('tseo_merchant_send_automatically', $send_automatically);
+        update_option('tseoindexing_merchant_send_automatically', $send_automatically);
 
         $message = $send_automatically ? __('Activated', 'tseoindexing') : __('Deactivated', 'tseoindexing');
         wp_send_json_success(array('message' => $message));
@@ -505,7 +505,7 @@ function tseoindexing_save_selected_products() {
 
     if (isset($_POST['selected_products'])) {
         $selected_products = array_map('intval', $_POST['selected_products']);
-        update_option('tseo_selected_products', $selected_products);
+        update_option('tseoindexing_selected_products', $selected_products);
 
         wp_send_json_success();
     } else {

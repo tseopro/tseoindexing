@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       TSEO Indexing
  * Plugin URI:        https://tseo.pro/indexing/
- * Description:       Plugin to notify Google Indexing API about new or updated posts, and to request removal of certain pages.
+ * Description:       This plugin notifies the Google Indexing API about new or updated posts and can request page removals. It integrates with Google Merchant Center to easily set up and submit product listings, featuring AI to generate optimized titles and descriptions. WooCommerce is required for Merchant Center features.
  * Version:           1.0.0
  * Requires at least: 5.5
  * Requires PHP:      8.1.0
@@ -72,3 +72,11 @@ function tseoindexing_add_settings_link($links) {
     return $links;
 }
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'tseoindexing_add_settings_link');
+
+// Add Doc Link
+function tseoindexing_add_doc_link($links) {
+    $settings_link = '<a href="admin.php?page=tseoindexing">' . esc_html__('Doc', 'tseoindexing') . '</a>';
+    array_push($links, $settings_link);
+    return $links;
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'tseoindexing_add_doc_link');
