@@ -1,6 +1,6 @@
 # TSEO Indexing
 
-## Management for indexing URLs in Google Console Search and management of product listings (Woo) for Google Merchant Center with integrated AI.
+## Management for Indexing URLs in Google Search Console and Managing Product Listings for Google Merchant Center with Integrated AI.
 
 * Contributors: devtseo
 * Tags: wordpress, google, seo, indexing, openai, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, google-merchant-center
@@ -18,36 +18,55 @@
 This plugin notifies the Google Indexing API about new or updated posts and can request page removals. It integrates with Google Merchant Center to easily set up and submit product listings, featuring AI to generate optimized titles and descriptions. WooCommerce is required for Merchant Center features.
 
 ### Key Features:
-- Display a visually appealing gallery of your web projects.
-- Showcase your web development skills to your audience.
-- Enable visitors to assess the quality of each website with ease.
-- Seamlessly link to critical performance analysis tools like PageSpeed Mobile, PageSpeed Desktop, Pingdom, GTmetrix, and Google Rich Results.
-- Enhance your online portfolio's impact and professionalism.
 
-Whether you're a web developer, designer, or digital agency, TSEO Portfolio simplifies the process of presenting your work in a user-friendly and engaging manner. Elevate your online presence and impress your clients with the quality of your web projects today!
+- **URL Management**: Lists all URLs on the website to manage which to index, update, or delete.
+- **Automated and Manual Processing**: Provides a console to automatically process the listed URLs or handle them manually.
+- **URL Cleaning Tool**: Includes a tool to clean URLs obtained by copying and pasting from Google Search Console.
+- **WooCommerce Integration**: If you use WooCommerce, it lists all products to configure which ones to send to Google Merchant Center.
+- **Merchant Center Configuration**: Adds a new tab in the product edit screen to configure the essential attributes required by Merchant Center.
+
+**TSEO Indexing** simplifies the process of URL indexing in Google Search Console and product management in Google Merchant Center. Effectively position your website and, if you have a WooCommerce store, publish your products for free!
 
 ## Installation
 
-1. Upload the tseoindexing folder to the /wp-content/plugins/ directory.
+1. Upload the `tseoindexing` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Go to the new "TSEO Indexing" menu in your dashboard to add and manage your websites.
+3. Navigate to the new "TSEO Indexing" menu in your dashboard to add and manage your websites.
+
+### Initial Configuration:
+   - After activation, go to the "TSEO Indexing" menu in your WordPress dashboard to set up your Google Search Console and Google Merchant Center integrations.
 
 ## Frequently Asked Questions
 
 ### Does this plugin work on multisite?
+
 Yes, the plugin has been tested and verified on WordPress Multisite.
+
+### Is WooCommerce required for all features?
+
+No, WooCommerce is only required for the Google Merchant Center integration features.
+
+### How does the AI generate optimized titles and descriptions?
+
+The AI uses advanced algorithms to analyze your content and create SEO-friendly titles and descriptions.
 
 ## Screenshots
 
-### Google Console Search
+### Google Search Console
 
 ![URL Settings](assets/img/tseoindexing-url-settings.jpg)
-*URL Settings: Lists all the URLs of the site to manage their destination in Google Console Search.*
+*URL Settings: Lists all the URLs of the site to manage their status in Google Search Console.*
 
 ![Submission Console](assets/img/tseoindexing-url-deleted.jpg)
-*Submission Console: Sends the URLs prepared in the list to Console Search according to their condition: Publish/Update or Delete*
+*Submission Console: Processes the URLs listed for submission to Google Search Console according to their status: Publish/Update or Delete.*
 
 ### Google Merchant Center
+
+![Product Listings](assets/img/tseoindexing-product-listing.jpg)
+*Product Listings: Manage and configure your WooCommerce products for submission to Google Merchant Center.*
+
+![Product Editing](assets/img/tseoindexing-product-edit.jpg)
+*Product Editing: Utilize the new tab on the product edit page to set up the required Google Merchant Center attributes for each product.*
 
 ## Upgrade Notice
 
