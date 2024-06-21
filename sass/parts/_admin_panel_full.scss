@@ -489,4 +489,8 @@
             }
         }
     }
+
+    tr:nth-child(even) {
+        background-color: $slate-100;
+    }
 }

@@ -54,14 +54,6 @@
   }
 }
 
-/* Estilos básicos para el indicador de carga */
-.loader {
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 12px;
-  color: #666;
-}
-
 /** Admin Panel two column layout **/
 .tseoindexing-admin-panel {
   background: #f8fafc;
@@ -651,6 +643,9 @@
   padding: 8px;
   border: 1px solid #d1d5db;
   border-radius: 3px;
+}
+.tseoindexing-admin-panel-all tr:nth-child(even) {
+  background-color: #f1f5f9;
 }
 
 /** Pagination **/

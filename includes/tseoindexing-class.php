@@ -116,7 +116,7 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
-                <h1><?php esc_html_e('Dashboard', 'tseoindexing'); ?></h1>
+                <h1><?php esc_html_e('Dashboard / Documentation', 'tseoindexing'); ?></h1>
                 <?php
                     tseoindexing_success_info();
                     tseoindexing_dashboard_options(); 
@@ -170,8 +170,8 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content">
-                <h1><?php esc_html_e('TSEO Indexing Settings', 'tseoindexing'); ?></h1>
-                <?php tseoindexing_danger_info() ?>
+                <h1><?php esc_html_e('Google Search Console - Settings', 'tseoindexing'); ?></h1>
+                <?php //tseoindexing_danger_info() ?>
                 <form method="post" enctype="multipart/form-data" action="">
                     <?php wp_nonce_field('tseoindexing_settings'); ?>
                     <h2><?php esc_html_e('Google Service Account JSON', 'tseoindexing'); ?></h2>
@@ -767,15 +767,13 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel-all">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content wrap-tools">
-                <h1><?php esc_html_e('Google Merchant Center', 'tseoindexing'); ?></h1>
-
+                <h1><?php esc_html_e('Google Merchant Center - Settings', 'tseoindexing'); ?></h1>
                 <?php
                     if ( class_exists( 'WooCommerce' ) ) {
                         tseoindexing_display_merchant_center();
                         tseoindexing_openai_api_client();
                     }
                 ?>
-                
             </div>
         </div>
         <?php
@@ -792,8 +790,7 @@ class TSEOIndexing_Main {
         <div class="tseoindexing-admin-panel-all">
             <?php tseoindexing_loading_overlay(); ?>
             <div class="main-content wrap-tools">
-                <h1><?php esc_html_e('List Products WooCommerce', 'tseoindexing'); ?></h1>
-
+                <h1><?php esc_html_e('WooCommerce Product List', 'tseoindexing'); ?></h1>
                 <?php
                     if ( class_exists( 'WooCommerce' ) ) {
                         tseoindexing_display_merchant_product_list();

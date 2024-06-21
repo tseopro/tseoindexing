@@ -39,16 +39,16 @@ function tseoindexing_display_merchant_product_list() {
             <thead>
                 <tr>
                     <th class="check-column"><input type="checkbox" class="submit" /></th>
-                    <th><?php esc_html_e('Image', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('Product', 'tseoindexing'); ?></th>
+                    <th style="width:45px"><?php esc_html_e('Image', 'tseoindexing'); ?></th>
+                    <th style="width:35%"><?php esc_html_e('Product', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Price', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Stock', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Condition', 'tseoindexing'); ?></th>
                     <th><?php esc_html_e('Brand', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('GTIN', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('MPN', 'tseoindexing'); ?></th>
+                    <!--<th><?php //esc_html_e('GTIN', 'tseoindexing'); ?></th>
+                    <th><?php //esc_html_e('MPN', 'tseoindexing'); ?></th>-->
                     <th><?php esc_html_e('Google Cat', 'tseoindexing'); ?></th>
-                    <th><?php esc_html_e('Destinations', 'tseoindexing'); ?></th>
+                    <th><?php esc_html_e('Dest', 'tseoindexing'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -80,11 +80,10 @@ function tseoindexing_display_merchant_product_list() {
                     $condition_label = isset($condition_labels[$condition]) ? $condition_labels[$condition] : esc_html__('No Condition', 'tseoindexing');
 
                     $brand = get_post_meta($product->get_id(), '_google_product_brand', true) ?: 'No Brand';
-                
+                    /*
                     $gtin = get_post_meta($product->get_id(), '_gtin', true) ?: 'No GTIN';
-                    
                     $mpn = get_post_meta($product->get_id(), '_mpn', true) ?: 'No MPN';
-                
+                    */
                     $google_product_category = get_post_meta($product->get_id(), '_google_product_category', true) ?: 'No Category';
 
                     // Obtener los destinos seleccionados
@@ -132,8 +131,8 @@ function tseoindexing_display_merchant_product_list() {
                         <td><?php echo esc_html($product->is_in_stock() ? 'In Stock' : 'Out of Stock'); ?></td>
                         <td><?php echo esc_html($condition_label); ?></td>
                         <td><?php echo esc_html($brand); ?></td>
-                        <td><?php echo esc_html($gtin); ?></td>
-                        <td><?php echo esc_html($mpn); ?></td>
+                        <!--<td><?php //echo esc_html($gtin); ?></td>
+                        <td><?php //echo esc_html($mpn); ?></td>-->
                         <td><?php echo esc_html($google_product_category); ?></td>
                         <td><?php echo esc_html($selected_destinations_text); ?></td>
                     </tr>

@@ -18,7 +18,13 @@
 This plugin notifies the Google Indexing API about new or updated posts and can request page removals. It integrates with Google Merchant Center to easily set up and submit product listings, featuring AI to generate optimized titles and descriptions. WooCommerce is required for Merchant Center features.
 
 ### Key Features:
+- Display a visually appealing gallery of your web projects.
+- Showcase your web development skills to your audience.
+- Enable visitors to assess the quality of each website with ease.
+- Seamlessly link to critical performance analysis tools like PageSpeed Mobile, PageSpeed Desktop, Pingdom, GTmetrix, and Google Rich Results.
+- Enhance your online portfolio's impact and professionalism.
 
+Whether you're a web developer, designer, or digital agency, TSEO Portfolio simplifies the process of presenting your work in a user-friendly and engaging manner. Elevate your online presence and impress your clients with the quality of your web projects today!
 
 ## Installation
 
@@ -33,7 +39,15 @@ Yes, the plugin has been tested and verified on WordPress Multisite.
 
 ## Screenshots
 
-1. Text...
+### Google Console Search
+
+![URL Settings](assets/img/tseoindexing-url-settings.jpg)
+*URL Settings: Lists all the URLs of the site to manage their destination in Google Console Search.*
+
+![Submission Console](assets/img/tseoindexing-url-deleted.jpg)
+*Submission Console: Sends the URLs prepared in the list to Console Search according to their condition: Publish/Update or Delete*
+
+### Google Merchant Center
 
 ## Upgrade Notice
 
