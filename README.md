@@ -1,6 +1,16 @@
 # TSEO Indexing
 
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.txt)
+![PHP Compatibility](https://img.shields.io/badge/PHP-8.1%2B-blue?style=flat-square&logo=php)
+![PHPStan Level](https://img.shields.io/badge/PHPStan-level%208-brightgreen?style=flat-square&logo=php)
+![PHPUnit Coverage](https://img.shields.io/badge/PHPUnit%20Coverage-80%25-green?style=flat-square&logo=php)
+![PHP Coding Standards](https://img.shields.io/badge/coding%20standards-PSR--12-blue?style=flat-square&logo=php)
+![WordPress Compatibility](https://img.shields.io/badge/WordPress-6.5%2B-blue?style=flat-square&logo=wordpress)
+![WooCommerce Compatibility](https://img.shields.io/badge/WooCommerce-5.0%2B-blue?style=flat-square&logo=woocommerce)
+![Google Content API](https://img.shields.io/badge/Google%20Content%20API-integrated-blue?style=flat-square&logo=google)
+![Google Merchant Center API](https://img.shields.io/badge/Google%20Merchant%20Center%20API-integrated-blue?style=flat-square&logo=google)
+![OpenAI API](https://img.shields.io/badge/OpenAI%20API-integrated-blue?style=flat-square&logo=openai)
+
 
 ## Management for Indexing URLs in Google Search Console and Managing Product Listings for Google Merchant Center with Integrated AI.
 
