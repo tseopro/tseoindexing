@@ -54,19 +54,13 @@ The AI uses advanced algorithms to analyze your content and create SEO-friendly 
 
 ### Google Search Console
 
-![URL Settings](assets/img/tseoindexing-url-settings.jpg)
-*URL Settings: Lists all the URLs of the site to manage their status in Google Search Console.*
-
-![Submission Console](assets/img/tseoindexing-url-deleted.jpg)
-*Submission Console: Processes the URLs listed for submission to Google Search Console according to their status: Publish/Update or Delete.*
+![Search Console](assets/img/tseoindexing-console-search.jpg)
+*URL Settings: Lists all the URLs of the site to manage their status in Google Search Console. Submission Console: Processes the URLs listed for submission to Google Search Console according to their status: Publish/Update or Delete.*
 
 ### Google Merchant Center
 
-![Product Listings](assets/img/tseoindexing-product-listing.jpg)
-*Product Listings: Manage and configure your WooCommerce products for submission to Google Merchant Center.*
-
-![Product Editing](assets/img/tseoindexing-product-edit.jpg)
-*Product Editing: Utilize the new tab on the product edit page to set up the required Google Merchant Center attributes for each product.*
+![Merchant Center](assets/img/tseoindexing-merchant-center.jpg)
+*Product Listings: Manage and configure your WooCommerce products for submission to Google Merchant Center. Product Editing: Utilize the new tab on the product edit page to set up the required Google Merchant Center attributes for each product.*
 
 ## Upgrade Notice
 
