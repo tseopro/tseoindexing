@@ -3,15 +3,15 @@
 ## Gestión para la indexación de URLs en Google Search Console y administración de listados de productos para Google Merchant Center con IA integrada.
 
 * Contributors: devtseo
-* Tags: wordpress, google, seo, indexing, openai, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, google-merchant-center
+* Tags: wordpress, google, seo, indexing, openai, seo-optimization, google-api, plugins-wordpress, google-indexing-api, google-console, google-merchant-center
 * Requires at least: 6.0
 * Tested up to: 6.5.4
 * Stable tag: 1.0.0
 * Requires PHP: 8.1
 * Text Domain: tseoindexing
 * Domain Path: /languages/
-* License: GPLv2
-* License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+* License: GPLv3
+* License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
 ## Documentación
 
@@ -28,7 +28,7 @@ Si buscas un posicionamiento web eficiente que genere visitas, te recomendamos e
 
 ¿Por qué "Renting"? Porque de esta manera te acompañamos en cada paso del camino para asegurar el éxito de tu negocio en internet con soporte técnico permanente. Además, incluye actualizaciones constantes que adaptan el código fuente a las exigencias de los algoritmos de los buscadores.
 
-El bajo costo del "Renting Web" (€29.95/mes) en comparación con los servicios externos necesarios para poder posicionar tu web, que en la mayoría de los casos cuesta alrededor de €700 al mes, hace de este un servicio único en su género.
+El bajo costo del "Renting Web" (**€29.95/mes**) en comparación con los servicios externos necesarios para poder posicionar tu web, que en la mayoría de los casos cuesta alrededor de *€700 al mes*, hace de este un servicio único en su género.
 
 >[!IMPORTANTE]
 >
@@ -44,7 +44,7 @@ El bajo costo del "Renting Web" (€29.95/mes) en comparación con los servicios
 - **Integración con WooCommerce**: Si usas WooCommerce, lista todos los productos para configurar cuáles enviar a Google Merchant Center.
 - **Configuración de Merchant Center**: Agrega una nueva pestaña en la pantalla de edición de productos para configurar los atributos esenciales requeridos por Merchant Center.
 
-**TSEO Indexing** simplifica el proceso de indexación de URLs en Google Search Console y la gestión de productos en Google Merchant Center. ¡Posiciona tu sitio web de manera efectiva y, si tienes una tienda WooCommerce, publica tus productos de forma gratuita!
+**TSEO Indexing** simplifica el proceso de indexación de URLs en Google Search Console y la gestión de productos en Google Merchant Center. ¡Indexa tu sitio web de manera efectiva y, si tienes una tienda WooCommerce, publica tus productos de forma gratuita!
 
 ## Instalación
 
@@ -117,9 +117,15 @@ Actualmente, el plugin se centra en los tipos de contenido estándar y en los pr
 ![Merchant Center](assets/img/tseoindexing-merchant-center.jpg)
 *Listados de Productos: Gestiona y configura tus productos de WooCommerce para enviarlos a Google Merchant Center. Edición de Productos: Utiliza la nueva pestaña en la página de edición de productos para configurar los atributos requeridos por Google Merchant Center para cada producto.*
 
-## 📄 Licencia
+## 📄 License
 
-Licencia GPLv2
+This project is licensed under the GNU General Public License version 3 (GPLv3). 
+
+You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ## 💖 Patrocinador
 

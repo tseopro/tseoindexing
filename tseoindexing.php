@@ -4,7 +4,7 @@
  *
  * @package           TSEOIndexing
  * @developer         TSEO team
- * @license           GPL-2.0-or-later
+ * @license           GPL-3.0-or-later
  *
  * @wordpress-plugin
  * Plugin Name:       TSEO Indexing
@@ -16,15 +16,15 @@
  * Author:            TSEO team
  * Author URI:        https://tseo.pro/
  * Text Domain:       tseoindexing
- * License:           GPL v2 or later
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License: GPLv3
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 /*
 TSEO Indexing is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-any later version.
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
 TSEO Indexing is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,7 +32,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with TSEO Indexing. If not, see https://tseo.pro/.
+along with TSEO Indexing. If not, see <http://www.gnu.org/licenses/>.
 */
 
 defined('ABSPATH') or die('No script kiddies please!');
