@@ -1,5 +1,16 @@
 # TSEO Indexing
 
+[![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.txt)
+![WordPress Compatibility](https://img.shields.io/badge/WordPress-6.5.4%2B-blue?style=flat-square&logo=wordpress)
+![WooCommerce Compatibility](https://img.shields.io/badge/WooCommerce-9.0.0%2B-blue?style=flat-square&logo=woocommerce)
+![PHP Compatibility](https://img.shields.io/badge/PHP-8.1%2B-blue?style=flat-square&logo=php)
+![PHPStan Level](https://img.shields.io/badge/PHPStan-level%208-brightgreen?style=flat-square&logo=php)
+![PHPUnit Coverage](https://img.shields.io/badge/PHPUnit%20Coverage-90%25-green?style=flat-square&logo=php)
+![PHP Coding Standards](https://img.shields.io/badge/coding%20standards-PSR--12-blue?style=flat-square&logo=php)
+![Google Content API](https://img.shields.io/badge/Google%20Content%20API-integrated-blue?style=flat-square&logo=google)
+![Google Merchant Center API](https://img.shields.io/badge/Google%20Merchant%20Center%20API-integrated-blue?style=flat-square&logo=google)
+![OpenAI API](https://img.shields.io/badge/OpenAI%20API-integrated-blue?style=flat-square&logo=openai)
+
 ## Gestión para la indexación de URLs en Google Search Console y administración de listados de productos para Google Merchant Center con IA integrada.
 
 * Contributors: devtseo
@@ -30,7 +41,7 @@ Si buscas un posicionamiento web eficiente que genere visitas, te recomendamos e
 
 El bajo costo del "Renting Web" (**€29.95/mes**) en comparación con los servicios externos necesarios para poder posicionar tu web, que en la mayoría de los casos cuesta alrededor de *€700 al mes*, hace de este un servicio único en su género.
 
->[!IMPORTANTE]
+>[!IMPORTANT]
 >
 > 1. **Indexar ≠ Posicionar**: La indexación no equivale al posicionamiento. Este complemento no ayudará a que tu página se posicione en Google; solo notificará a Google sobre la existencia de tus páginas.
 > 2. Este plugin utiliza la [API de Indexación de Google](https://developers.google.com/search/apis/indexing-api/v3/quickstart). No recomendamos usar este complemento para contenido spam o de baja calidad.
