@@ -5,7 +5,7 @@
 * Contributors: devtseo
 * Tags: wordpress, google, seo, indexing, openai, seo-optimization, google-api, positioning, plugins-wordpress, google-indexing-api, google-console, google-merchant-center
 * Requires at least: 6.0
-* Tested up to: 6.4.2
+* Tested up to: 6.5.4
 * Stable tag: 1.0.0
 * Requires PHP: 8.1
 * Text Domain: tseoindexing
@@ -13,9 +13,28 @@
 * License: GPLv2
 * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
+## Documentation
+
+- [English (default)](README.md)
+- [Español (README-ES.md)](README-ES.md)
+
 ## Description
 
-This plugin notifies the Google Indexing API about new or updated posts and can request page removals. It integrates with Google Merchant Center to easily set up and submit product listings, featuring AI to generate optimized titles and descriptions. WooCommerce is required for Merchant Center features.
+This plugin notifies the Google Indexing API about new or updated posts and can request page removal. It integrates with Google Merchant Center to easily set up and submit product listings, using AI to generate optimized titles and descriptions. WooCommerce is required to access Merchant Center features.
+
+The plugin facilitates the rapid indexing of your pages in Google Search Console and Google Merchant Center, but it does not guarantee that the submitted URLs will rank in search engines unless they are supported by quality content, effective On-page SEO, and professional Off-page SEO techniques.
+
+If you're looking for efficient web positioning that generates visits, we highly recommend our flagship service **TSEO PRO:** [https://tseo.pro](https://tseo.pro). This service offers a web template on a "Renting" basis for WordPress, with academic support for professional Off-page SEO. TSEO PRO comes already super optimized for On-page SEO, so you won't have to worry about this aspect, which is the hardest to achieve, as our technicians are constantly monitoring changes in search engine algorithms.
+
+Why "Renting"? Because this way we accompany you every step of the way to ensure your online business success with permanent technical support. Additionally, it includes constant updates that adapt the source code to meet the demands of search engine algorithms.
+
+The low cost of "Web Renting" (€29.95/month) compared to the necessary external services required to rank your website, which in most cases costs around €700 per month, makes this a unique service in its category.
+
+>[!IMPORTANT]
+>
+> 1. **Indexing ≠ Ranking**: Indexing does not equal ranking. This plugin will not help your page rank on Google; it will simply notify Google of the existence of your pages.
+> 2. This plugin uses the [Google Indexing API](https://developers.google.com/search/apis/indexing-api/v3/quickstart). We do not recommend using this plugin for spam or low-quality content.
+> 3. For Google Merchant Center, you will also need the [Merchant API](https://support.google.com/merchants/answer/7514752) and a [Merchant ID](https://support.google.com/paymentscenter/answer/7163092) to manage free listings and/or paid ads. Additionally, you will need an [OpenAI API Key](https://openai.com/api/) to generate optimized titles and descriptions for each listing.
 
 ### Key Features:
 
@@ -50,6 +69,42 @@ No, WooCommerce is only required for the Google Merchant Center integration feat
 
 The AI uses advanced algorithms to analyze your content and create SEO-friendly titles and descriptions.
 
+### Does the plugin support multiple languages?
+
+Currently, the plugin is designed to support English and Spanish. However, translations can be added for other languages as needed.
+
+### Can I schedule the indexing process?
+
+No, at this time, the plugin does not support scheduling. You must manually trigger the indexing process.
+
+### What should I do if my URL is not indexed by Google?
+
+Ensure your content meets Google's quality guidelines and does not violate any of their policies. The plugin only informs Google about your URLs, but Google decides whether to index them.
+
+### Can I use this plugin on websites with high traffic?
+
+Yes, the plugin is designed to handle websites of all sizes. However, for very high-traffic sites, it's recommended to monitor performance and make sure the server resources are adequate.
+
+### How can I troubleshoot issues with the plugin?
+
+Check the plugin settings and ensure that all API keys and IDs are correctly configured. Refer to the plugin documentation for detailed troubleshooting steps. If issues persist, contact support.
+
+### Are there any usage limits for the Google Indexing API?
+
+Yes, Google imposes limits on the number of indexing requests per day. Be sure to refer to the [Google Indexing API quota](https://developers.google.com/search/apis/indexing-api/v3/quota-pricing) for the latest limits and guidelines.
+
+### What happens if I exceed the API request limits?
+
+If you exceed the API request limits, your requests may be throttled or denied by Google. Plan your submissions accordingly to avoid hitting these limits.
+
+### Can I customize the attributes sent to Google Merchant Center?
+
+Yes, the plugin allows you to configure essential attributes for each product in WooCommerce to meet the requirements of Google Merchant Center.
+
+### Does the plugin support custom post types?
+
+Currently, the plugin focuses on standard post types and WooCommerce products. Custom post type support may be added in future updates.
+
 ## Screenshots
 
 ### Google Search Console
@@ -62,12 +117,12 @@ The AI uses advanced algorithms to analyze your content and create SEO-friendly 
 ![Merchant Center](assets/img/tseoindexing-merchant-center.jpg)
 *Product Listings: Manage and configure your WooCommerce products for submission to Google Merchant Center. Product Editing: Utilize the new tab on the product edit page to set up the required Google Merchant Center attributes for each product.*
 
-## Upgrade Notice
+## 📄 License
 
-= 1.0.0 - 31/05/2024 =
-* Initial release.
+GPLv2 License
 
-## Changelog
+## 💖 Sponsor
 
-= 1.0.0 - 31/05/2024 =
-* Initial release.
+This project is sponsored by [TSEO DEVELOPER](https://tseo.pro)
+
+![](https://tseo.pro/wp-content/uploads/2023/08/tseo-opengraph.webp)
