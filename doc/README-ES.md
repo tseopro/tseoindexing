@@ -1,15 +1,16 @@
 # TSEO Indexing
 
-[![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.txt)
-![WordPress Compatibility](https://img.shields.io/badge/WordPress-6.5.4%2B-blue?style=flat-square&logo=wordpress)
-![WooCommerce Compatibility](https://img.shields.io/badge/WooCommerce-9.0.0%2B-blue?style=flat-square&logo=woocommerce)
-![PHP Compatibility](https://img.shields.io/badge/PHP-8.1%2B-blue?style=flat-square&logo=php)
-![PHPStan Level](https://img.shields.io/badge/PHPStan-level%208-brightgreen?style=flat-square&logo=php)
-![PHPUnit Coverage](https://img.shields.io/badge/PHPUnit%20Coverage-90%25-green?style=flat-square&logo=php)
-![PHP Coding Standards](https://img.shields.io/badge/coding%20standards-PSR--12-blue?style=flat-square&logo=php)
-![Google Content API](https://img.shields.io/badge/Google%20Content%20API-integrated-blue?style=flat-square&logo=google)
-![Google Merchant Center API](https://img.shields.io/badge/Google%20Merchant%20Center%20API-integrated-blue?style=flat-square&logo=google)
-![OpenAI API](https://img.shields.io/badge/OpenAI%20API-integrated-blue?style=flat-square&logo=openai)
+![WordPress Plugin](https://img.shields.io/badge/Plugin-TSEO%20Indexing%20v.1.0.0-%230073AA?style=flat&logo=wordpress&labelColor=black)
+![WordPress Compatibility](https://img.shields.io/badge/WordPress-5.9%2B-%230073AA?style=flat&logo=wordpress&labelColor=black)
+![WooCommerce Compatibility](https://img.shields.io/badge/WooCommerce-6.5.0%2B-%2396588A?style=flat&logo=woocommerce-icon&labelColor=black)
+![PHP Compatibility](https://img.shields.io/badge/PHP-8.1%2B-%23777BB4?style=flat&logo=php&labelColor=black)
+![Google API Integrations](https://img.shields.io/badge/Google%20APIs-Content%20%26%20Merchant%20Center%20integrated-%234285F4?style=flat&logo=google&logoColor=white&labelColor=black)
+![OpenAI API](https://img.shields.io/badge/OpenAI%20API-integrated-%230f1a2b?style=flat&logo=openai&labelColor=black)
+![PHPStan Level](https://img.shields.io/badge/PHPStan-level%208-%234F4F4F?style=flat&logo=php&labelColor=black)
+![PHPUnit Coverage](https://img.shields.io/badge/PHPUnit%20Coverage-90%25-%234D8BBE?style=flat&logo=php&labelColor=black)
+![PHP Coding Standards](https://img.shields.io/badge/coding%20standards-PSR--12-%236E9C8C?style=flat&logo=php&labelColor=black)
+[![Software License](https://img.shields.io/badge/license-GPLv3-%233C1F4E.svg?style=flat&labelColor=black)](LICENSE.txt)
+[![TSEO PRO Compatibility](https://img.shields.io/badge/TSEO%20PRO-1.3.3%2B-%230f1a2b?style=flat&logo=world&labelColor=black)](https://tseo.pro)
 
 ## Gestión para la indexación de URLs en Google Search Console y administración de listados de productos para Google Merchant Center con IA integrada.
 
@@ -26,7 +27,7 @@
 
 ## Documentación
 
-- [Inglés (por defecto)](README.md)
+- [Inglés (por defecto)](../README.md)
 - [Español (README-ES.md)](README-ES.md)
 
 ## Descripción
