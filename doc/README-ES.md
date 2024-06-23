@@ -124,12 +124,12 @@ Actualmente, el plugin se centra en los tipos de contenido estándar y en los pr
 
 ### Google Search Console
 
-![Search Console](assets/img/tseoindexing-console-search.jpg)
+![Search Console](../assets/img/tseoindexing-console-search.jpg)
 *Ajustes de URL: Lista todas las URLs del sitio para gestionar su estado en Google Search Console. Consola de Envío: Procesa las URLs listadas para enviarlas a Google Search Console según su estado: Publicar/Actualizar o Eliminar.*
 
 ### Google Merchant Center
 
-![Merchant Center](assets/img/tseoindexing-merchant-center.jpg)
+![Merchant Center](../assets/img/tseoindexing-merchant-center.jpg)
 *Listados de Productos: Gestiona y configura tus productos de WooCommerce para enviarlos a Google Merchant Center. Edición de Productos: Utiliza la nueva pestaña en la página de edición de productos para configurar los atributos requeridos por Google Merchant Center para cada producto.*
 
 ## 📄 License
