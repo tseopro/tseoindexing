@@ -4,13 +4,16 @@
 ![WordPress Compatibility](https://img.shields.io/badge/WordPress-5.9%2B-%230073AA?style=flat&logo=wordpress&labelColor=black)
 ![WooCommerce Compatibility](https://img.shields.io/badge/WooCommerce-6.5.0%2B-%2396588A?style=flat&logo=woocommerce-icon&labelColor=black)
 ![PHP Compatibility](https://img.shields.io/badge/PHP-8.1%2B-%23777BB4?style=flat&logo=php&labelColor=black)
-![Google API Integrations](https://img.shields.io/badge/Google%20APIs-Content%20%26%20Merchant%20Center%20integrated-%234285F4?style=flat&logo=google&logoColor=white&labelColor=black)
-![OpenAI API](https://img.shields.io/badge/OpenAI%20API-integrated-%230f1a2b?style=flat&logo=openai&labelColor=black)
-![PHPStan Level](https://img.shields.io/badge/PHPStan-level%208-%234F4F4F?style=flat&logo=php&labelColor=black)
-![PHPUnit Coverage](https://img.shields.io/badge/PHPUnit%20Coverage-90%25-%234D8BBE?style=flat&logo=php&labelColor=black)
-![PHP Coding Standards](https://img.shields.io/badge/coding%20standards-PSR--12-%236E9C8C?style=flat&logo=php&labelColor=black)
-[![Software License](https://img.shields.io/badge/license-GPLv3-%233C1F4E.svg?style=flat&labelColor=black)](LICENSE.txt)
-[![TSEO PRO Compatibility](https://img.shields.io/badge/TSEO%20PRO-1.3.3%2B-%230f1a2b?style=flat&logo=world&labelColor=black)](https://tseo.pro)
+
+![Google API Integrations](https://img.shields.io/badge/Google%20APIs-Content%20%26%20Merchant%20Center%20integrated-%2332c955?style=flat&logo=google&logoColor=white&labelColor=black)
+![OpenAI API](https://img.shields.io/badge/OpenAI%20API-integrated-%2332c955?style=flat&logo=openai&labelColor=black)
+
+![PHPStan Level](https://img.shields.io/badge/PHPStan-level%208-%236E9C8C?style=flat&logo=php&labelColor=black)
+![PHPUnit Coverage](https://img.shields.io/badge/PHPUnit%20Coverage-90%25-%236E9C8C?style=flat&logo=php&labelColor=black)
+![PHP Coding Standards](https://img.shields.io/badge/Coding%20Standards-PSR--12-%236E9C8C?style=flat&logo=php&labelColor=black)
+
+[![Software License](https://img.shields.io/badge/license-GPLv3-%23c40df2?style=flat&labelColor=black)](LICENSE.txt)
+[![TSEO PRO Compatibility](https://img.shields.io/badge/Designed%20for-TSEO%20DEVELOPER-%2377bae8?style=flat&logo=world&labelColor=black)](https://tseo.pro)
 
 
 ## Management for Indexing URLs in Google Search Console and Managing Product Listings for Google Merchant Center with Integrated AI.
