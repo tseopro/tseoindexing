@@ -53,8 +53,8 @@ class TSEOIndexing_Main {
      */
     public function tseoindexing_create_menu() {
         add_menu_page(
-            'TSEO Indexing',
-            'TSEO Indexing',
+            'tSEO Indexing',
+            'tSEO Indexing',
             'manage_options',
             'tseoindexing',
             [$this, 'tseoindexing_dashboard_page_content'],
