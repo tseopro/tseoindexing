@@ -18,6 +18,7 @@ class TSEOIndexing_Main {
      */
     public function __construct() {
         add_action('admin_menu', [$this, 'tseoindexing_create_menu']);
+        add_action('admin_head', [$this, 'tseoindexing_menu_icon_css']);
         add_action('admin_init', [$this, 'tseoindexing_setup_sections']);
         add_action('admin_init', [$this, 'tseoindexing_setup_fields']);
         add_action('publish_post', [$this, 'tseo_notify_google_about_new_post'], 10, 2);
@@ -29,6 +30,19 @@ class TSEOIndexing_Main {
         // AJAX actions
         add_action('wp_ajax_tseoindexing_load_urls_by_type', [$this, 'tseoindexing_load_urls_by_type']);
         add_action('wp_ajax_tseoindexing_send_urls_to_google', [$this, 'tseoindexing_send_urls_to_google']);
+    }
+
+    public function tseoindexing_menu_icon_css() {
+        $icon_url = plugin_dir_url(dirname(__FILE__)) . 'assets/img/tseo-indexing.svg';
+        echo '<style>
+            #toplevel_page_tseoindexing .wp-menu-image {
+                background: url(' . esc_url($icon_url) . ') no-repeat center center !important;
+                background-size: 23px 23px !important;
+            }
+            #toplevel_page_tseoindexing .wp-menu-image:before {
+                content: "" !important;
+            }
+        </style>';
     }
 
     /**
@@ -44,7 +58,7 @@ class TSEOIndexing_Main {
             'manage_options',
             'tseoindexing',
             [$this, 'tseoindexing_dashboard_page_content'],
-            'dashicons-admin-site',
+            '',
             6
         );
 

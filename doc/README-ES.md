@@ -142,8 +142,35 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+## 📄 Copyright
+
+Copyright (C) 2024 TSEO Developer, S.L.
+
 ## 💖 Patrocinador
 
 Este proyecto está patrocinado por [TSEO DEVELOPER](https://tseo.pro)
 
 ![](https://tseo.pro/wp-content/uploads/2023/08/tseo-opengraph.webp)
+
+### Licencias de Terceros
+
+Este plugin utiliza APIs externas que están licenciadas de la siguiente manera:
+
+- Google API: Licencia Apache, Versión 2.0
+  [Enlace a la Licencia Apache](https://www.apache.org/licenses/LICENSE-2.0)
+
+- OpenAI API: Licencia MIT
+  [Enlace a la Licencia MIT](https://opensource.org/licenses/MIT)
+
+Por favor, consulta las respectivas licencias para conocer los términos y condiciones de uso de estas APIs.
+
+### 🤝 Contribuciones
+
+¡Damos la bienvenida a contribuciones de la comunidad! Si deseas contribuir a TSEO Indexing, sigue estos pasos:
+
+1. **Haz un Fork del Repositorio**: Haz clic en el botón "Fork" en la parte superior derecha de esta página para crear una copia del repositorio en tu propia cuenta de GitHub.
+2. **Clona el Repositorio**: Clona tu repositorio bifurcado a tu máquina local usando:
+
+```sh
+git clone https://github.com/devtseo/tseoindexing.git
+```
