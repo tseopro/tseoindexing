@@ -151,7 +151,7 @@ Copyright (C) 2024 TSEO Developer, S.L.
 
 This project is sponsored by [TSEO DEVELOPER](https://tseo.pro)
 
-![](https://tseo.pro/wp-content/uploads/2023/08/tseo-opengraph.webp)
+![](https://tseo.pro/wp-content/uploads/2024/08/tseo-opengraph.webp)
 
 ## Third-Party Licenses
 
