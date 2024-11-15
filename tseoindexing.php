@@ -10,7 +10,7 @@
  * Plugin Name:       TSEO Indexing
  * Plugin URI:        https://tseo.pro/indexing/
  * Description:       This plugin notifies the Google Indexing API about new or updated posts and can request page removals. It integrates with Google Merchant Center to easily set up and submit product listings, featuring AI to generate optimized titles and descriptions. WooCommerce is required for Merchant Center features.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.5
  * Requires PHP:      8.1.0
  * Author:            TSEO team
@@ -40,7 +40,7 @@
 defined('ABSPATH') or die('No script kiddies please!');
 
 if (!defined('TSEOINDEXING_VERSION')) {
-    define('TSEOINDEXING_VERSION', '1.0.0');
+    define('TSEOINDEXING_VERSION', '1.0.1');
 }
 
 // Autoload Google Client and OpenAI-PHP

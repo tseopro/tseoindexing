@@ -1,6 +1,6 @@
 # TSEO Indexing
 
-![WordPress Plugin](https://img.shields.io/badge/Plugin-TSEO%20Indexing%20v.1.0.0-%230073AA?style=flat&logo=wordpress&labelColor=black)
+![WordPress Plugin](https://img.shields.io/badge/Plugin-TSEO%20Indexing%20v.1.0.1-%230073AA?style=flat&logo=wordpress&labelColor=black)
 ![WordPress Compatibility](https://img.shields.io/badge/WordPress-5.9%2B-%230073AA?style=flat&logo=wordpress&labelColor=black)
 ![WooCommerce Compatibility](https://img.shields.io/badge/WooCommerce-6.5.0%2B-%2396588A?style=flat&logo=woocommerce-icon&labelColor=black)
 ![PHP Compatibility](https://img.shields.io/badge/PHP-8.1%2B-%23777BB4?style=flat&logo=php&labelColor=black)
@@ -20,8 +20,8 @@
 * Contributors: devtseo
 * Tags: wordpress, google, seo, indexing, openai, seo-optimization, google-api, plugins-wordpress, google-indexing-api, google-console, google-merchant-center
 * Requires at least: 6.0
-* Tested up to: 6.5.4
-* Stable tag: 1.0.0
+* Tested up to: 6.7
+* Stable tag: 1.0.1
 * Requires PHP: 8.1
 * Text Domain: tseoindexing
 * Domain Path: /languages/
@@ -172,5 +172,5 @@ Por favor, consulta las respectivas licencias para conocer los términos y condi
 2. **Clona el Repositorio**: Clona tu repositorio bifurcado a tu máquina local usando:
 
 ```sh
-git clone https://github.com/devtseo/tseoindexing.git
+git clone https://github.com/tseopro/tseoindexing.git
 ```

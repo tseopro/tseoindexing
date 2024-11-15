@@ -23,9 +23,7 @@
         "style:rtl": "rtlcss assets/css/style.css assets/css/tseoindexing-rtl.css",
         "style": "sass --watch sass/style.scss assets/css/tseoindexing.css  --no-charset --no-source-map",
         "style-min": "sass --watch sass/style.scss assets/css/tseoindexing.min.css  --no-charset --style=compressed --no-source-map",
-        "woo": "sass --watch sass/woo.scss assets/css/tseoindexing-woo.min.css  --no-charset --style=compressed --no-source-map",
-        "bundle": "dir-archiver --src . --dest ../tseoindexing-v1.0.0.zip --exclude sass icons _psd .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore .vscode README.md composer.json composer.lock node_modules vendor package-lock.json package.json",
-        "bundle2": "dir-archiver --src . --dest ../tseoindexing-v1.0.0.zip --exclude sass icons _psd .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore .vscode README.md node_modules package-lock.json package.json vendor/bin vendor/composer/installed.json"
+        "woo": "sass --watch sass/woo.scss assets/css/tseoindexing-woo.min.css  --no-charset --style=compressed --no-source-map"
     },
     "dependencies": {
         "loader-utils": "^3.2.1",
