@@ -1,6 +1,6 @@
 # TSEO Indexing
 
-![Search Console](assets/img/tseo-indexing.jpg)
+![TSEO Indexing](assets/img/tseo-indexing.jpg)
 
 ![WordPress Plugin](https://img.shields.io/badge/Plugin-TSEO%20Indexing%20v.1.0.1-%230073AA?style=flat&logo=wordpress&labelColor=black)
 ![WordPress Compatibility](https://img.shields.io/badge/WordPress-5.9%2B-%230073AA?style=flat&logo=wordpress&labelColor=black)
